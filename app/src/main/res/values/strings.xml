@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">UMarketApp2</string>
+
+    <!--splashscreen-->
+    <string name="splash">logo</string>
+    <string name="txtSplash">UMarket</string>
+
+    <!--transition string -->
+    <string name="trans_Image">logo_image</string>
+    <string name="trans_Text">logo_text</string>
+    <string name="trans_Desc">logo_Desc</string>
+    <string name="trans_Id">id_trans</string>
+    <string name="trans_Pass">pass_trans</string>
+    <string name="trans_forget">forgot_trans</string>
+    <string name="trans_btnLogin">login_trans</string>
+    <string name="trans_btnSignUp">SignUp_trans</string>
+    <string name="top_circle_design">top circle design</string>
+    <string name="bottom_circle_design">bottom circle design</string>
+    <string name="rect" />
+    <string name="txtsignin">txt_signin</string>
+    <string name="txtregister">txtregister</string>
+    <string name="sslogo">sslogo</string>
+    <string name="login_studid">Student ID</string>
+    <string name="login_pass">Password</string>
+    <string name="reg_fname">First Name</string>
+    <string name="reg_lname">Last Name</string>
+    <string name="reg_studid">Student ID</string>
+    <string name="reg_contact">Contact No.</string>
+    <string name="reg_email">Email</string>
+    <string name="reg_pass">Password</string>
+    <string name="registertext">Register</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_xtratxt">You must be very patient, very persistent. The world isn’t going to shower gold coins on you just because you have a good idea. You’re going to have to work like crazy to bring that idea to the attention of people. They’re not going to buy it unless they know about it.</string>
+    <string name="log_inbutton">Log In</string>
+    <string name="login_logintxt">Log In</string>
+
+
+</resources>

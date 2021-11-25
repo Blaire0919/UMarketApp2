@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mustard"
+    tools:context="bbc.umarket.umarketapp2.Login">
+
+    <TextView
+        android:id="@+id/txtRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:gravity="center"
+        android:text="Register"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:transitionName="@string/trans_Image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/logintxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/archivo_black"
+        android:gravity="center"
+        android:text="@string/login_logintxt"
+        android:textColor="@color/black"
+        android:textSize="35sp"
+        android:transitionName="@string/trans_Image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtRegister" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginEnd="28dp"
+        android:justificationMode="inter_word"
+        android:layout_marginBottom="35dp"
+        android:id="@+id/xtratext"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="@string/login_xtratxt"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:transitionName="@string/trans_Image"
+        app:layout_constraintBottom_toTopOf="@id/linear01"
+        app:layout_constraintTop_toBottomOf="@id/logintxt">
+
+    </TextView>
+
+    <LinearLayout
+        android:id="@+id/linear01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/panelrect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-75dp"
+            android:background="@drawable/rect01">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:paddingTop="3dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/LoginInputStudID"
+                    style="@style/InputLayoutOutlineBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:hint="@string/login_studid"
+                    android:textColorHint="@color/lightgray"
+                    android:transitionName="@string/trans_Id">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/EditText01"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="false" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/LoginInputPass"
+                    style="@style/InputLayoutOutlineBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:hint="@string/login_pass"
+                    android:textColorHint="@color/lightgray"
+                    android:transitionName="@string/trans_Pass"
+                    app:errorIconDrawable="@null"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/mustard">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/EditText01"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <Button
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:id="@+id/btnLogin"
+                    style="@style/ButtonStyle01"
+                    android:background="@drawable/corner_layouts"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:padding="5dp"
+                    android:text="@string/log_inbutton"
+                    android:transitionName="@string/trans_btnLogin" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
