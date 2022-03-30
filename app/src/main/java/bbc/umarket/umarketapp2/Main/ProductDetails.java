@@ -1,9 +1,8 @@
-package bbc.umarket.umarketapp2;
+package bbc.umarket.umarketapp2.Main;
 
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,12 +15,15 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.database.ChildEventListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,22 +35,28 @@ import com.google.firebase.database.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 //Python Imports
 import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
 
-import bbc.umarket.umarketapp2.Adapter.ClickedHistoryHelperClass;
+import bbc.umarket.umarketapp2.Adapter.CartItemAdapter;
+import bbc.umarket.umarketapp2.Helper.CartHelperClass;
+import bbc.umarket.umarketapp2.Helper.ClickedHistoryHelperClass;
 import bbc.umarket.umarketapp2.Adapter.ItemAdapter;
-import bbc.umarket.umarketapp2.Adapter.ItemHelperClass;
+import bbc.umarket.umarketapp2.Helper.ItemHelperClass;
 import bbc.umarket.umarketapp2.Adapter.RateReviewAdapter;
-import bbc.umarket.umarketapp2.Adapter.RateReviewHelperClass;
+import bbc.umarket.umarketapp2.Helper.RateReviewHelperClass;
 import bbc.umarket.umarketapp2.Database.SessionManager;
+import bbc.umarket.umarketapp2.Listener.CartItemLoadListener;
+import bbc.umarket.umarketapp2.R;
 
-public class ProductDetails extends AppCompatActivity {
+public class ProductDetails extends AppCompatActivity implements CartItemLoadListener {
     ImageView back;
-    Button buy;
+    Button buy, cart;
     ImageView PR_image;
     TextView PRbrand, PRcondition, PRdesc, PRhandling, PRname, PRrate, PRprice, PRstock, PRsellername;
     RatingBar PRratingbar;
@@ -74,11 +82,22 @@ public class ProductDetails extends AppCompatActivity {
     String chdatetime;
     long maxid = 0;
 
+    Integer qty = 0;
+    String itemID;
+
+    //for add to cart database
+    CartHelperClass cartHelperClass;
+    String CuserID, CprodID, CsellerID, CsellerName, CprodName, CprodQty, CprodPrice, CimgUrl, CdateTime, CtotalPrice;
+    LinearLayout mlayout;
+    CartItemLoadListener cartItemLoadListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_prod_details);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar\
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
+
+        cartItemLoadListener = this;
 
         //getting data from session
         SessionManager sessionManager = new SessionManager(ProductDetails.this);
@@ -104,6 +123,8 @@ public class ProductDetails extends AppCompatActivity {
         items = findViewById(R.id.pd_recommend_recyclerview);
         ratenreview = findViewById(R.id.proddetails_recyclerview);
         buy = findViewById(R.id.btnbuy);
+        cart = findViewById(R.id.btnaddtocart);
+        mlayout = findViewById(R.id.mlayout);
 
         back.setOnClickListener(view -> {
             Intent intent = new Intent(ProductDetails.this, HomeContainer.class);
@@ -112,7 +133,8 @@ public class ProductDetails extends AppCompatActivity {
             finish();
         });
 
-        DatabaseReference reference = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("products");
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("products");
         Query checkID = reference.orderByChild("pID").equalTo(prodID);
 
         checkID.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -134,13 +156,44 @@ public class ProductDetails extends AppCompatActivity {
                         PRhandling.setText(snapshot.child(prodID).child("pHandlingFee").getValue(String.class));
                         PRname.setText(snapshot.child(prodID).child("pName").getValue(String.class));
                         pName = snapshot.child(prodID).child("pName").getValue(String.class);
-                        PRratingbar.setRating(Float.parseFloat(Objects.requireNonNull(snapshot.child(prodID).child("pOverallRate").getValue(String.class))));
+
+                        DatabaseReference ratingref = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                                .getReference("rateandreview");
+
+                        ratingref.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @SuppressLint("DefaultLocale")
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                float average, total = 0.0F, rating;
+                                int count = 0;
+                                if (snapshot.exists()) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        if (dataSnapshot.child("prodID").getValue(String.class).equals(prodID)) {
+                                            rating = Float.parseFloat(Objects.requireNonNull(dataSnapshot.child("rate").getValue(String.class)));
+                                            total = total + rating;
+                                            count = count + 1;
+                                            average = total / count;
+                                            PRratingbar.setRating(average);
+                                            PRrate.setText(String.format("%.1f", ((double) average)));
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+
                         PRprice.setText(String.format("₱ %s", snapshot.child(prodID).child("pPrice").getValue(String.class)));
                         PRstock.setText(snapshot.child(prodID).child("pStock").getValue(String.class));
-                        PRrate.setText(snapshot.child(prodID).child("pOverallRate").getValue(String.class));
+                        CprodPrice = Objects.requireNonNull(snapshot.child(prodID).child("pPrice").getValue(String.class));
+                        CtotalPrice = Objects.requireNonNull(snapshot.child(prodID).child("pPrice").getValue(String.class));
+
                         final String SellerID = snapshot.child(prodID).child("pSellerID").getValue(String.class);
 
-                        DatabaseReference userRef = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users");
+                        DatabaseReference userRef = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                                .getReference("users");
                         Query checkUserID = userRef.orderByChild("studID").equalTo(SellerID);
 
                         checkUserID.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -151,7 +204,9 @@ public class ProductDetails extends AppCompatActivity {
                                     String fnamefromDB = snaps.child(SellerID).child("fname").getValue(String.class);
                                     String lnamefromDB = snaps.child(SellerID).child("lname").getValue(String.class);
                                     PRsellername.setText(String.format("%s %s", fnamefromDB, lnamefromDB));
+                                    CsellerName = String.format("%s %s", fnamefromDB, lnamefromDB);
                                 }
+
                                 DatabaseReference refCH = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                                         .getReference("clicked_history")
                                         .child(studid);
@@ -170,20 +225,33 @@ public class ProductDetails extends AppCompatActivity {
                                             refCH.child(String.valueOf(maxid)).setValue(clickedHistoryHelperClass);
                                         }
                                         currentdatetime = chdatetime;
+
+                                        CuserID = studid;
+                                        CprodID = prodID;
+                                        CsellerID = SellerID;
+                                        CprodName = pName;
+                                        CprodQty = "1";
+                                        CimgUrl = imageUrl;
+
                                     }
 
                                     @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {     }
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                    }
                                 });
                             }
+
                             @Override
-                            public void onCancelled(@NonNull @NotNull DatabaseError error) {    }
+                            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                            }
                         });
                     }
                 }
             }
+
             @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) { }
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+            }
         });
 
         //recommendation recyclerview
@@ -204,12 +272,13 @@ public class ProductDetails extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 //Set paramater to get recommendations
-                   String itemName = snapshot.child(prodID).child("pName").getValue(String.class);
+                String itemName = snapshot.child(prodID).child("pName").getValue(String.class);
                 //return to a array
                 //    String[] rec = pyobj.callAttr("main", itemName).toJava(String[].class);
                 String[] rec = pyobj.callAttr("main", itemName).toJava(String[].class);
                 for (String strTemp : rec) {
                     ItemRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @SuppressLint("NotifyDataSetChanged")
                         @Override
                         public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                             for (DataSnapshot snap : snapshot.getChildren()) {
@@ -229,8 +298,10 @@ public class ProductDetails extends AppCompatActivity {
                     });
                 }
             }
+
             @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) { }
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+            }
         });
 
         //create and review recyclerview
@@ -242,26 +313,69 @@ public class ProductDetails extends AppCompatActivity {
         DatabaseReference rrRef = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                 .getReference("rateandreview");
         rrRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    for (DataSnapshot snaps1 : snapshot.getChildren()){
+                if (snapshot.exists()) {
+                    for (DataSnapshot snaps1 : snapshot.getChildren()) {
                         RateReviewHelperClass rateReviewHelperClass = snaps1.getValue(RateReviewHelperClass.class);
                         if (rateReviewHelperClass != null && rateReviewHelperClass.getProdID().equals(prodID)) {
                             rrlist.add(rateReviewHelperClass);
                         }
                     }
-                }else{
+                } else {
                     Toast.makeText(ProductDetails.this, "HINDI GUMAGANA", Toast.LENGTH_SHORT).show();
                 }
                 rrAdapter.notifyDataSetChanged();
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
+        });
+
+        cart.setOnClickListener(view -> {
+            DatabaseReference refCart = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                    .getReference("cart").child(studid).child(prodID);
+
+            refCart.addListenerForSingleValueEvent(new ValueEventListener() {
+                @SuppressLint("DefaultLocale")
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        //if there is a same item in cart
+                        itemID = snapshot.child("prodID").getValue(String.class);
+                        assert itemID != null;
+                        if (itemID.equals(prodID)) {
+                            Log.d(TAG, itemID);
+                            CartHelperClass cartHelperClass = snapshot.getValue(CartHelperClass.class);
+
+                            assert cartHelperClass != null;
+                            qty = Integer.parseInt(cartHelperClass.getProdQty()) + 1;
+                            cartHelperClass.setProdQty(qty.toString());
+                            Map<String, Object> updateData = new HashMap<>();
+                            updateData.put("prodQty", qty.toString());
+                            Float totprice = Integer.parseInt(cartHelperClass.getProdQty()) * Float.parseFloat(cartHelperClass.getTotalPrice());
+                            updateData.put("totalPrice", String.format("%.2f", totprice));
+
+                            refCart.updateChildren(updateData)
+                                    .addOnSuccessListener(unused -> cartItemLoadListener.onCartLoadFailed("Add to Cart Successful"))
+                                    .addOnFailureListener(e -> cartItemLoadListener.onCartLoadFailed(e.getMessage()));
+                        }
+
+                    } else {
+                        CdateTime = java.text.DateFormat.getDateTimeInstance().format(new Date());
+                        clickedHistoryHelperClass = new ClickedHistoryHelperClass(studid, chdatetime, pID);
+                        cartHelperClass = new CartHelperClass(CuserID, CprodID, CsellerID, CsellerName, CprodName, CprodQty, CprodPrice, CimgUrl, CdateTime, CtotalPrice);
+                        refCart.setValue(cartHelperClass);
+                        Snackbar.make(mlayout, "Add to Cart Successful", Snackbar.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
         });
 
         buy.setOnClickListener(view -> {
@@ -273,8 +387,12 @@ public class ProductDetails extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-
     }
 
 
+    @Override
+    public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) { }
+
+    @Override
+    public void onCartLoadFailed(String message) {Snackbar.make(mlayout, message, Snackbar.LENGTH_LONG).show(); }
 }

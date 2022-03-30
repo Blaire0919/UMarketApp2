@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mustard"
-    tools:context="bbc.umarket.umarketapp2.Login">
+    tools:context="bbc.umarket.umarketapp2.Main.Login">
 
     <TextView
         android:id="@+id/txtRegister"
@@ -34,7 +34,7 @@
         android:gravity="center"
         android:text="@string/login_logintxt"
         android:textColor="@color/black"
-        android:textSize="35sp"
+        android:textSize="30sp"
         android:transitionName="@string/trans_Image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtRegister" />

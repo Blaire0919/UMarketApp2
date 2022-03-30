@@ -1,4 +1,4 @@
-package bbc.umarket.umarketapp2;
+package bbc.umarket.umarketapp2.Main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,6 +25,7 @@ import com.google.firebase.database.annotations.NotNull;
 import java.util.Objects;
 
 import bbc.umarket.umarketapp2.Database.SessionManager;
+import bbc.umarket.umarketapp2.R;
 
 //Just Press CTRL+ALT+L on Windows. The android studio will reformat all the code for you
 public class Login extends AppCompatActivity {

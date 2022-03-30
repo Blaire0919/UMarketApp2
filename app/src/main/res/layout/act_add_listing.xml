@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".AddListing">
+    tools:context=".Main.AddListing">
 
     <LinearLayout
         android:id="@+id/linear02"
@@ -114,7 +114,7 @@
                             android:id="@+id/selectedphoto"
                             android:layout_width="60dp"
                             android:layout_height="match_parent"
-                            android:src="@drawable/ic_image"/>
+                            android:src="@drawable/ic_image" />
 
                     </RelativeLayout>
 

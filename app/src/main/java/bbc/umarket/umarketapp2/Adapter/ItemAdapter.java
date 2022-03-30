@@ -1,5 +1,6 @@
 package bbc.umarket.umarketapp2.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -14,16 +15,25 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import bbc.umarket.umarketapp2.ProductDetails;
+import bbc.umarket.umarketapp2.Helper.ItemHelperClass;
+import bbc.umarket.umarketapp2.Main.ProductDetails;
 import bbc.umarket.umarketapp2.R;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
-
     Context context;
     ArrayList<ItemHelperClass> itemlist;
+
+    DatabaseReference ratingref = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+            .getReference("rateandreview");
 
     public ItemAdapter(Context context, ArrayList<ItemHelperClass> itemlist) {
         this.context = context;
@@ -38,12 +48,48 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ItemViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        Glide.with(context).load(itemlist.get(position).getImageUrl()).into(holder.image);
+        Glide.with(context)
+                .load(itemlist.get(position)
+                        .getImageUrl())
+                .into(holder.image);
+
         holder.title.setText(itemlist.get(position).getpName());
         holder.price.setText(itemlist.get(position).getpPrice());
-        holder.rate.setRating(Float.parseFloat((itemlist.get(position).getpOverallRate())));
+
+        ratingref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("DefaultLocale")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                float average, total = 0.0F, rating;
+                int count = 0;
+                if (snapshot.exists()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                        if (Objects.equals(dataSnapshot.child("prodID").getValue(String.class), itemlist.get(position).getpID())){
+                            rating = Float.parseFloat(Objects.requireNonNull(dataSnapshot.child("rate").getValue(String.class)));
+                            total = total + rating;
+                            count = count + 1;
+                            average = total / count;
+                            holder.rate.setRating(average);
+                        }
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+      //  holder.rate.setRating(Float.parseFloat(itemlist.get(position).getpOverallRate()));
+
+
 
         holder.cardView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ProductDetails.class);

@@ -1,4 +1,4 @@
-package bbc.umarket.umarketapp2.Adapter;
+package bbc.umarket.umarketapp2.Helper;
 
 public class InterestHelperClass {
     String studid, schoolsupplies, electronics, foodbeverages, clothesaccessories, beautyproducts, sportsequipment;

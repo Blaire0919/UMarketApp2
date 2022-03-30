@@ -1,4 +1,4 @@
-package bbc.umarket.umarketapp2;
+package bbc.umarket.umarketapp2.Main;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,9 +30,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import bbc.umarket.umarketapp2.Adapter.ClickedHistoryHelperClass;
 import bbc.umarket.umarketapp2.Adapter.Model;
 import bbc.umarket.umarketapp2.Database.SessionManager;
+import bbc.umarket.umarketapp2.R;
 
 public class AddListing extends AppCompatActivity {
     ImageView back, selectedimg;

@@ -5,6 +5,10 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -15,39 +19,42 @@
         android:theme="@style/SplashScreenTheme"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".RateAndReview"
+            android:name=".Main.AddToCart"
             android:exported="false" />
         <activity
-            android:name=".SellerCenter"
+            android:name=".Main.RateAndReview"
             android:exported="false" />
         <activity
-            android:name=".SearchedListing"
+            android:name=".Main.SellerCenter"
             android:exported="false" />
         <activity
-            android:name=".CategorizedListing"
+            android:name=".Main.SearchedListing"
+            android:exported="false" />
+        <activity
+            android:name=".Main.CategorizedListing"
             android:exported="true" />
         <activity
-            android:name=".AddListing"
+            android:name=".Main.AddListing"
             android:exported="true" />
         <activity
-            android:name=".Settings"
+            android:name=".Main.Settings"
             android:exported="true" />
         <activity
-            android:name=".ProductDetails"
+            android:name=".Main.ProductDetails"
             android:exported="true" />
         <activity
-            android:name=".EditProfile"
+            android:name=".Main.EditProfile"
             android:exported="true" />
         <activity
-            android:name=".HomeContainer"
+            android:name=".Main.HomeContainer"
             android:exported="true"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".Register"
+            android:name=".Main.Register"
             android:exported="true"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".Login"
+            android:name=".Main.Login"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>

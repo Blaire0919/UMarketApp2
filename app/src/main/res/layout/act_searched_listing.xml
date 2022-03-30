@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/mustard"
-    tools:context=".SearchedListing">
+    tools:context=".Main.SearchedListing">
 
     <LinearLayout
         android:layout_width="match_parent"

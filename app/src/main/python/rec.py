@@ -23,14 +23,14 @@ warnings.filterwarnings('ignore')
 
 def main(itemName):
     firebaseConfig = {
-        "apiKey": "AIzaSyAWdKlV_6uha2Cq3vPlSNeRm5OD7ZiRy4Y",
-        "authDomain": "umarketapp-c3ff2.firebaseapp.com",
-        "databaseURL": "https://umarketapp-c3ff2-default-rtdb.asia-southeast1.firebasedatabase.app",
-        "projectId": "umarketapp-c3ff2",
-        "storageBucket": "umarketapp-c3ff2.appspot.com",
-        "messagingSenderId": "735215233789",
-        "appId": "1:735215233789:web:eda19d1df295577728ec94",
-        "measurementId": "G-5EX4YS54RC"
+              "apiKey": "AIzaSyAE9LoONOQgkiWsAEAvnVqCSrQGUJkezIo",
+              "authDomain": "umarketapp2-58178.firebaseapp.com",
+              "databaseURL": "https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app",
+              "projectId": "umarketapp2-58178",
+              "storageBucket": "umarketapp2-58178.appspot.com",
+              "messagingSenderId": "740426938880",
+              "appId": "1:740426938880:web:d2e577322eb1eb7a9c36e5",
+              "measurementId": "G-50NH6QW3PX"
     }
 
     firebase = pyrebase.initialize_app(firebaseConfig)

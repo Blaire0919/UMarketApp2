@@ -1,4 +1,4 @@
-package bbc.umarket.umarketapp2;
+package bbc.umarket.umarketapp2.Main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +22,8 @@ import com.google.firebase.database.annotations.NotNull;
 import java.util.ArrayList;
 
 import bbc.umarket.umarketapp2.Adapter.ItemAdapter;
-import bbc.umarket.umarketapp2.Adapter.ItemHelperClass;
+import bbc.umarket.umarketapp2.Helper.ItemHelperClass;
+import bbc.umarket.umarketapp2.R;
 
 public class CategorizedListing extends AppCompatActivity {
     ImageView back;

@@ -1,4 +1,4 @@
-package bbc.umarket.umarketapp2.Adapter;
+package bbc.umarket.umarketapp2.Helper;
 
 public class UserHelperClass {
     String fname, lname, studID, contacts, gender, bday, email, password, is_seller;

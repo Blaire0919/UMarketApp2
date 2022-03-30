@@ -1,8 +1,10 @@
-package bbc.umarket.umarketapp2;
+package bbc.umarket.umarketapp2.Main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import bbc.umarket.umarketapp2.R;
 
 public class SellerCenter extends AppCompatActivity {
 

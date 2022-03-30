@@ -1,11 +1,12 @@
-package bbc.umarket.umarketapp2;
+package bbc.umarket.umarketapp2.Main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.view.ContextThemeWrapper;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -23,8 +24,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Objects;
 
-import bbc.umarket.umarketapp2.Adapter.RateReviewHelperClass;
+import bbc.umarket.umarketapp2.Helper.RateReviewHelperClass;
 import bbc.umarket.umarketapp2.Database.SessionManager;
+import bbc.umarket.umarketapp2.R;
 
 public class RateAndReview extends AppCompatActivity {
     ImageView p_img, back;
@@ -109,6 +111,13 @@ public class RateAndReview extends AppCompatActivity {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {  }
             });
+            AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
+            builder.setTitle("");
+            builder.setMessage("Successfully reviewed the product!");
+            // create and show the alert dialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
 
             Intent intent = new Intent(RateAndReview.this, HomeContainer.class);
             intent.putExtra("back_Home", "Home");

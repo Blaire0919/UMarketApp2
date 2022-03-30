@@ -1,7 +1,6 @@
 package bbc.umarket.umarketapp2.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import bbc.umarket.umarketapp2.CategorizedListing;
+import bbc.umarket.umarketapp2.Helper.InterestHelperClass;
 import bbc.umarket.umarketapp2.R;
 
 public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.InterestViewHolder> {

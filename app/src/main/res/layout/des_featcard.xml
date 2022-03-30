@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="100dp"
-    android:layout_height="150dp"
+    android:layout_height="130dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="15dp"
     app:cardElevation="10dp"
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Iphone 12 Pro"
+            android:text="Loading..."
             android:textColor="@color/black"
             android:fontFamily="@font/poppins_bold"
             android:textSize="6sp"/>
@@ -46,22 +46,14 @@
             android:orientation="vertical"
             android:gravity="bottom">
 
-            <RatingBar
-                android:id="@+id/ft_rate"
-                style="@style/Widget.AppCompat.RatingBar.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:progressTint="@color/mustard"
-                android:rating="4.5" />
-
             <TextView
                 android:id="@+id/ft_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="₱100.00"
+                android:text="₱0.00"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/black"
-                android:textSize="8sp"
+                android:textSize="9sp"
                 android:layout_gravity="end"
                 android:fontFamily="@font/poppins_semibold"/>
         </LinearLayout>

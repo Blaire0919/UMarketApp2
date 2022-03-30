@@ -1,14 +1,12 @@
-package bbc.umarket.umarketapp2.Adapter;
+package bbc.umarket.umarketapp2.Helper;
 
-public class ItemHelperClass {
-    String imageUrl, pCategory, pName, pOverallRate, pPrice, pID;
+public class FeatProdtHelperClass {
+    String imageUrl, pName, pOverallRate, pPrice, pID;
 
-    public ItemHelperClass() {
-    }
+    public FeatProdtHelperClass() { }
 
-    public ItemHelperClass(String imageUrl, String pCategory, String pName, String pOverallRate, String pPrice, String pID) {
+    public FeatProdtHelperClass(String imageUrl, String pName, String pOverallRate, String pPrice, String pID) {
         this.imageUrl = imageUrl;
-        this.pCategory = pCategory;
         this.pName = pName;
         this.pOverallRate = pOverallRate;
         this.pPrice = pPrice;
@@ -21,14 +19,6 @@ public class ItemHelperClass {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    public String getpCategory() {
-        return pCategory;
-    }
-
-    public void setpCategory(String pCategory) {
-        this.pCategory = pCategory;
     }
 
     public String getpName() {
@@ -63,4 +53,3 @@ public class ItemHelperClass {
         this.pID = pID;
     }
 }
-

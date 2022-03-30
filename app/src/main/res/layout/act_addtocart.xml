@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/cartlayout"
+    android:orientation="vertical"
+    tools:context=".Main.AddToCart">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/proddetails_lin01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/mustard"
+            android:orientation="horizontal"
+            android:padding="13dp">
+
+            <ImageView
+                android:id="@+id/cart_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:src="@drawable/ic_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Shopping Cart"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="5dp"
+    android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cartItem_RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        tools:ignore="UselessLeaf" />
+
+</LinearLayout>
+
+
+
+
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-55dp"
+        android:layout_gravity="bottom"
+        android:background="@color/transparent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/chkcartselectAll"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:text="All"
+                android:fontFamily="@font/poppins_semibold"
+                android:textSize="20sp"
+                android:textColorHighlight="@color/black"
+                android:textColor="@color/grey_font"
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_gravity="start"/>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="4" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/txttotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total"
+                        android:fontFamily="@font/poppins_regular" />
+
+                    <TextView
+                        android:id="@+id/tvTotalPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_toEndOf="@+id/txttotal"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="0.00"
+                        android:textColor="@color/black"
+                        android:textSize="17sp" />
+
+                </RelativeLayout>
+
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/btncheckout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:fontFamily="@font/poppins_semibold"
+                android:layout_gravity="end"
+                android:backgroundTint="@color/mustard"
+                android:text="Check Out"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+</LinearLayout>

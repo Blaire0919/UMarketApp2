@@ -15,12 +15,12 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 
-import bbc.umarket.umarketapp2.AddListing;
+import bbc.umarket.umarketapp2.Main.AddListing;
 import bbc.umarket.umarketapp2.Database.SessionManager;
-import bbc.umarket.umarketapp2.EditProfile;
-import bbc.umarket.umarketapp2.ProductDetails;
+import bbc.umarket.umarketapp2.Main.EditProfile;
+import bbc.umarket.umarketapp2.Main.ProductDetails;
 import bbc.umarket.umarketapp2.R;
-import bbc.umarket.umarketapp2.Settings;
+import bbc.umarket.umarketapp2.Main.Settings;
 
 public class FragProfile extends Fragment {
     Context context;

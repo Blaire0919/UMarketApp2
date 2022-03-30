@@ -1,4 +1,4 @@
-package bbc.umarket.umarketapp2;
+package bbc.umarket.umarketapp2.Main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,8 +22,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
 
-import bbc.umarket.umarketapp2.Adapter.UserHelperClass;
 import bbc.umarket.umarketapp2.Database.SessionManager;
+import bbc.umarket.umarketapp2.R;
 
 public class EditProfile extends AppCompatActivity {
     ImageView btnback, btnbday;

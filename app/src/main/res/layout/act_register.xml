@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/reg_bg"
     android:padding="5dp"
-    tools:context="bbc.umarket.umarketapp2.Register">
+    tools:context="bbc.umarket.umarketapp2.Main.Register">
 
     <ScrollView
         android:id="@+id/scrollView01"

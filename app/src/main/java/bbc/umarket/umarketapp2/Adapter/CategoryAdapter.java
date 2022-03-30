@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import bbc.umarket.umarketapp2.CategorizedListing;
+import bbc.umarket.umarketapp2.Main.CategorizedListing;
+import bbc.umarket.umarketapp2.Helper.CategoryHelperClass;
 import bbc.umarket.umarketapp2.R;
-import bbc.umarket.umarketapp2.SearchedListing;
 
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {

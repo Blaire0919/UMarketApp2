@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:id="@+id/mainLayout"
     tools:context=".Fragments.FragHome">
 
     <LinearLayout
@@ -16,49 +17,64 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="12dp">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="7"
-                android:contentDescription="profile pic"
-                android:elevation="10dp"
-                android:src="@mipmap/ic_umlogo" />
+            android:padding="10dp">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilSearch"
                 style="@style/InputLayoutOutlineBox"
-                android:layout_width="match_parent"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2">
+                android:layout_weight="1">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:focusable="true"
-                    android:hint="Search..."
-                    android:maxLines="1"
-                    android:inputType="text"
                     android:focusableInTouchMode="true"
+                    android:hint="Search..."
+                    android:inputType="text"
+                    android:maxLines="1"
                     android:padding="7dp"
                     android:textColor="@color/black"
-                    android:textSize="11sp" />
+                    android:textSize="11sp"
+                    tools:ignore="TouchTargetSizeCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageView
-                android:id="@+id/btnsearch"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_search"
-                />
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/btnCart"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+
+                    android:src="@drawable/ic_cart" />
+
+                <com.nex3z.notificationbadge.NotificationBadge
+                    android:id="@+id/badge"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:nbBackground="@drawable/bgyellow"
+                    android:textColor="@color/black"
+                    android:layout_alignTop="@id/btnCart"
+                    android:layout_marginStart="-28dp"
+                    android:layout_marginTop="-3dp"
+                    android:layout_toEndOf="@id/btnCart"
+                    app:nbMaxTextLength="2" />
 
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="7"
-                android:src="@drawable/ic_notif" />
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@id/btnCart"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_notif" />
+
+            </RelativeLayout>
+
 
         </LinearLayout>
 
@@ -80,49 +96,49 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:background="@color/transparent">
+            android:layout_height="35dp"
+            android:background="@color/white">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/category_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp" />
-
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp" />
         </RelativeLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/mustard"
-            android:layout_marginTop="5dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="For You"
-                android:textSize="15sp"
-                android:fontFamily="@font/poppins_semibold"
-                android:textColor="@color/black"
-                android:textAlignment="center"/>
 
-        </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="165dp"
-            android:layout_margin="10dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
             android:background="@color/mustard">
+
+            <TextView
+                android:id="@+id/txtforyou"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="For You"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/featured_RecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtforyou"
+                android:layout_marginBottom="5dp" />
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="vertical"
-            android:padding="5dp">
+            android:padding="3dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/item_RecyclerView"
@@ -132,7 +148,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 

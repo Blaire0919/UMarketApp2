@@ -1,4 +1,4 @@
-package bbc.umarket.umarketapp2.Adapter;
+package bbc.umarket.umarketapp2.Helper;
 
 public class RateReviewHelperClass {
     String rrID, prodID, studID, nameofBuyer, rate, review, currentdate;

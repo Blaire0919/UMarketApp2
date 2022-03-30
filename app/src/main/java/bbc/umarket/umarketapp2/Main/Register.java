@@ -1,15 +1,11 @@
-package bbc.umarket.umarketapp2;
+package bbc.umarket.umarketapp2.Main;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import android.view.ContextThemeWrapper;
 
-import android.view.Gravity;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -23,12 +19,11 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-import bbc.umarket.umarketapp2.Adapter.InterestHelperClass;
-import bbc.umarket.umarketapp2.Adapter.UserHelperClass;
+import bbc.umarket.umarketapp2.Helper.InterestHelperClass;
+import bbc.umarket.umarketapp2.Helper.UserHelperClass;
+import bbc.umarket.umarketapp2.R;
 
 
 public class Register extends AppCompatActivity {
@@ -225,6 +220,14 @@ public class Register extends AppCompatActivity {
 
             InterestHelperClass helperClass1 = new InterestHelperClass(sstudid, ss, e, fb, ca, bp, se);
             catref.child(sstudid).setValue(helperClass1);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
+            builder.setTitle("");
+            builder.setMessage("Registered Successfully!");
+            // create and show the alert dialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
 
             Intent intent = new Intent(Register.this, Login.class);
             startActivity(intent);

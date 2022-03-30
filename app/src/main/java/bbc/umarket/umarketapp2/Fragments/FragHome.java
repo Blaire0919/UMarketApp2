@@ -14,9 +14,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.SearchView;
 
 
 import com.chaquo.python.PyObject;
@@ -24,14 +23,15 @@ import com.chaquo.python.Python;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
+import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,20 +39,27 @@ import java.util.List;
 import java.util.Objects;
 
 import bbc.umarket.umarketapp2.Adapter.CategoryAdapter;
-import bbc.umarket.umarketapp2.Adapter.CategoryHelperClass;
+import bbc.umarket.umarketapp2.Helper.CartHelperClass;
+import bbc.umarket.umarketapp2.Helper.CategoryHelperClass;
 import bbc.umarket.umarketapp2.Adapter.FeatProdAdapter;
-import bbc.umarket.umarketapp2.Adapter.FeatProdtHelperClass;
-import bbc.umarket.umarketapp2.Adapter.InterestAdapter;
-import bbc.umarket.umarketapp2.Adapter.InterestHelperClass;
+import bbc.umarket.umarketapp2.Helper.FeatProdtHelperClass;
 import bbc.umarket.umarketapp2.Adapter.ItemAdapter;
-import bbc.umarket.umarketapp2.Adapter.ItemHelperClass;
-import bbc.umarket.umarketapp2.CategorizedListing;
+import bbc.umarket.umarketapp2.Helper.ItemHelperClass;
 import bbc.umarket.umarketapp2.Database.SessionManager;
+import bbc.umarket.umarketapp2.Listener.CartItemLoadListener;
+import bbc.umarket.umarketapp2.Listener.ItemLoadListener;
+import bbc.umarket.umarketapp2.Main.AddListing;
+import bbc.umarket.umarketapp2.Main.AddToCart;
+import bbc.umarket.umarketapp2.Main.EditProfile;
+import bbc.umarket.umarketapp2.Main.HomeContainer;
+import bbc.umarket.umarketapp2.Main.Login;
 import bbc.umarket.umarketapp2.R;
-import bbc.umarket.umarketapp2.SearchedListing;
+import bbc.umarket.umarketapp2.Main.SearchedListing;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
-public class FragHome extends Fragment {
+public class FragHome extends Fragment implements ItemLoadListener, CartItemLoadListener {
     Context context;
     TextInputLayout search;
     RecyclerView category, items, features;
@@ -62,26 +69,37 @@ public class FragHome extends Fragment {
     ArrayList<CategoryHelperClass> catlist;
     ArrayList<FeatProdtHelperClass> featprod;
     ArrayList<ItemHelperClass> listItem;
-    ImageView searchbutton;
-    String searchprod, studid;
+    String studid;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.mainLayout)
+    FrameLayout mainLayout;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.badge)
+    NotificationBadge badge;
+    ImageView btncart;
+
+    ItemLoadListener itemLoadListener;
+    CartItemLoadListener cartItemLoadListener;
 
     //for database
     FirebaseDatabase rootNode;
     DatabaseReference reference;
 
-    public FragHome() {
-        // Required empty public constructor
-    }
+    public FragHome() { }
 
     @Override
     public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.frag_home, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.frag_home, container, false);
+        ButterKnife.bind(this, view);
         context = view.getContext();
+
+        itemLoadListener = this;
+        cartItemLoadListener = this;
+        countCartItem();
 
         rootNode = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
@@ -93,8 +111,8 @@ public class FragHome extends Fragment {
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
 
         //studid
-        SessionManager sessionManager = new SessionManager(getActivity() );
-        HashMap<String,String> usersdetails =  sessionManager.getUserDetailSession();
+        SessionManager sessionManager = new SessionManager(getActivity());
+        HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
         studid = usersdetails.get(SessionManager.KEY_STUDID);
 
         //hooks
@@ -102,16 +120,9 @@ public class FragHome extends Fragment {
         items = view.findViewById(R.id.item_RecyclerView);
         features = view.findViewById(R.id.featured_RecyclerView);
         search = view.findViewById(R.id.tilSearch);
-        searchbutton = view.findViewById(R.id.btnsearch);
+        btncart = view.findViewById(R.id.btnCart);
 
         reference = rootNode.getReference("products");
-
-        searchprod = Objects.requireNonNull(search.getEditText()).getText().toString();
-        searchbutton.setOnClickListener(view1 -> {
-            Intent intent = new Intent(context, SearchedListing.class);
-            intent.putExtra("searched", searchprod);
-            context.startActivity(intent);
-        });
 
         //for category recycler view
         category.setHasFixedSize(true);
@@ -139,7 +150,7 @@ public class FragHome extends Fragment {
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
 //              convert the returned value from algo to array
                 String[] rec = pyobj.callAttr("main", studid).toJava(String[].class);
-                for (String strTemp : rec){
+                for (String strTemp : rec) {
                     reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -162,11 +173,11 @@ public class FragHome extends Fragment {
                 }
 
             }
+
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
             }
         });
-
 
         //for product listing
         items.setHasFixedSize(true);
@@ -174,22 +185,29 @@ public class FragHome extends Fragment {
         listItem = new ArrayList<>();
         itemAdapter = new ItemAdapter(context, listItem);
         items.setAdapter(itemAdapter);
+
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-
-                for (DataSnapshot snap : snapshot.getChildren()) {
-                    ItemHelperClass itemHelperClass = snap.getValue(ItemHelperClass.class);
-                    listItem.add(itemHelperClass);
+                if (snapshot.exists()) {
+                    for (DataSnapshot snap : snapshot.getChildren()) {
+                        ItemHelperClass itemHelperClass = snap.getValue(ItemHelperClass.class);
+                        listItem.add(itemHelperClass);
+                    }
+                    itemAdapter.notifyDataSetChanged();
+                    itemLoadListener.onItemLoadSuccess(listItem);
+                } else {
+                    itemLoadListener.onItemLoadFailed("Can't find product");
                 }
-                itemAdapter.notifyDataSetChanged();
             }
+
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
             }
         });
 
+        btncart.setOnClickListener(v -> startActivity(new Intent(getActivity(), AddToCart.class)));
         return view;
     }
 
@@ -202,4 +220,55 @@ public class FragHome extends Fragment {
         catlist.add(new CategoryHelperClass("Sports Equipment"));
     }
 
+    @Override
+    public void onItemLoadSuccess(List<ItemHelperClass> itemList) { }
+
+    @Override
+    public void onItemLoadFailed(String message) { Snackbar.make(mainLayout, message, Snackbar.LENGTH_LONG).show(); }
+
+    @Override
+    public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) {
+        int cartSum = 0;
+        for (CartHelperClass cartHelperClass : cartItemList) {
+            cartSum += Integer.parseInt(cartHelperClass.getProdQty());
+            badge.setNumber(cartSum);
+        }
+    }
+
+    @Override
+    public void onCartLoadFailed(String message) { Snackbar.make(mainLayout, message, Snackbar.LENGTH_LONG).show(); }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        countCartItem();
+
+    }
+
+    private void countCartItem() {
+        ArrayList<CartHelperClass> cartHelperClasses = new ArrayList<>();
+
+        SessionManager sessionManager = new SessionManager(getActivity());
+        HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
+
+        FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("cart").child(Objects.requireNonNull(usersdetails.get(SessionManager.KEY_STUDID)))
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            for (DataSnapshot cartsnapshot :snapshot.getChildren()){
+                                CartHelperClass cartHelperClass = cartsnapshot.getValue(CartHelperClass.class);
+                                cartHelperClasses.add(cartHelperClass);
+                            }
+                            cartItemLoadListener.onCartLoadSuccess(cartHelperClasses);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
 }

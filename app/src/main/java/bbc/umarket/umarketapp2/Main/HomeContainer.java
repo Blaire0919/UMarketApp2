@@ -1,4 +1,4 @@
-package bbc.umarket.umarketapp2;
+package bbc.umarket.umarketapp2.Main;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -9,10 +9,10 @@ import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 
-import bbc.umarket.umarketapp2.Fragments.FragCart;
 import bbc.umarket.umarketapp2.Fragments.FragChat;
 import bbc.umarket.umarketapp2.Fragments.FragHome;
 import bbc.umarket.umarketapp2.Fragments.FragProfile;
+import bbc.umarket.umarketapp2.R;
 
 public class HomeContainer extends AppCompatActivity {
     //initialize variables
@@ -36,8 +36,7 @@ public class HomeContainer extends AppCompatActivity {
 
         bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_home));
         bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_chat));
-        bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_cart));
-        bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_profile));
+        bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_profile));
 
         bottomNavigation.setOnShowListener(item -> {
 
@@ -52,10 +51,6 @@ public class HomeContainer extends AppCompatActivity {
                     fragment = new FragChat();
                     break;
                 case 3:
-                    //When id is 3; initialize cart fragment
-                    fragment = new FragCart();
-                    break;
-                case 4:
                     //When id is 4; initialize profile fragment
                     fragment = new FragProfile();
                     break;
@@ -73,14 +68,14 @@ public class HomeContainer extends AppCompatActivity {
                 fragment = new FragHome();
                 HomeContainer.this.loadFragment(fragment);
                 bottomNavigation.show(1, true);
-            }else if (bundle.getString("back_Home") != null) {
-                fragment = new FragHome();
-                HomeContainer.this.loadFragment(fragment);
-                bottomNavigation.show(1, true);
             }
         }else {
-            //set notification count
-            bottomNavigation.setCount(2,"10");
+           // Clear counter badge on a specific cell by clearCount(Int).
+             //       bottomNavigation.clearCount(CELL_ID)
+
+        //    Set counter badge on a specific cell by setCount(Int,String).
+         //           bottomNavigation.setCount(CELL_ID, YOUR_STRING)
+
             //set home initially selected
             bottomNavigation.show(1, true);
 

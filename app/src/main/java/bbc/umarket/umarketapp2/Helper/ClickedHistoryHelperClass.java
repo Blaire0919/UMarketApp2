@@ -1,4 +1,4 @@
-package bbc.umarket.umarketapp2.Adapter;
+package bbc.umarket.umarketapp2.Helper;
 
 public class ClickedHistoryHelperClass {
     String studID, dateNTime, prodID;
@@ -16,7 +16,6 @@ public class ClickedHistoryHelperClass {
     public String getDateNTime() {
         return dateNTime;
     }
-
 
     public void setDateNTime(String dateNTime) {
         this.dateNTime = dateNTime;
