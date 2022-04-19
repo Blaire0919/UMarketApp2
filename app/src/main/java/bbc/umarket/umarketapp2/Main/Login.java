@@ -1,17 +1,31 @@
 package bbc.umarket.umarketapp2.Main;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.view.ContextThemeWrapper;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,6 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
 
 
+import java.util.HashMap;
 import java.util.Objects;
 
 import bbc.umarket.umarketapp2.Database.SessionManager;
@@ -30,11 +45,13 @@ import bbc.umarket.umarketapp2.R;
 //Just Press CTRL+ALT+L on Windows. The android studio will reformat all the code for you
 public class Login extends AppCompatActivity {
     Animation topAnim, bottomAnim;
-    TextView btnReg, logintext, xtratxt;
+    TextView logintext;
     TextInputLayout l_user, l_pass;
-    RelativeLayout panel;
     Button login;
+    EditText et_studId, et_pass;
+    TextView btnReg;
     public Bundle bundle;
+    CheckBox RememberMe;
     String Entered_pass, Entered_studID, fnamefromDB, lnamefromDB, studIDfromDB, phonefromDB, genderfromDB, bdayfromDB, emailfromDB, passFromDB, sellerFromDB;
 
     @Override
@@ -52,16 +69,24 @@ public class Login extends AppCompatActivity {
         //Hooks
         btnReg = findViewById(R.id.txtRegister);
         logintext = findViewById(R.id.logintxt);
-        xtratxt = findViewById(R.id.xtratext);
-        panel = findViewById(R.id.panelrect);
+
         login = findViewById(R.id.btnLogin);
         l_user = findViewById(R.id.LoginInputStudID);
         l_pass = findViewById(R.id.LoginInputPass);
+        RememberMe = findViewById(R.id.chkremember_me);
 
-        btnReg.setAnimation(topAnim);
+        et_studId = findViewById(R.id.loginedittext_StudID);
+        et_pass = findViewById(R.id.loginedittext_Pass);
+
         logintext.setAnimation(topAnim);
-        xtratxt.setAnimation(topAnim);
-        panel.setAnimation(bottomAnim);
+
+        //Check whether studid and pass is already saved in Shared Preferences or not
+        SessionManager sessionManager = new SessionManager(Login.this, SessionManager.SESSION_REMEMBERME);
+        if (sessionManager.checkRememberMe()) {
+            HashMap<String, String> rememberMeDetails = sessionManager.getRememberMeDetailsFromSession();
+            et_studId.setText(rememberMeDetails.get(SessionManager.KEY_SESSIONSTUDID));
+            et_pass.setText(rememberMeDetails.get(SessionManager.KEY_SESSIONPASS));
+        }
 
         btnReg.setOnClickListener(v -> {
             Intent intent = new Intent(Login.this, Register.class);
@@ -69,20 +94,63 @@ public class Login extends AppCompatActivity {
             finish();
         });
 
-        login.setOnClickListener(v -> LoginUser());
+    }
+
+    public void letTheUserLoggedIn(View view) {
+        if (validatestudID() | validatePass()) {
+
+            if (!isConnected(this)) {
+                showCustomDialog();
+            } else {
+                isUser();
+            }
+        }
+    }
+
+    //Checking for Internet Connection
+    private boolean isConnected(Login login) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) login.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mobileConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+        if ((wifiConn != null && wifiConn.isConnected()) || (mobileConn != null && mobileConn.isConnected())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void showCustomDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+        AlertDialog dialog = builder.setTitle("")
+                .setMessage("Please connect to the internet to proceed further")
+                .setCancelable(false)
+                .setPositiveButton("Connect", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startActivity(new Intent(getApplicationContext(), Login.class));
+                        finish();
+                    }
+                })
+                .create();
+
+        dialog.show();
 
     }
 
-   private void LoginUser() { if (validatestudID() | validatePass()) {isUser();}
-
-    }
-
-      private void isUser() {
-        Entered_studID = l_user.getEditText().getText().toString();
-        Entered_pass = l_pass.getEditText().getText().toString();
+    private void isUser() {
+        Entered_studID = Objects.requireNonNull(l_user.getEditText()).getText().toString().toLowerCase();
+        Entered_pass = Objects.requireNonNull(l_pass.getEditText()).getText().toString();
 
         DatabaseReference reference = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users");
         Query checkUser = reference.orderByChild("studID").equalTo(Entered_studID);
+
 
         checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -91,6 +159,7 @@ public class Login extends AppCompatActivity {
                     l_user.setError(null);
                     l_user.setErrorEnabled(false);
                     passFromDB = snapshot.child(Entered_studID).child("password").getValue(String.class);
+                    assert passFromDB != null;
                     if (passFromDB.equals(Entered_pass)) {
                         l_pass.setError(null);
                         l_pass.setErrorEnabled(false);
@@ -104,9 +173,16 @@ public class Login extends AppCompatActivity {
                         emailfromDB = snapshot.child(Entered_studID).child("email").getValue(String.class);
                         passFromDB = snapshot.child(Entered_studID).child("password").getValue(String.class);
                         sellerFromDB = snapshot.child(Entered_studID).child("is_seller").getValue(String.class);
+
                         //Create a Session
-                        SessionManager sessionManager = new SessionManager(Login.this);
-                        sessionManager.createLoginSession(fnamefromDB, lnamefromDB, studIDfromDB, phonefromDB, genderfromDB, bdayfromDB, emailfromDB, passFromDB, sellerFromDB);
+                        if (RememberMe.isChecked()) {
+                            SessionManager sessionManager = new SessionManager(Login.this, SessionManager.SESSION_REMEMBERME);
+                            sessionManager.createRememberMeSession(Entered_studID, Entered_pass);
+                        }
+
+                        SessionManager sessionManager2 = new SessionManager(Login.this, SessionManager.SESSION_USERSESSION);
+                        sessionManager2.createLoginSession(fnamefromDB, lnamefromDB, studIDfromDB, phonefromDB, genderfromDB,
+                                bdayfromDB, emailfromDB, passFromDB, sellerFromDB);
 
                         Intent intent = new Intent(Login.this, HomeContainer.class);
                         startActivity(intent);
@@ -126,8 +202,6 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-
-
 
     private Boolean validatestudID() {
         String val = Objects.requireNonNull(l_user.getEditText()).getText().toString();

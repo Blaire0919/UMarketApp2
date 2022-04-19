@@ -20,7 +20,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/mustard"
+                android:background="@color/NewUMarketlight"
                 android:padding="16dp">
 
                 <LinearLayout
@@ -35,7 +35,6 @@
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="85dp"
                         android:layout_height="85dp"
-
                         android:elevation="8dp"
                         app:cardCornerRadius="10dp"
                         app:strokeColor="@color/black"
@@ -52,8 +51,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:textAlignment="center"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:gravity="center_horizontal"
+                        android:fontFamily="@font/moon_light"
                         android:text="user"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
@@ -63,10 +64,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="-5dp"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/moon_light"
                         android:text="student ID"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="12sp" />
 
                     <TextView
@@ -75,7 +76,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:clickable="true"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/moon_light"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:text="Edit Profile"
                         android:textColor="@color/red"
@@ -88,10 +90,12 @@
                     android:id="@+id/linear04"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
                     android:layout_alignTop="@id/linear03"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="5dp"
                     android:layout_toEndOf="@id/linear03"
                     android:gravity="center"
+                    android:layout_marginBottom="5dp"
                     android:orientation="horizontal">
 
                     <com.google.android.material.card.MaterialCardView
@@ -102,30 +106,28 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/mustard"
-                            android:padding="8dp">
+                            android:background="@color/NewUMarketlight"
+                            android:padding="5dp">
 
                             <TextView
                                 android:id="@+id/num_followers"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:fontFamily="@font/moon_light"
                                 android:text="21.5k"
                                 android:textAlignment="center"
                                 android:textColor="@color/black"
-                                android:textSize="18sp"
-                                tools:ignore="SmallSp" />
+                                android:textSize="23sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/num_followers"
-                                android:layout_marginTop="-10dp"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:layout_centerHorizontal="true"
+                                android:fontFamily="@font/moon_light"
                                 android:text="Followers"
-                                android:textAlignment="center"
-                                android:textColor="@color/white"
+                                android:textColor="@color/NewUMarketDarkBlue"
                                 android:textSize="13sp"
                                 tools:ignore="SmallSp" />
 
@@ -141,32 +143,30 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/mustard"
-                            android:padding="8dp">
+                            android:background="@color/NewUMarketlight"
+                            android:padding="5dp">
 
                             <TextView
                                 android:id="@+id/num_following"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:fontFamily="@font/moon_light"
                                 android:text="210"
                                 android:textAlignment="center"
                                 android:textColor="@color/black"
-                                android:textSize="18sp"
-                                tools:ignore="SmallSp" />
+                                android:textSize="23sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/num_following"
-                                android:layout_marginTop="-10dp"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:layout_centerHorizontal="true"
+                                android:fontFamily="@font/moon_light"
                                 android:text="Following"
-                                android:textAlignment="center"
-                                android:textColor="@color/white"
+                                android:textColor="@color/NewUMarketDarkBlue"
                                 android:textSize="13sp"
-                                tools:ignore="SmallSp" />
+                                tools:ignore="SmallSp,TextContrastCheck" />
 
                         </RelativeLayout>
 
@@ -180,31 +180,30 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/mustard"
-                            android:padding="8dp">
+                            android:background="@color/NewUMarketlight"
+                            android:padding="5dp">
 
                             <TextView
                                 android:id="@+id/num_likes"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:fontFamily="@font/moon_light"
                                 android:text="55k"
                                 android:textAlignment="center"
                                 android:textColor="@color/black"
-                                android:textSize="18sp"
-                                tools:ignore="SmallSp" />
+                                android:textSize="23sp"
+                                />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/num_likes"
                                 android:layout_alignStart="@id/num_likes"
-                                android:layout_marginTop="-10dp"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:layout_centerHorizontal="true"
+                                android:fontFamily="@font/moon_light"
                                 android:text="Likes"
-                                android:textAlignment="center"
-                                android:textColor="@color/white"
+                                android:textColor="@color/NewUMarketDarkBlue"
                                 android:textSize="13sp"
                                 tools:ignore="SmallSp" />
 
@@ -221,37 +220,26 @@
                     android:layout_below="@id/linear04"
                     android:layout_alignStart="@id/linear04"
                     android:layout_alignEnd="@id/linear04"
-                    android:layout_marginTop="-13dp"
+                    android:layout_marginTop="-5dp"
                     android:layout_toEndOf="@id/linear04"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/btnfollow"
+                        android:id="@+id/btnsellercenter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="3dp"
-                        android:layout_marginEnd="3dp"
+                        android:layout_marginStart="4dp"
+                        android:elevation="2dp"
+                        android:layout_marginEnd="4dp"
                         android:layout_weight="12"
-                        android:backgroundTint="@color/black"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:text="Follow"
-                        android:textSize="12sp"
+                        android:backgroundTint="@color/NewUMarketDarkBlue"
+                        android:fontFamily="@font/moon_light"
+                        android:text="Seller Centre"
+                        android:textColor="@color/white"
+                        android:drawableLeft="@drawable/ic_store"
+                        android:textSize="13sp"
                         android:transitionName="@string/trans_btnLogin" />
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        android:src="@drawable/ic_chat" />
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_weight="2"
-                        android:padding="5dp"
-                        android:src="@drawable/ic_store" />
 
                 </LinearLayout>
 
@@ -274,24 +262,24 @@
                         android:elevation="8dp"
                         android:foreground="?android:attr/selectableItemBackground"
                         app:strokeColor="@color/black"
-                        app:strokeWidth="1dp">
+                        app:strokeWidth="1dp"
+                        tools:ignore="TouchTargetSizeCheck">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/mustard"
+                            android:background="@color/NewUMarketDarkBlue"
                             android:padding="8dp">
 
                             <TextView
                                 android:id="@+id/toReceivelbl"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:fontFamily="@font/moon_light"
                                 android:gravity="center_horizontal"
                                 android:text="To\nReceive"
-                                android:textAlignment="center"
-                                android:textColor="@color/black"
-                                android:textSize="10sp"
+                                android:textColor="@color/white"
+                                android:textSize="9sp"
                                 tools:ignore="SmallSp" />
 
                         </RelativeLayout>
@@ -306,26 +294,26 @@
                         android:layout_weight="1"
                         android:clickable="true"
                         android:elevation="8dp"
-
                         android:foreground="?android:attr/selectableItemBackground"
                         app:strokeColor="@color/black"
-                        app:strokeWidth="1dp">
+                        app:strokeWidth="1dp"
+                        tools:ignore="TouchTargetSizeCheck">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/mustard"
+                            android:background="@color/NewUMarketDarkBlue"
                             android:padding="8dp">
 
                             <TextView
                                 android:id="@+id/toRatelbl"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:fontFamily="@font/moon_light"
+                                android:gravity="center_horizontal"
                                 android:text="To\nRate"
-                                android:textAlignment="center"
-                                android:textColor="@color/black"
-                                android:textSize="10sp"
+                                android:textColor="@color/white"
+                                android:textSize="9sp"
                                 tools:ignore="SmallSp" />
                         </RelativeLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -339,23 +327,24 @@
                         android:elevation="8dp"
                         android:foreground="?android:attr/selectableItemBackground"
                         app:strokeColor="@color/black"
-                        app:strokeWidth="1dp">
+                        app:strokeWidth="1dp"
+                        tools:ignore="TouchTargetSizeCheck">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/mustard"
+                            android:background="@color/NewUMarketDarkBlue"
                             android:padding="8dp">
 
                             <TextView
                                 android:id="@+id/PurchaseHistory"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:fontFamily="@font/moon_light"
+                                android:gravity="center_horizontal"
                                 android:text="Purchase\nHistory"
-                                android:textAlignment="center"
-                                android:textColor="@color/black"
-                                android:textSize="10sp"
+                                android:textColor="@color/white"
+                                android:textSize="9sp"
                                 tools:ignore="SmallSp" />
                         </RelativeLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -367,10 +356,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/mustard"
+                android:background="@color/NewUMarketlight"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:padding="5dp">
+                android:padding="5dp"
+                tools:ignore="TouchTargetSizeCheck">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -387,7 +377,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="5dp"
-                    android:fontFamily="@font/poppins_semibold"
+                    android:fontFamily="@font/moon_light"
                     android:text="Add Product"
                     android:textColor="@color/black"
                     android:textSize="13sp" />
@@ -399,26 +389,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@color/mustard"
+                android:background="@color/NewUMarketlight"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:padding="5dp">
+                android:padding="5dp"
+                tools:ignore="TouchTargetSizeCheck">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginStart="15dp"
                     android:elevation="10dp"
-                    android:src="@drawable/ic_settings"
-                    />
+                    android:src="@drawable/ic_settings" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="5dp"
-                    android:fontFamily="@font/poppins_semibold"
+                    android:fontFamily="@font/moon_light"
                     android:text="Settings"
                     android:textColor="@color/black"
                     android:textSize="13sp" />
@@ -433,17 +423,17 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:padding="10dp">
-
+        android:padding="20dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="@font/poppins_semibold"
+            android:fontFamily="@font/moon_light"
             android:text="Account"
             android:textAlignment="center"
+            android:gravity="center"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 

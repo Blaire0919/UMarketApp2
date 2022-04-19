@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
-android:background="@color/mustard"
+android:background="@color/NewUMarketlight"
     android:layout_height="match_parent"
     tools:context=".Main.Settings">
 
@@ -14,7 +14,7 @@ android:background="@color/mustard"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:padding="13dp">
+        android:padding="20dp">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -22,13 +22,12 @@ android:background="@color/mustard"
             android:layout_gravity="start"
             android:id="@+id/settings_back"
             android:elevation="10dp"
-            android:layout_marginStart="10dp"
             android:src="@drawable/ic_back" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="@font/poppins_semibold"
+            android:fontFamily="@font/moon_light"
             android:text="Settings"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="20dp"
@@ -55,9 +54,10 @@ android:background="@color/mustard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:paddingStart="10dp"
+                android:padding="10dp"
+               android:drawableLeft="@drawable/ic_logout"
                 android:textAlignment="textStart"
-                android:fontFamily="@font/poppins_semibold"
+                android:fontFamily="@font/moon_light"
                 android:text="Log out"
                 android:textColor="@color/black"
                 android:textSize="20sp" />

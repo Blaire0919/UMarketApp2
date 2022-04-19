@@ -11,8 +11,12 @@ public class SessionManager {
     SharedPreferences.Editor editor;
     Context context;
 
-    private static final String IS_LOGIN = "IsLoggedIn";
+    //Session names
+    public static final String SESSION_USERSESSION = "userLoginSession";
+    public static final String SESSION_REMEMBERME = "rememberMe";
 
+    //user session variables
+    private static final String IS_LOGIN = "IsLoggedIn";
     public static final String KEY_FNAME = "fname";
     public static final String KEY_LNAME = "lname";
     public static final String KEY_STUDID = "studid";
@@ -23,16 +27,21 @@ public class SessionManager {
     public static final String KEY_PASS = "password";
     public static final String KEY_IS_SELLER = "is_seller";
 
+    //remember me variables
+    private static final String IS_REMEMBERME = "IsRememberMe";
+    public static final String KEY_SESSIONSTUDID = "studId";
+    public static final String KEY_SESSIONPASS = "password";
 
-    public SessionManager(Context _context) {
+
+    //constructor
+    public SessionManager(Context _context, String sessionName) {
         context = _context;
-        usersSession = context.getSharedPreferences("userLoginSession", Context.MODE_PRIVATE);
+        usersSession = context.getSharedPreferences(sessionName, Context.MODE_PRIVATE);
         editor = usersSession.edit();
     }
 
     public void createLoginSession(String fname, String lname, String studID, String contacts, String gender, String bday, String email, String password, String is_seller) {
         editor.putBoolean(IS_LOGIN, true);
-
         editor.putString(KEY_FNAME, fname);
         editor.putString(KEY_LNAME, lname);
         editor.putString(KEY_STUDID, studID);
@@ -42,7 +51,6 @@ public class SessionManager {
         editor.putString(KEY_EMAIL, email);
         editor.putString(KEY_PASS, password);
         editor.putString(KEY_IS_SELLER, is_seller);
-
         editor.commit();
     }
 
@@ -62,17 +70,32 @@ public class SessionManager {
     }
 
     public boolean checkLogin() {
-        if (usersSession.getBoolean(IS_LOGIN, false)) {
-            return true;
-        } else {
-            return false;
-        }
+        return usersSession.getBoolean(IS_LOGIN, false);
     }
 
-    public void logoutUserfromSession
-            () {
+    public void logoutUserfromSession() {
         editor.clear();
         editor.commit();
+    }
+
+    //remember me session functions
+    public void createRememberMeSession(String studId, String password){
+        editor.putBoolean(IS_REMEMBERME, true);
+        editor.putString(KEY_SESSIONSTUDID, studId);
+        editor.putString(KEY_SESSIONPASS, password);
+        editor.commit();
+    }
+
+    public HashMap<String, String> getRememberMeDetailsFromSession() {
+        HashMap<String, String> userData = new HashMap<String, String>();
+
+        userData.put(KEY_SESSIONSTUDID, usersSession.getString(KEY_SESSIONSTUDID, null));
+        userData.put(KEY_SESSIONPASS, usersSession.getString(KEY_SESSIONPASS, null));
+        return userData;
+    }
+
+    public boolean checkRememberMe() {
+        return usersSession.getBoolean(IS_REMEMBERME, false);
     }
 
 }

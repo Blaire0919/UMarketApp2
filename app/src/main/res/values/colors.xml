@@ -7,4 +7,6 @@
     <color name="transparent">#0000ffff</color>
     <color name="lightergray">#ECECEC</color>
     <color name="lightgray">#D1CFCF</color>
+    <color name="NewUMarketDarkBlue">#5FA3B6</color>
+    <color name="NewUMarketlight">#B5E0EA</color>
 </resources>

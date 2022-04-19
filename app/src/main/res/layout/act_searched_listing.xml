@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/mustard"
+    android:background="@color/NewUMarketlight"
     tools:context=".Main.SearchedListing">
 
     <LinearLayout
@@ -13,14 +13,13 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:padding="13dp">
+        android:padding="20dp">
 
         <ImageView
             android:id="@+id/editprof_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:layout_marginStart="10dp"
             android:clickable="true"
             android:elevation="10dp"
             android:foreground="?android:attr/selectableItemBackground"

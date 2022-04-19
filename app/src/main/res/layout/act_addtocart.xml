@@ -16,16 +16,15 @@
             android:id="@+id/proddetails_lin01"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/mustard"
+            android:background="@color/NewUMarketDarkBlue"
             android:orientation="horizontal"
-            android:padding="13dp">
+            android:padding="20dp">
 
             <ImageView
                 android:id="@+id/cart_back"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="10dp"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:src="@drawable/ic_back" />
 
@@ -34,10 +33,10 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="20dp"
-                android:fontFamily="@font/poppins_semibold"
+                android:fontFamily="@font/moon_light"
                 android:text="Shopping Cart"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textColor="@color/white"
+                android:textSize="20sp" />
         </LinearLayout>
 
     </RelativeLayout>
@@ -60,10 +59,6 @@
         tools:ignore="UselessLeaf" />
 
 </LinearLayout>
-
-
-
-
 
 
     <FrameLayout
@@ -118,7 +113,7 @@
                         android:layout_marginLeft="1dp"
                         android:layout_toEndOf="@+id/txttotal"
                         android:fontFamily="@font/poppins_semibold"
-                        android:text="0.00"
+                        android:text="₱ 0.00"
                         android:textColor="@color/black"
                         android:textSize="17sp" />
 
@@ -131,11 +126,12 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:fontFamily="@font/poppins_semibold"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/moon_light"
                 android:layout_gravity="end"
-                android:backgroundTint="@color/mustard"
+                android:backgroundTint="@color/NewUMarketDarkBlue"
                 android:text="Check Out"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
 
         </LinearLayout>

@@ -13,34 +13,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="13dp">
+        android:padding="20dp">
 
         <ImageView
             android:id="@+id/settings_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
             android:elevation="10dp"
             android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_close" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="20dp"
-            android:fontFamily="@font/poppins_semibold"
+            android:layout_weight="4"
+            android:fontFamily="@font/moon_light"
             android:text="Add Listing"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/save"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="end"
             android:layout_marginEnd="10dp"
-            android:fontFamily="@font/poppins_semibold"
+            android:layout_weight="1"
+            android:fontFamily="@font/moon_light"
+            android:foregroundGravity="right"
             android:gravity="end"
             android:text="Add"
             android:textColor="@color/red"
@@ -61,6 +64,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
+                android:layout_marginStart="10dp"
                 android:orientation="horizontal">
 
                 <com.google.android.material.card.MaterialCardView
@@ -70,25 +74,29 @@
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
                     android:clickable="true"
+
                     android:elevation="20dp"
                     android:foreground="?android:attr/selectableItemBackground"
-                    app:strokeColor="@color/mustard"
+                    app:strokeColor="@color/NewUMarketDarkBlue"
                     app:strokeWidth="2dp">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@color/NewUMarketDarkBlue"
                         android:padding="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_semibold"
+                            android:layout_height="match_parent"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="@font/moon_light"
                             android:gravity="center_horizontal"
                             android:text="+ Add \nPhoto"
-                            android:textAlignment="center"
-                            android:textColor="@color/mustard"
-                            android:textSize="17sp" />
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
 
                     </RelativeLayout>
 
@@ -101,9 +109,9 @@
                     android:layout_gravity="center"
                     android:layout_margin="15dp"
                     android:clickable="true"
-                    android:visibility="invisible"
                     android:elevation="20dp"
-                    android:foreground="?android:attr/selectableItemBackground">
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:visibility="invisible">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -126,16 +134,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="20dp">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/InputPName"
-                    style="@style/InputLayoutOutlineBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:hint="Product Name">
+                    android:hint="Product Name"
+                    app:boxBackgroundColor="@color/transparent"
+                    app:boxStrokeColor="@color/black"
+                    app:hintTextColor="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -146,12 +157,14 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/InputPDesc"
-                    style="@style/InputLayoutOutlineBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:hint="Product Description">
+                    android:hint="Product Description"
+                    app:boxBackgroundColor="@color/transparent"
+                    app:boxStrokeColor="@color/black"
+                    app:hintTextColor="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -162,12 +175,14 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/InputPBrand"
-                    style="@style/InputLayoutOutlineBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:hint="Product Brand">
+                    android:hint="Product Brand"
+                    app:boxBackgroundColor="@color/transparent"
+                    app:boxStrokeColor="@color/black"
+                    app:hintTextColor="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -188,6 +203,7 @@
                         android:id="@+id/acCat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/white"
                         android:dropDownHeight="wrap_content"
                         android:inputType="none" />
 
@@ -205,6 +221,7 @@
                         android:id="@+id/acSubCat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/white"
                         android:dropDownHeight="wrap_content"
                         android:inputType="none" />
 
@@ -212,12 +229,14 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/InputPrice"
-                    style="@style/InputLayoutOutlineBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:hint="Price">
+                    android:hint="Price"
+                    app:boxBackgroundColor="@color/transparent"
+                    app:boxStrokeColor="@color/black"
+                    app:hintTextColor="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -228,12 +247,14 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/InputPStock"
-                    style="@style/InputLayoutOutlineBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:hint="Stock">
+                    android:hint="Stock"
+                    app:boxBackgroundColor="@color/transparent"
+                    app:boxStrokeColor="@color/black"
+                    app:hintTextColor="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -254,6 +275,7 @@
                         android:id="@+id/acCondition"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/white"
                         android:dropDownHeight="wrap_content"
                         android:inputType="none" />
 
@@ -261,28 +283,14 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/InputPHandlingFee"
-                    style="@style/InputLayoutOutlineBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:hint="Handling Fee">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:textColor="@color/black" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/InputPOverallRate"
-                    style="@style/InputLayoutOutlineBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:hint="Overall Rate">
+                    android:hint="Handling Fee"
+                    app:boxBackgroundColor="@color/transparent"
+                    app:boxStrokeColor="@color/black"
+                    app:hintTextColor="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -293,12 +301,14 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/InputPID"
-                    style="@style/InputLayoutOutlineBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:hint="Product ID">
+                    android:hint="Product ID"
+                    app:boxBackgroundColor="@color/transparent"
+                    app:boxStrokeColor="@color/black"
+                    app:hintTextColor="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"

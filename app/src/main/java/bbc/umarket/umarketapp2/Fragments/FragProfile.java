@@ -19,12 +19,13 @@ import bbc.umarket.umarketapp2.Main.AddListing;
 import bbc.umarket.umarketapp2.Database.SessionManager;
 import bbc.umarket.umarketapp2.Main.EditProfile;
 import bbc.umarket.umarketapp2.Main.ProductDetails;
+import bbc.umarket.umarketapp2.Main.SellerCenter;
 import bbc.umarket.umarketapp2.R;
 import bbc.umarket.umarketapp2.Main.Settings;
 
 public class FragProfile extends Fragment {
     Context context;
-    Button btnfollow;
+    Button btnsellercenter;
     TextView name, id, editprofile;
     LinearLayout btnadd, btnsettings;
 
@@ -43,7 +44,7 @@ public class FragProfile extends Fragment {
         View view = inflater.inflate(R.layout.frag_profile, container, false);
         context = view.getContext();
 
-        SessionManager sessionManager = new SessionManager(getActivity() );
+        SessionManager sessionManager = new SessionManager(getActivity(), SessionManager.SESSION_USERSESSION );
         HashMap<String,String> usersdetails =  sessionManager.getUserDetailSession();
 
         //getting data from session
@@ -54,7 +55,7 @@ public class FragProfile extends Fragment {
         //hooks
         btnsettings = view.findViewById(R.id.prof_settings);
         editprofile = view.findViewById(R.id.editprof);
-        btnfollow = view.findViewById(R.id.btnfollow);
+        btnsellercenter = view.findViewById(R.id.btnsellercenter);
         name = view.findViewById(R.id.Acc_name);
         id = view.findViewById(R.id.Acc_id);
         btnadd = view.findViewById(R.id.add);
@@ -68,7 +69,7 @@ public class FragProfile extends Fragment {
 
         editprofile.setOnClickListener(v -> startActivity(new Intent(getActivity(), EditProfile.class)));
 
-        btnfollow.setOnClickListener(v -> startActivity(new Intent(getActivity(), ProductDetails.class)));
+        btnsellercenter.setOnClickListener(v -> startActivity(new Intent(getActivity(), SellerCenter.class)));
 
         btnadd.setOnClickListener(view1 -> startActivity(new Intent(getActivity(), AddListing.class)));
 

@@ -1,14 +1,14 @@
 package bbc.umarket.umarketapp2.Main;
+
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.WindowManager;
-
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
-
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import bbc.umarket.umarketapp2.Fragments.FragChat;
 import bbc.umarket.umarketapp2.Fragments.FragHome;
 import bbc.umarket.umarketapp2.Fragments.FragProfile;
@@ -16,74 +16,68 @@ import bbc.umarket.umarketapp2.R;
 
 public class HomeContainer extends AppCompatActivity {
     //initialize variables
-    MeowBottomNavigation bottomNavigation;
-    Fragment fragment= null;
+    BottomNavigationView bottomnav;
+    Fragment selectedFragment = null;
 
-
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_homecontainer);
-
-        if (! Python.isStarted()) {
-            Python.start(new AndroidPlatform(this));
-        }
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
-        //Assign variables
-        bottomNavigation = findViewById(R.id.bottom_navigation);
-
-        bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_home));
-        bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_chat));
-        bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_profile));
-
-        bottomNavigation.setOnShowListener(item -> {
-
-            //Check condition
-            switch (item.getId()) {
-                case 1:
-                    //When id is 1; initialize home fragment
-                    fragment = new FragHome();
-                    break;
-                case 2:
-                    //When id is 2; initialize chat fragment
-                    fragment = new FragChat();
-                    break;
-                case 3:
-                    //When id is 4; initialize profile fragment
-                    fragment = new FragProfile();
-                    break;
-            }
-            //load fragment
-            HomeContainer.this.loadFragment(fragment);
-        });
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null){
-            if (bundle.getString("back_Acc") != null){
-                fragment = new FragProfile();
-                HomeContainer.this.loadFragment(fragment);
-                bottomNavigation.show(4, true);
-            }else if (bundle.getString("back_Home") != null) {
-                fragment = new FragHome();
-                HomeContainer.this.loadFragment(fragment);
-                bottomNavigation.show(1, true);
-            }
-        }else {
-           // Clear counter badge on a specific cell by clearCount(Int).
-             //       bottomNavigation.clearCount(CELL_ID)
-
-        //    Set counter badge on a specific cell by setCount(Int,String).
-         //           bottomNavigation.setCount(CELL_ID, YOUR_STRING)
-
-            //set home initially selected
-            bottomNavigation.show(1, true);
-
+        //I added this if statement to keep the selected fragment when rotating the device
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frame_layout,
+                    new FragHome()).commit();
         }
 
-        bottomNavigation.setOnClickMenuListener(item -> item.getId());
+        if (!Python.isStarted()) {   Python.start(new AndroidPlatform(this)); }
 
-        bottomNavigation.setOnReselectListener(item -> item.getId());
+        //Assign variables
+        bottomnav = findViewById(R.id.bottom_nav);
+
+        Bundle bundle = getIntent().getExtras();
+
+        bottomnav.setOnItemSelectedListener( item -> {
+            switch (item.getItemId()) {
+                case R.id.nav_home:
+                    selectedFragment = new FragHome();
+                    break;
+                case R.id.nav_chat:
+                    selectedFragment = new FragChat();
+                    break;
+                case R.id.nav_profile:
+                    selectedFragment = new FragProfile();
+                    break;
+
+            }
+            assert selectedFragment != null;
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frame_layout, selectedFragment)
+                    .commit();
+            return true;
+        });
+
+        if (bundle != null) {
+            if (bundle.getString("back_Acc") != null) {
+                selectedFragment = new FragProfile();
+                HomeContainer.this.loadFragment(selectedFragment);
+            } else if (bundle.getString("back_Home") != null) {
+                selectedFragment = new FragHome();
+                HomeContainer.this.loadFragment(selectedFragment);
+
+            }
+        } else {
+            selectedFragment = new FragHome();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frame_layout, selectedFragment)
+                    .commit();
+        }
     }
 
     private void loadFragment(Fragment fragment) {

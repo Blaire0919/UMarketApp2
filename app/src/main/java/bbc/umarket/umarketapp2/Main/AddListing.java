@@ -38,7 +38,7 @@ public class AddListing extends AppCompatActivity {
     ImageView back, selectedimg;
     TextView save;
     MaterialCardView mcvaddphoto, forimg;
-    TextInputLayout pname, pdesc, pbrand, pcat, psubcat, pprice, pstock, pcondition, phandling, poverallrate, pid;
+    TextInputLayout pname, pdesc, pbrand, pcat, psubcat, pprice, pstock, pcondition, phandling, pid;
     AutoCompleteTextView autocat, autosubcat, autocondition;
     List<String> ListCat, ListSubCat, ListCondition;
     ArrayAdapter<String> arrayAdapter_Cat, arrayAdapter_SubCat, arrayAdapter_Condition;
@@ -62,7 +62,7 @@ public class AddListing extends AppCompatActivity {
 
         storageref = storage.getReference();
 
-        SessionManager sessionManager = new SessionManager(this);
+        SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
         studid = usersdetails.get(SessionManager.KEY_STUDID);
         pSellerID = usersdetails.get(SessionManager.KEY_STUDID);
@@ -83,7 +83,6 @@ public class AddListing extends AppCompatActivity {
         pcat = findViewById(R.id.InputPCategory);
         psubcat = findViewById(R.id.InputPSubCategory);
         pcondition = findViewById(R.id.InputPCondition);
-        poverallrate = findViewById(R.id.InputPOverallRate);
         pid = findViewById(R.id.InputPID);
 
         autocat = findViewById(R.id.acCat);
@@ -368,19 +367,6 @@ public class AddListing extends AppCompatActivity {
         }
     }
 
-    private Boolean validatePOverallRate() {
-        String val = Objects.requireNonNull(poverallrate.getEditText()).getText().toString();
-
-        if (val.isEmpty()) {
-            poverallrate.setError("Field cannot be empty");
-            return false;
-        } else {
-            poverallrate.setError(null);
-            poverallrate.setErrorEnabled(false);
-            return true;
-        }
-    }
-
     private Boolean validatePID() {
         String val = Objects.requireNonNull(pid.getEditText()).getText().toString();
 
@@ -398,7 +384,7 @@ public class AddListing extends AppCompatActivity {
     private void Add_ProdOnDB() {
         if (!validatePBrand() | !validatePCat() | !validatePSubCat() | !validatePCondtion() |
                 !validatePDesc() | !validatePHandling() | !validatePName() | !validatePPrice() |
-                !validatePStock() | !validatePOverallRate() | !validatePID()) {
+                !validatePStock() | !validatePID()) {
             return;
         }
         pBrand = Objects.requireNonNull(pbrand.getEditText()).getText().toString();
@@ -411,7 +397,7 @@ public class AddListing extends AppCompatActivity {
         pPrice = Objects.requireNonNull(pprice.getEditText()).getText().toString();
         pStock = Objects.requireNonNull(pstock.getEditText()).getText().toString();
         pSellerID = studid;
-        pOverAllrate = (String) Objects.requireNonNull(poverallrate.getEditText()).getText().toString();
+        pOverAllrate = (String) "0.00";
         pSold = (String) "0";
         pScore = (String) "0.0";
         pID = (String) Objects.requireNonNull(pid.getEditText()).getText().toString();

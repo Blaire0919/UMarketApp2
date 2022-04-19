@@ -12,10 +12,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_umlogo"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_umlogo_round"
-        android:supportsRtl="true"
+        android:icon="@mipmap/logo_um_foreground"
+        android:label="UMarket"
+        android:roundIcon="@mipmap/logo_um_round"
         android:theme="@style/SplashScreenTheme"
         tools:ignore="AllowBackup">
         <activity

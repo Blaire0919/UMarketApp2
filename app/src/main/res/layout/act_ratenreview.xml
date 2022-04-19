@@ -16,9 +16,9 @@
             android:id="@+id/proddetails_lin01"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/mustard"
+            android:background="@color/NewUMarketDarkBlue"
             android:orientation="horizontal"
-            android:padding="13dp">
+            android:padding="20dp">
 
             <ImageView
                 android:id="@+id/rr_back"
@@ -37,22 +37,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:fontFamily="@font/poppins_semibold"
+                android:layout_weight="5"
+                android:fontFamily="@font/moon_light"
                 android:text="Rate Product"
-                android:textColor="@color/black"
-                android:textSize="21sp" />
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/rr_submit"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:clickable="true"
-                android:fontFamily="@font/poppins_semibold"
+                android:fontFamily="@font/moon_light"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:text="Submit"
                 android:textAlignment="textEnd"
                 android:textColor="@color/red"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
         </LinearLayout>
 
     </RelativeLayout>

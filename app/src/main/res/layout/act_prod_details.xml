@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:id="@+id/mlayout"
     android:orientation="vertical"
     tools:context=".Main.ProductDetails">
 
@@ -17,9 +17,9 @@
             android:id="@+id/proddetails_lin01"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/mustard"
+            android:background="@color/NewUMarketDarkBlue"
             android:orientation="horizontal"
-            android:padding="13dp">
+            android:padding="20dp">
 
             <ImageView
                 android:id="@+id/proddetails_back"
@@ -72,16 +72,19 @@
                     android:id="@+id/pd_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_semibold"
+                    android:fontFamily="@font/moon_light"
+                    android:gravity="center_horizontal"
                     android:text="Loading... "
                     android:textAlignment="center"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/pd_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_semibold"
+                    android:fontFamily="@font/moon_light"
+                    android:gravity="center_horizontal"
                     android:text="P0.00"
                     android:textAlignment="center"
                     android:textColor="@color/black" />
@@ -104,10 +107,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-15dp"
-                    android:fontFamily="@font/poppins_semibold"
+                    android:fontFamily="@font/moon_light"
                     android:text="(0.0)"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"
                     android:textAlignment="center"
-                    android:textColor="@color/mustard" />
+                    android:textColor="@color/NewUMarketDarkBlue" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -119,7 +124,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:layout_marginTop="50dp"
-                        android:background="@color/mustard"
+                        android:background="@color/NewUMarketlight"
                         android:orientation="vertical"
                         android:padding="10dp" />
 
@@ -154,7 +159,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="5dp"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:fontFamily="@font/moon_light"
                                 android:text="Loading..."
                                 android:textColor="@color/black"
                                 android:textSize="14sp" />
@@ -165,10 +170,10 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:backgroundTint="@color/black"
-                            android:fontFamily="@font/poppins_semibold"
+                            android:backgroundTint="@color/NewUMarketDarkBlue"
+                            android:fontFamily="@font/moon_light"
                             android:text="View \nListing"
-                            android:textSize="8sp" />
+                            android:textSize="10sp" />
 
 
                     </LinearLayout>
@@ -184,7 +189,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:fontFamily="@font/moon_light"
                         android:text="PRODUCT DETAILS"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
@@ -204,7 +209,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:fontFamily="@font/moon_light"
                                 android:text="Brand:"
                                 android:textColor="@color/black"
                                 android:textSize="12sp" />
@@ -213,7 +218,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:fontFamily="@font/moon_light"
                                 android:text="Stock:"
                                 android:textColor="@color/black"
                                 android:textSize="12sp" />
@@ -222,7 +227,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:fontFamily="@font/moon_light"
                                 android:text="Condition:"
                                 android:textColor="@color/black"
                                 android:textSize="12sp" />
@@ -231,7 +236,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:fontFamily="@font/moon_light"
                                 android:text="Handling Fee:"
                                 android:textColor="@color/black"
                                 android:textSize="12sp" />
@@ -249,7 +254,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:fontFamily="@font/moon_light"
                                 android:text="Sheki Sheki"
                                 android:textColor="@color/black"
                                 android:textSize="12sp" />
@@ -259,7 +264,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:fontFamily="@font/moon_light"
                                 android:text="150"
                                 android:textColor="@color/black"
                                 android:textSize="12sp" />
@@ -269,7 +274,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:fontFamily="@font/moon_light"
                                 android:text="Never been used"
                                 android:textColor="@color/black"
                                 android:textSize="12sp" />
@@ -279,7 +284,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:fontFamily="@font/moon_light"
                                 android:text="₱ 45.00"
                                 android:textColor="@color/black"
                                 android:textSize="12sp" />
@@ -292,7 +297,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:fontFamily="@font/moon_light"
                         android:text="Description:"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
@@ -303,7 +308,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="20dp"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:fontFamily="@font/moon_light"
                         android:text="So grab your watercolors. And just have fun painting. All over these stickers. You could use a pen..."
                         android:textColor="@color/black"
                         android:textSize="12sp" />
@@ -312,21 +317,23 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/mustard">
+                        android:background="@color/NewUMarketlight">
 
                         <TextView
                             android:id="@+id/rec"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
+                            android:layout_margin="10dp"
+                            android:gravity="center"
                             android:layout_marginBottom="5dp"
                             android:layout_weight="1"
                             android:elevation="18dp"
-                            android:fontFamily="@font/poppins_semibold"
+                            android:fontFamily="@font/moon_light"
                             android:text="Similar Products"
                             android:textAlignment="center"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="20sp" />
 
 
                         <LinearLayout
@@ -339,7 +346,7 @@
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/pd_recommend_recyclerview"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="190dp"
                                 android:padding="5dp" />
 
                         </LinearLayout>
@@ -348,23 +355,34 @@
 
                 </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@color/mustard"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="Product Reviews:"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:orientation="vertical"
+                    android:background="@color/NewUMarketlight">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/proddetails_recyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="10dp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/NewUMarketlight"
+                        android:fontFamily="@font/moon_light"
+                        android:text="Product Reviews:"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/proddetails_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="10dp" />
+
+                </LinearLayout>
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -395,10 +413,10 @@
                 android:layout_margin="2dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
-                android:elevation="15dp"
+                android:elevation="3dp"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:text="Add to Cart"
-                android:textColor="@color/black"
+                android:textColor="@color/NewUMarketDarkBlue"
                 android:textSize="13sp" />
 
             <Button
@@ -407,10 +425,10 @@
                 android:layout_height="53dp"
                 android:layout_margin="2dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/mustard"
-                android:elevation="15dp"
+                android:backgroundTint="@color/NewUMarketDarkBlue"
+                android:elevation="3dp"
                 android:text="Buy Now"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="13sp" />
 
         </LinearLayout>

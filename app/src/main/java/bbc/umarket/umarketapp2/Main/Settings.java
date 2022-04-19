@@ -35,8 +35,12 @@ public class Settings extends AppCompatActivity {
         });
 
         btnlogout.setOnClickListener(v -> {
-            SessionManager sessionManager = new SessionManager(this );
+            SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION );
             sessionManager.logoutUserfromSession();
+
+            SessionManager sessionManager2 = new SessionManager(this, SessionManager.SESSION_REMEMBERME );
+            sessionManager2.logoutUserfromSession();
+
             Intent intent = new Intent(Settings.this, Login.class);
             startActivity(intent);
             finish();

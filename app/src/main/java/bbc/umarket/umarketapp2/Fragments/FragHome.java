@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -61,7 +63,7 @@ import butterknife.ButterKnife;
 
 public class FragHome extends Fragment implements ItemLoadListener, CartItemLoadListener {
     Context context;
-    TextInputLayout search;
+    TextInputEditText search;
     RecyclerView category, items, features;
     CategoryAdapter categoryAdapter;
     FeatProdAdapter featProdAdapter;
@@ -89,7 +91,9 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
     public FragHome() { }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -111,9 +115,10 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
 
         //studid
-        SessionManager sessionManager = new SessionManager(getActivity());
+        SessionManager sessionManager = new SessionManager(getActivity(), SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
         studid = usersdetails.get(SessionManager.KEY_STUDID);
+
 
         //hooks
         category = view.findViewById(R.id.category_recyclerview);
@@ -166,17 +171,14 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
                         }
 
                         @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
+                        public void onCancelled(@NonNull DatabaseError error) {}
                     });
                 }
 
             }
 
             @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {  }
         });
 
         //for product listing
@@ -221,10 +223,13 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
     }
 
     @Override
-    public void onItemLoadSuccess(List<ItemHelperClass> itemList) { }
+    public void onItemLoadSuccess(List<ItemHelperClass> itemList) {
+    }
 
     @Override
-    public void onItemLoadFailed(String message) { Snackbar.make(mainLayout, message, Snackbar.LENGTH_LONG).show(); }
+    public void onItemLoadFailed(String message) {
+        Snackbar.make(mainLayout, message, Snackbar.LENGTH_LONG).show();
+    }
 
     @Override
     public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) {
@@ -236,10 +241,12 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
     }
 
     @Override
-    public void onCartLoadFailed(String message) { Snackbar.make(mainLayout, message, Snackbar.LENGTH_LONG).show(); }
+    public void onCartLoadFailed(String message) {
+        Snackbar.make(mainLayout, message, Snackbar.LENGTH_LONG).show();
+    }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         countCartItem();
 
@@ -248,27 +255,58 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
     private void countCartItem() {
         ArrayList<CartHelperClass> cartHelperClasses = new ArrayList<>();
 
-        SessionManager sessionManager = new SessionManager(getActivity());
-        HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
+        SessionManager sessionManager = new SessionManager(getActivity(), SessionManager.SESSION_REMEMBERME);
+        HashMap<String, String> usersdetails = sessionManager.getRememberMeDetailsFromSession();
 
-        FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
-                .getReference("cart").child(Objects.requireNonNull(usersdetails.get(SessionManager.KEY_STUDID)))
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.exists()){
-                            for (DataSnapshot cartsnapshot :snapshot.getChildren()){
-                                CartHelperClass cartHelperClass = cartsnapshot.getValue(CartHelperClass.class);
-                                cartHelperClasses.add(cartHelperClass);
+        SessionManager sessionManager2 = new SessionManager(getActivity(), SessionManager.SESSION_USERSESSION);
+        HashMap<String, String> usersdetails2 = sessionManager2.getUserDetailSession();
+
+        if (usersdetails.get(SessionManager.KEY_SESSIONSTUDID) != null) {
+            FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                    .getReference("cart").child(Objects.requireNonNull(usersdetails.get(SessionManager.KEY_SESSIONSTUDID)))
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                for (DataSnapshot cartsnapshot : snapshot.getChildren()) {
+                                    CartHelperClass cartHelperClass = cartsnapshot.getValue(CartHelperClass.class);
+                                    cartHelperClasses.add(cartHelperClass);
+                                }
+                                cartItemLoadListener.onCartLoadSuccess(cartHelperClasses);
                             }
-                            cartItemLoadListener.onCartLoadSuccess(cartHelperClasses);
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.d("", error.getDetails());
+                        }
+                    });
 
-                    }
-                });
+        } else {
+
+            FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                    .getReference("cart").child(Objects.requireNonNull(usersdetails2.get(SessionManager.KEY_STUDID)))
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                for (DataSnapshot cartsnapshot : snapshot.getChildren()) {
+                                    CartHelperClass cartHelperClass = cartsnapshot.getValue(CartHelperClass.class);
+                                    cartHelperClasses.add(cartHelperClass);
+                                }
+                                cartItemLoadListener.onCartLoadSuccess(cartHelperClasses);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.d("", error.getDetails());
+                        }
+                    });
+
+
+        }
+
+
     }
 }

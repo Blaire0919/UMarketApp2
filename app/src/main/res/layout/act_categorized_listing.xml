@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/mustard"
+    android:background="@color/NewUMarketlight"
     tools:context=".Main.CategorizedListing">
 
     <LinearLayout
@@ -14,14 +14,13 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:padding="13dp">
+        android:padding="20dp">
 
         <ImageView
             android:id="@+id/editprof_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:layout_marginStart="10dp"
             android:clickable="true"
             android:elevation="10dp"
             android:foreground="?android:attr/selectableItemBackground"
@@ -35,7 +34,7 @@
             android:text="Category"
             android:textSize="21sp"
             android:layout_marginStart="10dp"
-            android:fontFamily="@font/poppins_semibold"
+            android:fontFamily="@font/moon_light"
             android:textColor="@color/black"
             android:layout_centerVertical="true"/>
 
@@ -46,11 +45,13 @@
         android:layout_height="wrap_content">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvcategorized"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:id="@+id/rvcategorized"
-            android:layout_marginTop="15dp" />
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp" />
 
     </RelativeLayout>
 

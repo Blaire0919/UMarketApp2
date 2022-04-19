@@ -2,7 +2,7 @@
 
     <!-- ButtonStyle -->
     <style name="ButtonStyle01" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="backgroundTint">@color/black</item>
+        <item name="backgroundTint">@color/NewUMarketDarkBlue</item>
         <item name="android:textColor">@color/white</item>
         <item name="elevation">15dp</item>
         <item name="android:textSize">20sp</item>
@@ -27,13 +27,14 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="DropDownOutlineBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+    <style name="errortest">
+        <item name="android:textColor">@color/mustard</item>
+        <item name="boxStrokeColor">@color/mustard</item>
+    </style>
+
+    <style name="DropDownOutlineBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu">
         <item name="boxStrokeColor">@color/black</item>
         <item name="backgroundColor">@color/transparent</item>
-        <item name="boxCornerRadiusBottomEnd">25dp</item>
-        <item name="boxCornerRadiusBottomStart">25dp</item>
-        <item name="boxCornerRadiusTopEnd">25dp</item>
-        <item name="boxCornerRadiusTopStart">25dp</item>
     </style>
 
     <!--User Profile InputLayout Style -->

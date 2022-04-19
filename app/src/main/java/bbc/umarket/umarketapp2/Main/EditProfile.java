@@ -51,7 +51,7 @@ public class EditProfile extends AppCompatActivity {
                 .getReference("users");
 
 
-        SessionManager sessionManager = new SessionManager(this);
+        SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
 
         //getting data from sessionmanager
@@ -102,8 +102,8 @@ public class EditProfile extends AppCompatActivity {
             mMonth = Cal.get(Calendar.MONTH);
             mYear = Cal.get(Calendar.YEAR);
             DatePickerDialog datePickerDialog = new DatePickerDialog(EditProfile.this,
-                    android.R.style.Theme_Holo_Dialog_MinWidth, (view, year, month, date) -> ebday.setText(new StringBuilder()
-                    .append(date)
+                    android.R.style.Theme_Holo_Dialog_MinWidth, (view, year, month, day) -> ebday.setText(new StringBuilder()
+                    .append(day)
                     .append("-")
                     .append((month)+1)
                     .append("-")
@@ -201,7 +201,7 @@ public class EditProfile extends AppCompatActivity {
         } else{uppass = pass;}
 
         //passing data to session manager
-            SessionManager sessionManager = new SessionManager(EditProfile.this);
+            SessionManager sessionManager = new SessionManager(EditProfile.this, SessionManager.SESSION_USERSESSION);
             sessionManager.createLoginSession(upfname, uplname, upstudID, upcontacts, upgender, upbday, upemail, uppass, upseller);
 
             Intent intent = new Intent(EditProfile.this, HomeContainer.class);

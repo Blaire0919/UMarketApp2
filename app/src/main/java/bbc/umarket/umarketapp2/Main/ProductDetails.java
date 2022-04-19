@@ -100,7 +100,7 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
         cartItemLoadListener = this;
 
         //getting data from session
-        SessionManager sessionManager = new SessionManager(ProductDetails.this);
+        SessionManager sessionManager = new SessionManager(ProductDetails.this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
         studid = usersdetails.get(SessionManager.KEY_STUDID);
 
@@ -368,6 +368,8 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                         clickedHistoryHelperClass = new ClickedHistoryHelperClass(studid, chdatetime, pID);
                         cartHelperClass = new CartHelperClass(CuserID, CprodID, CsellerID, CsellerName, CprodName, CprodQty, CprodPrice, CimgUrl, CdateTime, CtotalPrice);
                         refCart.setValue(cartHelperClass);
+
+
                         Snackbar.make(mlayout, "Add to Cart Successful", Snackbar.LENGTH_LONG).show();
                     }
                 }

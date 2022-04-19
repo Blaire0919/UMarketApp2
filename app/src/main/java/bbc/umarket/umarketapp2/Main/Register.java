@@ -1,5 +1,6 @@
 package bbc.umarket.umarketapp2.Main;
 
+
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,12 +44,10 @@ public class Register extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
-        builder.setTitle("");
-        builder.setMessage("REQUIRED: Please use your UMak email address upon signing up.");
-        // add a button
-        builder.setNeutralButton("OK", null);
-        // create and show the alert dialog
-        AlertDialog dialog = builder.create();
+        AlertDialog dialog = builder.setTitle("")
+                .setMessage("REQUIRED: Please use your UMak email address upon signing up.")
+                .setNeutralButton("OK", null)
+                .create();
         dialog.show();
 
         //Hook
@@ -69,7 +68,6 @@ public class Register extends AppCompatActivity {
         chkCA = findViewById(R.id.chkClothesandAccessories);
         chkBP = findViewById(R.id.chkBeautyProduct);
         chkSE = findViewById(R.id.chkSportsEquipment);
-
 
         back.setOnClickListener(v -> {
             Intent intent = new Intent(Register.this, Login.class);
@@ -100,7 +98,7 @@ public class Register extends AppCompatActivity {
     }
 
     private Boolean validateLName() {
-        String val = lname.getEditText().getText().toString();
+        String val = Objects.requireNonNull(lname.getEditText()).getText().toString();
 
         if (val.isEmpty()) {
             lname.setError("Field cannot be empty");
@@ -113,8 +111,8 @@ public class Register extends AppCompatActivity {
     }
 
     private Boolean validatestudID() {
-        String val = studid.getEditText().getText().toString();
-        String noWhiteSpace = "^" + "\\A\\w{8,10}\\z" + "$";
+        String val = Objects.requireNonNull(studid.getEditText()).getText().toString();
+        String noWhiteSpace = "^\\A\\w{8,10}\\z$";
 
         if (val.isEmpty()) {
             studid.setError("Field cannot be empty");
@@ -136,7 +134,7 @@ public class Register extends AppCompatActivity {
     }
 
     private Boolean validateContact() {
-        String val = contact.getEditText().getText().toString();
+        String val = Objects.requireNonNull(contact.getEditText()).getText().toString();
         if (val.isEmpty()) {
             contact.setError("Field cannot be empty");
             return false;
@@ -148,7 +146,7 @@ public class Register extends AppCompatActivity {
     }
 
     private Boolean validateEmail() {
-        String val = email.getEditText().getText().toString();
+        String val = Objects.requireNonNull(email.getEditText()).getText().toString();
         String emailPattern = "^\\S+@umak\\.edu\\.ph$";
 
         if (val.isEmpty()) {
@@ -165,7 +163,7 @@ public class Register extends AppCompatActivity {
     }
 
     private Boolean validatePass() {
-        String val = cpass.getEditText().getText().toString();
+        String val = Objects.requireNonNull(cpass.getEditText()).getText().toString();
         String pass = "^" + "(?=.*[a-zA-Z0-9])" + ".{5,}" + "$";
 
         if (val.isEmpty()) {
@@ -182,7 +180,7 @@ public class Register extends AppCompatActivity {
     }
 
     private void RegisterUser() {
-        String  ss, e, fb, ca, bp, se;
+        String ss, e, fb, ca, bp, se;
 
         rootNode = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/");
         reference = rootNode.getReference("users");
@@ -196,17 +194,44 @@ public class Register extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "Please check atleast one interest", Toast.LENGTH_SHORT).show();
         } else {
 
-            if(chkSS.isChecked()){ss = "School Equipment";} else {ss="";}
-            if(chkE.isChecked()){e = "Electronics";} else {e="";}
-            if(chkFB.isChecked()){fb = "Food and Beverages";} else {fb="";}
-            if(chkCA.isChecked()){ca = "Clothes and Accessories";} else {ca="";}
-            if(chkBP.isChecked()){bp = "Beauty Products";} else {bp="";}
-            if(chkSE.isChecked()){se = "Sports Equipment";} else {se="";}
+            if (chkSS.isChecked()) {
+                ss = "School Equipment";
+            } else {
+                ss = "";
+            }
+
+            if (chkE.isChecked()) {
+                e = "Electronics";
+            } else {
+                e = "";
+            }
+
+            if (chkFB.isChecked()) {
+                fb = "Food and Beverages";
+            } else {
+                fb = "";
+            }
+
+            if (chkCA.isChecked()) {
+                ca = "Clothes and Accessories";
+            } else {
+                ca = "";
+            }
+            if (chkBP.isChecked()) {
+                bp = "Beauty Products";
+            } else {
+                bp = "";
+            }
+            if (chkSE.isChecked()) {
+                se = "Sports Equipment";
+            } else {
+                se = "";
+            }
 
             //Get all the values
             String sfname = Objects.requireNonNull(fname.getEditText()).getText().toString();
             String slname = Objects.requireNonNull(lname.getEditText()).getText().toString();
-            String sstudid = Objects.requireNonNull(studid.getEditText()).getText().toString();
+            String sstudid = Objects.requireNonNull(studid.getEditText()).getText().toString().toLowerCase();
             String scontacts = Objects.requireNonNull(contact.getEditText()).getText().toString();
             String sgender = "";
             String sbday = "";
@@ -222,10 +247,10 @@ public class Register extends AppCompatActivity {
             catref.child(sstudid).setValue(helperClass1);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
-            builder.setTitle("");
-            builder.setMessage("Registered Successfully!");
-            // create and show the alert dialog
-            AlertDialog dialog = builder.create();
+            AlertDialog dialog = builder.setTitle("")
+                    .setMessage("Registered Successfully!")
+                    .create();
+
             dialog.show();
 
 

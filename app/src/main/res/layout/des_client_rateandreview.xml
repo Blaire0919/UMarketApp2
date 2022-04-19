@@ -60,7 +60,7 @@
                         android:id="@+id/rr_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:fontFamily="@font/moon_light"
                         android:text="Amethyst Smith"
                         android:textColor="@color/black" />
 
@@ -68,36 +68,35 @@
                         android:id="@+id/rr_studid"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="-3dp"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:fontFamily="@font/moon_light"
                         android:text="K11615687"
+                        android:textColor="@color/NewUMarketDarkBlue"
                         android:textSize="8sp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+
                     android:orientation="horizontal">
 
                     <RatingBar
                         android:id="@+id/rr_ratingbar"
                         style="@style/Widget.AppCompat.RatingBar.Small"
                         android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="-15dp"
+                        android:layout_height="23dp"
                         android:progressTint="@color/mustard"
                         android:rating="4.3" />
 
                     <TextView
                         android:id="@+id/rr_ratetxt"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:fontFamily="@font/moon_light"
                         android:text="(4.3)"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/mustard"
-                        android:textSize="15sp" />
+                       android:layout_gravity="end"
+                        android:textColor="@color/NewUMarketDarkBlue"
+                        android:textSize="20sp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -113,12 +112,12 @@
                     android:id="@+id/rr_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_semibold"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/moon_light"
                     android:text="“Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.”"
                     android:textColor="@color/black"
                     android:textSize="8sp"
-                    android:layout_marginBottom="10dp"
                     tools:ignore="SmallSp" />
 
             </LinearLayout>

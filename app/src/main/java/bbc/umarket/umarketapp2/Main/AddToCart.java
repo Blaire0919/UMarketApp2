@@ -1,6 +1,5 @@
 package bbc.umarket.umarketapp2.Main;
 
-import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,16 +9,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+
 import android.util.Log;
+
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,17 +27,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import bbc.umarket.umarketapp2.Adapter.CartItemAdapter;
 import bbc.umarket.umarketapp2.Database.SessionManager;
 import bbc.umarket.umarketapp2.Helper.CartHelperClass;
-import bbc.umarket.umarketapp2.Helper.CategoryHelperClass;
-import bbc.umarket.umarketapp2.Helper.ClickedHistoryHelperClass;
-import bbc.umarket.umarketapp2.Helper.ItemHelperClass;
-import bbc.umarket.umarketapp2.Helper.RateReviewHelperClass;
+
 import bbc.umarket.umarketapp2.Listener.CartItemLoadListener;
-import bbc.umarket.umarketapp2.Listener.ItemLoadListener;
+
 import bbc.umarket.umarketapp2.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,22 +49,25 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
     DatabaseReference reference;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.cartItem_RecyclerView) RecyclerView cartItemRView;
+    @BindView(R.id.cartItem_RecyclerView)
+    RecyclerView cartItemRView;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.cartlayout) LinearLayout mainlayout;
+    @BindView(R.id.cartlayout)
+    LinearLayout mainlayout;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.cart_back) ImageView back;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tvTotalPrice) TextView txttotal;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.btncheckout) Button checkout;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.chkcartselectAll) CheckBox chkselectAll;
+    @BindView(R.id.cart_back)
+    ImageView back;
 
+    public static TextView txttotal;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.btncheckout)
+    Button checkout;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.chkcartselectAll)
+    CheckBox chkselectAll;
 
     CartItemLoadListener cartItemLoadListener;
-
-    float sum = 0.00F;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +77,10 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
 
         init();
 
+        txttotal = findViewById(R.id.tvTotalPrice);
+
         //studid
-        SessionManager sessionManager = new SessionManager(this);
+        SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
         studid = usersdetails.get(SessionManager.KEY_STUDID);
 
@@ -103,24 +102,33 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
                         CartHelperClass cartHelperClass = snaps1.getValue(CartHelperClass.class);
                         if (cartHelperClass != null) {
                             cartitem.add(cartHelperClass);
-                            sum += Float.parseFloat(cartHelperClass.getTotalPrice());
-                            Log.d(TAG, String.valueOf(snaps1.getValue()));
                         }
                         cartItemAdapter.notifyDataSetChanged();
-                    } txttotal.setText(new StringBuilder("₱").append(String.format("%.2f", sum)));
-
+                    }
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) { }
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
         });
 
+        chkselectAll.setOnClickListener(view -> {
+            if (chkselectAll.isChecked()) {
+                cartItemAdapter.selectAll();
 
+            } else {
+                cartItemAdapter.unselectall();
+            }
+        });
+
+        checkout.setOnClickListener(view -> {
+
+        });
 
     }
 
-    private void init(){
+    private void init() {
         ButterKnife.bind(this);
         cartItemLoadListener = this;
 
@@ -135,9 +143,19 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
 
     }
 
-    @Override
-    public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) {  }
+    @SuppressLint("DefaultLocale")
+    public static void selected_subtotal(String value) {
+        try {
+            txttotal.setText(value);
+            Log.d("SUBTOT: ", value);
+        } catch (Exception ex) {
+            Log.d("Exception", "Exception of type" + ex.getMessage());
+        }
+    }
 
     @Override
-    public void onCartLoadFailed(String Message) {}
+    public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) { }
+
+    @Override
+    public void onCartLoadFailed(String Message) { }
 }
