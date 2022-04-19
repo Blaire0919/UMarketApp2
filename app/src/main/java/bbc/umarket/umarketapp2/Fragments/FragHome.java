@@ -55,6 +55,7 @@ import bbc.umarket.umarketapp2.Main.AddToCart;
 import bbc.umarket.umarketapp2.Main.EditProfile;
 import bbc.umarket.umarketapp2.Main.HomeContainer;
 import bbc.umarket.umarketapp2.Main.Login;
+import bbc.umarket.umarketapp2.Main.Search;
 import bbc.umarket.umarketapp2.R;
 import bbc.umarket.umarketapp2.Main.SearchedListing;
 import butterknife.BindView;
@@ -210,6 +211,8 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
         });
 
         btncart.setOnClickListener(v -> startActivity(new Intent(getActivity(), AddToCart.class)));
+        search.setOnClickListener(v -> startActivity(new Intent(getActivity(), Search.class)));
+
         return view;
     }
 
