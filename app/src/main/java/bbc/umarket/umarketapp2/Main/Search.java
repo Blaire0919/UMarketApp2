@@ -4,6 +4,7 @@ package bbc.umarket.umarketapp2.Main;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 
@@ -19,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import bbc.umarket.umarketapp2.Helper.FeatProdtHelperClass;
 import bbc.umarket.umarketapp2.R;
 
 public class Search extends AppCompatActivity {
@@ -31,8 +33,8 @@ public class Search extends AppCompatActivity {
 
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.act_search);
 
 //        Database Reference on Products
@@ -45,12 +47,12 @@ public class Search extends AppCompatActivity {
 
         ValueEventListener event = new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            public void onDataChange(DataSnapshot snapshot) {
                 populateSearch(snapshot);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled( DatabaseError error) {
 
             }
         };
@@ -62,8 +64,16 @@ public class Search extends AppCompatActivity {
 
 //    Methods
     private void populateSearch(DataSnapshot snapshot) {
-        ArrayList<String> name = new ArrayList<>();
+        ArrayList<String> pnames = new ArrayList<>();
         if(snapshot.exists()){
+
+            for(DataSnapshot ds:snapshot.getChildren()){
+                String pname = ds.child("pName").getValue(String.class);
+                pnames.add(pname);
+            }
+
+            ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, pnames);
+            txtSearch.setAdapter(adapter);
 
         }else{
             Log.d("Users", "No data found");
