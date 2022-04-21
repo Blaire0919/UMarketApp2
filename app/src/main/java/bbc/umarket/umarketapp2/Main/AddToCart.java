@@ -73,7 +73,7 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_addtocart);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar\
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
         init();
 
@@ -123,7 +123,8 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
         });
 
         checkout.setOnClickListener(view -> {
-
+            Intent intent = new Intent(AddToCart.this, Checkout.class);
+            startActivity(intent);
         });
 
     }

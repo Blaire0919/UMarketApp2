@@ -7,12 +7,12 @@ import android.view.WindowManager;
 
 import bbc.umarket.umarketapp2.R;
 
-public class SellerCenter extends AppCompatActivity {
+public class Checkout extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_seller_center);
+        setContentView(R.layout.act_checkout);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
     }
