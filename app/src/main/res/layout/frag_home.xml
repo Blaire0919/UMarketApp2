@@ -30,7 +30,6 @@
                 android:background="@color/white"
                 android:drawableStart="@drawable/ic_search"
                 android:drawableTint="@color/lightgray"
-                android:focusableInTouchMode="true"
                 android:focusedByDefault="false"
                 android:fontFamily="@font/moon_light"
                 android:hint="Search..."
@@ -39,7 +38,11 @@
                 android:padding="5dp"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                tools:ignore="SmallSp,TouchTargetSizeCheck" />
+                tools:ignore="SmallSp,TouchTargetSizeCheck"
+
+                android:focusableInTouchMode="false"
+                android:editable="false"
+                />
 
             <LinearLayout
                 android:layout_width="0dp"
