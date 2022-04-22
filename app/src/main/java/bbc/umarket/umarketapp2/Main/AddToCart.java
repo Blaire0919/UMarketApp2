@@ -116,7 +116,6 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
         chkselectAll.setOnClickListener(view -> {
             if (chkselectAll.isChecked()) {
                 cartItemAdapter.selectAll();
-
             } else {
                 cartItemAdapter.unselectall();
             }
@@ -132,9 +131,7 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
     private void init() {
         ButterKnife.bind(this);
         cartItemLoadListener = this;
-
         cartItemRView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
         back.setOnClickListener(view -> {
             Intent intent = new Intent(AddToCart.this, HomeContainer.class);
             intent.putExtra("back_Home", "Home");
@@ -155,8 +152,10 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
     }
 
     @Override
-    public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) { }
+    public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) {
+    }
 
     @Override
-    public void onCartLoadFailed(String Message) { }
+    public void onCartLoadFailed(String Message) {
+    }
 }
