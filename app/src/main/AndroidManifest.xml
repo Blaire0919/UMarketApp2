@@ -18,6 +18,9 @@
         android:theme="@style/SplashScreenTheme"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".Main.Checkout"
+            android:exported="false" />
+        <activity
             android:name=".Main.AddToCart"
             android:exported="false" />
         <activity

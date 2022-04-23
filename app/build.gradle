@@ -22,7 +22,7 @@ android {
 
         python {
             buildPython "C:/Users/rowgi/AppData/Local/Programs/Python/Python38/python.exe"
-//            buildPython "C:/Users/Michelle Anne/AppData/Local/Programs/Python/Python38/python.exe"
+//     buildPython "C:/Users/Michelle Anne/AppData/Local/Programs/Python/Python38/python.exe"
 
             pip {
                 install "pandas"

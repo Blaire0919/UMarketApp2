@@ -14,11 +14,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
@@ -35,6 +40,9 @@ public class Register extends AppCompatActivity {
     CheckBox chkSS, chkE, chkFB, chkCA, chkBP, chkSE;
     FirebaseDatabase rootNode;
     DatabaseReference reference, catref;
+
+    //for validation
+    String check_id, check_email, studentid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +90,8 @@ public class Register extends AppCompatActivity {
         });
 
         register.setOnClickListener(v -> RegisterUser());
+
+        studentid = Objects.requireNonNull(studid.getEditText()).getText().toString();
     }
 
     private Boolean validateFName() {
@@ -114,6 +124,9 @@ public class Register extends AppCompatActivity {
         String val = Objects.requireNonNull(studid.getEditText()).getText().toString();
         String noWhiteSpace = "^\\A\\w{8,10}\\z$";
 
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users");
+        Query checkID = reference.orderByChild("studID").equalTo(val);
+
         if (val.isEmpty()) {
             studid.setError("Field cannot be empty");
             return false;
@@ -126,7 +139,11 @@ public class Register extends AppCompatActivity {
         } else if (!val.matches(noWhiteSpace)) {
             studid.setError("Space not allowed");
             return false;
-        } else {
+        }else if(Objects.equals(val, check_id)){
+            studid.setError("This Student ID is already registered");
+            return false;
+        }
+        else {
             studid.setError(null);
             studid.setErrorEnabled(false);
             return true;
@@ -149,13 +166,32 @@ public class Register extends AppCompatActivity {
         String val = Objects.requireNonNull(email.getEditText()).getText().toString();
         String emailPattern = "^\\S+@umak\\.edu\\.ph$";
 
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users");
+        Query checkEmail = reference.orderByChild("email").equalTo(val);
+
+        checkEmail.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    check_email = snapshot.child(studentid).child("email").getValue(String.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+
         if (val.isEmpty()) {
             email.setError("Field cannot be empty");
             return false;
         } else if (!val.matches(emailPattern)) {
             email.setError("Invalid. Use your UMak gmail");
             return false;
-        } else {
+        }else if (Objects.equals(val, check_email)) {
+            email.setError("This email is already registered");
+            return false;
+        }
+        else {
             email.setError(null);
             email.setErrorEnabled(false);
             return true;
