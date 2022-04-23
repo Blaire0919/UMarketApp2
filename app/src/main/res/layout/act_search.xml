@@ -29,7 +29,7 @@
 
         <AutoCompleteTextView
             android:id="@+id/txtSearch"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:drawableStart="@drawable/ic_search"
@@ -37,7 +37,21 @@
             android:focusedByDefault="true"
             android:fontFamily="@font/moon_light"
             android:hint="Search Here"
-            android:padding="10dp" />
+            android:padding="10dp"
+
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:singleLine="true"
+            />
+
+<!--        <Button-->
+<!--            android:id="@+id/button"-->
+<!--            android:layout_width="55dp"-->
+<!--            android:layout_height="52dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_gravity="end"-->
+<!--            android:elevation="10dp"-->
+<!--            android:text="Button" />-->
 
     </LinearLayout>
 
