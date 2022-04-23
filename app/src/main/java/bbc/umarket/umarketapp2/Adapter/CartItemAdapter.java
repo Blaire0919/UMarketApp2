@@ -78,6 +78,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
             holder.minus.setBackgroundColor(Color.LTGRAY);
         }
 
+     //   if (getItemCount() >= )
 
         Glide.with(context)
                 .load(currentItem.getImgUrl())
