@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Main.Search"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <AutoCompleteTextView

@@ -24,13 +24,10 @@ import bbc.umarket.umarketapp2.Helper.FeatProdtHelperClass;
 import bbc.umarket.umarketapp2.R;
 
 public class Search extends AppCompatActivity {
-
-
     DatabaseReference mref;
 
     private ListView listdata;
     private AutoCompleteTextView txtSearch;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,30 +49,29 @@ public class Search extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled( DatabaseError error) {
-
+            public void onCancelled(DatabaseError error) {
             }
         };
-
         mref.addListenerForSingleValueEvent(event);
 
     }
 
-
-//    Methods
+    //    Methods
     private void populateSearch(DataSnapshot snapshot) {
-        ArrayList<String> pnames = new ArrayList<>();
-        if(snapshot.exists()){
-
-            for(DataSnapshot ds:snapshot.getChildren()){
-                String pname = ds.child("pName").getValue(String.class);
-                pnames.add(pname);
+        ArrayList<String> autosuggest = new ArrayList<>();
+        if (snapshot.exists()) {
+            for (DataSnapshot ds : snapshot.getChildren()) {
+                FeatProdtHelperClass featProdtHelperClass = ds.getValue(FeatProdtHelperClass.class);
+//                String pname = ds.child("pName").getValue(String.class);
+                assert featProdtHelperClass != null;
+                String pname = featProdtHelperClass.getpName();
+//                add products into auto suggest
+                autosuggest.add(pname);
+//               TODO: make it able to auto suggest a seller's name/id number
             }
-
-            ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, pnames);
+            ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, autosuggest);
             txtSearch.setAdapter(adapter);
-
-        }else{
+        } else {
             Log.d("Users", "No data found");
         }
     }
