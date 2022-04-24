@@ -82,5 +82,7 @@ dependencies {
     //event bus
     implementation 'org.greenrobot:eventbus:3.2.0'
 
+//    country code picker
+    implementation 'com.hbb20:ccp:2.6.0'
 
 }
