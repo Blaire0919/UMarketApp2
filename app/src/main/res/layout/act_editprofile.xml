@@ -24,7 +24,8 @@
             android:clickable="true"
             android:elevation="10dp"
             android:foreground="?android:attr/selectableItemBackground"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_back"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
         <TextView
             android:layout_width="match_parent"
@@ -111,7 +112,8 @@
                             android:layout_margin="5dp"
                             android:clickable="true"
                             android:elevation="3dp"
-                            android:foreground="?android:attr/selectableItemBackground">
+                            android:foreground="?android:attr/selectableItemBackground"
+                            tools:ignore="TouchTargetSizeCheck">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -143,7 +145,8 @@
                             android:layout_margin="5dp"
                             android:clickable="true"
                             android:elevation="3dp"
-                            android:foreground="?android:attr/selectableItemBackground">
+                            android:foreground="?android:attr/selectableItemBackground"
+                            tools:ignore="TouchTargetSizeCheck">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -157,9 +160,9 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/moon_light"
                                     android:gravity="center_horizontal"
+                                    android:padding="5dp"
                                     android:text="C a n c e l"
                                     android:textAlignment="center"
-                                    android:padding="5dp"
                                     android:textColor="@color/white"
                                     android:textSize="15sp" />
                             </RelativeLayout>

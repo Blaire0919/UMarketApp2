@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import android.util.Log;
 
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -63,9 +64,6 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btncheckout)
     Button checkout;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.chkcartselectAll)
-    CheckBox chkselectAll;
 
     CartItemLoadListener cartItemLoadListener;
 
@@ -76,6 +74,7 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
         init();
+
 
         txttotal = findViewById(R.id.tvTotalPrice);
 
@@ -107,18 +106,8 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
                     }
                 }
             }
-
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-
-        chkselectAll.setOnClickListener(view -> {
-            if (chkselectAll.isChecked()) {
-                cartItemAdapter.selectAll();
-            } else {
-                cartItemAdapter.unselectall();
-            }
+            public void onCancelled(@NonNull DatabaseError error) { }
         });
 
         checkout.setOnClickListener(view -> {
@@ -138,7 +127,6 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
             startActivity(intent);
             finish();
         });
-
     }
 
     @SuppressLint("DefaultLocale")
@@ -152,8 +140,7 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
     }
 
     @Override
-    public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) {
-    }
+    public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) {  }
 
     @Override
     public void onCartLoadFailed(String Message) {

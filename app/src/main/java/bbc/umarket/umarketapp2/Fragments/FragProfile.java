@@ -27,7 +27,7 @@ public class FragProfile extends Fragment {
     Context context;
     Button btnsellercenter;
     TextView name, id, editprofile;
-    LinearLayout btnadd, btnsettings;
+    LinearLayout btnsettings;
 
     public FragProfile() {
         // Required empty public constructor
@@ -58,7 +58,7 @@ public class FragProfile extends Fragment {
         btnsellercenter = view.findViewById(R.id.btnsellercenter);
         name = view.findViewById(R.id.Acc_name);
         id = view.findViewById(R.id.Acc_id);
-        btnadd = view.findViewById(R.id.add);
+
 
         //displaying value
         name.setText(fname + "\n" + lname);
@@ -70,8 +70,6 @@ public class FragProfile extends Fragment {
         editprofile.setOnClickListener(v -> startActivity(new Intent(getActivity(), EditProfile.class)));
 
         btnsellercenter.setOnClickListener(v -> startActivity(new Intent(getActivity(), SellerCenter.class)));
-
-        btnadd.setOnClickListener(view1 -> startActivity(new Intent(getActivity(), AddListing.class)));
 
         return view;
     }

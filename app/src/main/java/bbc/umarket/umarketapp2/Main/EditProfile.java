@@ -208,7 +208,6 @@ public class EditProfile extends AppCompatActivity {
             intent.putExtra("back_Acc", "Account");
             startActivity(intent);
             finish();
-
     }
 
 

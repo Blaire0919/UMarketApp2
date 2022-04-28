@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,9 +41,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
     final Context context;
     String itemqty;
     String studid;
-    Boolean isSelectedAll = false;
     float sum = 0.00F;
-    AddToCart addToCart;
 
     public CartItemAdapter(Context context, ArrayList<CartHelperClass> cartItem) {
         this.cartItem = cartItem;
@@ -65,21 +64,6 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
         studid = usersdetails.get(SessionManager.KEY_STUDID);
 
-        if (!isSelectedAll) {
-            holder.selectItem.setChecked(false);
-        } else {
-            holder.selectItem.setChecked(true);
-        }
-
-        if (cartItem.get(position).getProdQty().equals("1")) {
-            itemqty = cartItem.get(position).getProdQty();
-            holder.qty.setText(itemqty);
-            holder.minus.setEnabled(false);
-            holder.minus.setBackgroundColor(Color.LTGRAY);
-        }
-
-     //   if (getItemCount() >= )
-
         Glide.with(context)
                 .load(currentItem.getImgUrl())
                 .into(holder.img);
@@ -88,21 +72,46 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
         holder.price.setText(currentItem.getProdPrice());
         holder.qty.setText(String.valueOf(currentItem.getProdQty()));
 
+        if (cartItem.get(position).getProdQty().equals("1")) {
+            itemqty = cartItem.get(position).getProdQty();
+            holder.qty.setText(itemqty);
+            holder.minus.setEnabled(false);
+            holder.minus.setBackgroundColor(Color.LTGRAY);
+        }
+
         holder.selectItem.setOnClickListener(view -> {
             if (holder.selectItem.isChecked()) {
                 sum += Float.parseFloat(currentItem.getTotalPrice());
                 Log.d(TAG, String.format("₱ %.2f", sum));
                 AddToCart.selected_subtotal(String.format("₱ %.2f", sum));
-
+                holder.add.setEnabled(false);
+                holder.add.setBackgroundColor(Color.LTGRAY);
+                holder.minus.setEnabled(false);
+                holder.minus.setBackgroundColor(Color.LTGRAY);
             }
 
             if (!holder.selectItem.isChecked()) {
-                sum -= Float.parseFloat(currentItem.getTotalPrice());
-                Log.d(TAG, String.format("₱ %.2f", sum));
-                AddToCart.selected_subtotal(String.format("₱ %.2f", sum));
+
+                if (cartItem.get(position).getProdQty().equals("1")) {
+                    itemqty = cartItem.get(position).getProdQty();
+                    holder.qty.setText(itemqty);
+                    holder.minus.setEnabled(false);
+                    holder.minus.setBackgroundColor(Color.LTGRAY);
+                    holder.add.setEnabled(true);
+                    holder.add.setBackgroundColor(Color.WHITE);
+                } else {
+
+                    sum -= Float.parseFloat(currentItem.getTotalPrice());
+                    Log.d(TAG, String.format("₱ %.2f", sum));
+                    AddToCart.selected_subtotal(String.format("₱ %.2f", sum));
+                    holder.add.setEnabled(true);
+                    holder.add.setBackgroundColor(Color.WHITE);
+                    holder.minus.setEnabled(true);
+                    holder.minus.setBackgroundColor(Color.WHITE);
+                }
+
+
             }
-
-
         });
 
         holder.minus.setOnClickListener(view -> minusCartItem(holder, cartItem.get(position)));
@@ -125,27 +134,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
             dialog.show();
 
         });
-
     }
-
-    @SuppressLint({"NotifyDataSetChanged", "DefaultLocale"})
-    public void selectAll() {
-        isSelectedAll = true;
-        sum = 0.00F;
-        for (int i=0; i < cartItem.size(); i++) {
-            sum += Float.parseFloat(cartItem.get(i).getTotalPrice());
-        }
-        AddToCart.selected_subtotal(String.format("₱ %.2f", sum));
-        notifyDataSetChanged();
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    public void unselectall() {
-        isSelectedAll = false;
-        AddToCart.selected_subtotal("₱ 0.00");
-        notifyDataSetChanged();
-    }
-
 
     @SuppressLint("NotifyDataSetChanged")
     private void addCartItem(CartViewHolder holder, CartHelperClass cartHelperClass) {

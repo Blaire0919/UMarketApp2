@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,10 +28,12 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
 import com.nex3z.notificationbadge.NotificationBadge;
@@ -87,9 +90,19 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
 
     //for database
     FirebaseDatabase rootNode;
-    DatabaseReference reference;
+    DatabaseReference reference, forInterest;
 
-    public FragHome() { }
+    //for interest
+    String beautyproducts;
+    String clothesaccessories;
+    String electronics;
+    String foodbeverages;
+    String schoolsupplies;
+    String sportsequipment;
+    ArrayList<String> cat_interests = new ArrayList<>();
+
+    public FragHome() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -120,7 +133,6 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
         studid = usersdetails.get(SessionManager.KEY_STUDID);
 
-
         //hooks
         category = view.findViewById(R.id.category_recyclerview);
         items = view.findViewById(R.id.item_RecyclerView);
@@ -129,6 +141,7 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
         btncart = view.findViewById(R.id.btnCart);
 
         reference = rootNode.getReference("products");
+        forInterest = rootNode.getReference("interests");
 
         //for category recycler view
         category.setHasFixedSize(true);
@@ -160,7 +173,6 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
                     reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                             for (DataSnapshot snapi : snapshot.getChildren()) {
                                 FeatProdtHelperClass featProdtHelperClass = snapi.getValue(FeatProdtHelperClass.class);
                                 assert featProdtHelperClass != null;
@@ -172,14 +184,15 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
                         }
 
                         @Override
-                        public void onCancelled(@NonNull DatabaseError error) {}
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
                     });
                 }
-
             }
 
             @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {  }
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+            }
         });
 
         //for product listing
@@ -189,29 +202,101 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
         itemAdapter = new ItemAdapter(context, listItem);
         items.setAdapter(itemAdapter);
 
+
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    for (DataSnapshot snap : snapshot.getChildren()) {
-                        ItemHelperClass itemHelperClass = snap.getValue(ItemHelperClass.class);
-                        listItem.add(itemHelperClass);
-                    }
-                    itemAdapter.notifyDataSetChanged();
-                    itemLoadListener.onItemLoadSuccess(listItem);
+
+                    Query check = forInterest.orderByChild("studid").equalTo(studid);
+                    check.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot2) {
+                            if (snapshot2.exists()) {
+
+                                if (Objects.equals(snapshot2.child(studid).child("beautyproducts").getValue(String.class),
+                                        "Beauty Products")) {
+                                    beautyproducts = snapshot2.child(studid).child("beautyproducts").getValue(String.class);
+                                    cat_interests.add("Beauty Products");
+                                }
+
+                                if (Objects.equals(snapshot2.child(studid).child("clothesaccessories").getValue(String.class),
+                                        "Clothes and Accessories")) {
+                                    clothesaccessories = snapshot2.child(studid).child("clothesaccessories").getValue(String.class);
+                                    cat_interests.add("Clothes and Accessories");
+                                }
+
+                                if (Objects.equals(snapshot2.child(studid).child("electronics").getValue(String.class),
+                                        "Electronics")) {
+                                    electronics = snapshot2.child(studid).child("electronics").getValue(String.class);
+                                    cat_interests.add("Electronics");
+                                }
+
+                                if (Objects.equals(snapshot2.child(studid).child("foodbeverages").getValue(String.class),
+                                        "Food and Beverages")) {
+                                    foodbeverages = snapshot2.child(studid).child("foodbeverages").getValue(String.class);
+                                    cat_interests.add("Food and Beverages");
+                                }
+
+                                if (Objects.equals(snapshot2.child(studid).child("schoolsupplies").getValue(String.class),
+                                        "School Supplies")) {
+                                    schoolsupplies = snapshot2.child(studid).child("schoolsupplies").getValue(String.class);
+                                    cat_interests.add("School Supplies");
+                                }
+
+                                if (Objects.equals(snapshot2.child(studid).child("sportsequipment").getValue(String.class),
+                                        "Sports Equipment")) {
+                                    sportsequipment = snapshot2.child(studid).child("sportsequipment").getValue(String.class);
+                                    cat_interests.add("Sports Equipment");
+                                }
+
+                                for(String x :cat_interests){
+                                    Log.d("EWAN ", x);
+                                }
+
+                                Log.d("categories", "beautyproducts: " + beautyproducts + "\n"
+                                        + "clothesaccessories: " + clothesaccessories + "\n" + "electronics: " + electronics + "\n"
+                                        + "foodbeverages: " + foodbeverages + "\n" + "schoolsupplies: " + schoolsupplies + "\n"
+                                        + "sportsequipment: " + sportsequipment
+                                );
+
+                                for (DataSnapshot snap : snapshot.getChildren()) {
+                                    ItemHelperClass itemHelperClass = snap.getValue(ItemHelperClass.class);
+                                    for (String x : cat_interests){
+                                        if (itemHelperClass != null && itemHelperClass.getpCategory().equals(x)){
+                                            listItem.add(itemHelperClass);
+                                        }
+                                    }
+
+                                }
+                                itemAdapter.notifyDataSetChanged();
+                                itemLoadListener.onItemLoadSuccess(listItem);
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.d("Error: ", error.getDetails());
+                        }
+                    });
+
+
+
+
+
                 } else {
                     itemLoadListener.onItemLoadFailed("Can't find product");
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull @NotNull DatabaseError error) { }
         });
 
         btncart.setOnClickListener(v -> startActivity(new Intent(getActivity(), AddToCart.class)));
         search.setOnClickListener(v -> startActivity(new Intent(getActivity(), Search.class)));
+
+
 
         return view;
     }

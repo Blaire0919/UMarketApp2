@@ -278,7 +278,6 @@ public class Register extends AppCompatActivity {
             UserHelperClass helperClass = new UserHelperClass(sfname, slname, sstudid, scontacts, sgender, sbday, semail, spass, is_seller);
             reference.child(sstudid).setValue(helperClass);
 
-
             InterestHelperClass helperClass1 = new InterestHelperClass(sstudid, ss, e, fb, ca, bp, se);
             catref.child(sstudid).setValue(helperClass1);
 

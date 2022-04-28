@@ -74,27 +74,13 @@
             android:background="@color/white"
             android:orientation="horizontal">
 
-            <CheckBox
-                android:id="@+id/chkcartselectAll"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:text="All"
-                android:fontFamily="@font/poppins_semibold"
-                android:textSize="20sp"
-                android:textColorHighlight="@color/black"
-                android:textColor="@color/grey_font"
-                android:layout_marginLeft="10dp"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_gravity="start"/>
-
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="4" >
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center">
@@ -103,8 +89,8 @@
                         android:id="@+id/txttotal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total"
-                        android:fontFamily="@font/poppins_regular" />
+                        android:fontFamily="@font/moon_light"
+                        android:text="Total" />
 
                     <TextView
                         android:id="@+id/tvTotalPrice"
@@ -112,12 +98,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="1dp"
                         android:layout_toEndOf="@+id/txttotal"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:fontFamily="@font/moon_light"
                         android:text="₱ 0.00"
                         android:textColor="@color/black"
-                        android:textSize="17sp" />
+                        android:textSize="22sp" />
 
-                </RelativeLayout>
+                </LinearLayout>
 
             </FrameLayout>
 
