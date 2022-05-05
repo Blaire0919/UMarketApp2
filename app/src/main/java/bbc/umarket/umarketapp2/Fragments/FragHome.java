@@ -182,10 +182,8 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
                             }
                             featProdAdapter.notifyDataSetChanged();
                         }
-
                         @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                        }
+                        public void onCancelled(@NonNull DatabaseError error) { }
                     });
                 }
             }

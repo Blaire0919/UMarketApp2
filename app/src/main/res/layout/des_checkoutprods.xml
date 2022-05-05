@@ -6,97 +6,107 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerVertical="true"
-    android:layout_marginBottom="20dp"
+    android:layout_marginBottom="5dp"
     android:backgroundTint="@color/NewUMarketlight"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="vertical">
+       android:orientation="vertical"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:fontFamily="@font/moon_light"
-                android:text="Seller Name"
-                android:textColor="@color/NewUMarketDarkBlue"
-                android:textSize="11sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/checkout_prodimg"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/corner_layouts"
-                android:src="@drawable/profile_img" />
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="15dp"
-                android:orientation="vertical">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/coSellerName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:fontFamily="@font/moon_light"
+                    android:text="Seller Name"
+                    android:textColor="@color/NewUMarketDarkBlue"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/coImg"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/corner_layouts"
+                    android:src="@drawable/profile_img" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="15dp"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/rr_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/moon_light"
-                        android:text="Product Name"
-                        android:textColor="@color/black"
-                        android:textSize="13sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
-                       android:orientation="horizontal">
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/coName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/moon_light"
-                            android:text="₱ 0.00"
+                            android:text="Product Name"
                             android:textColor="@color/black"
-                            android:textSize="13sp"
-                            android:gravity="start"
-                            tools:ignore="SmallSp" />
+                            android:textSize="13sp" />
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/moon_light"
-                            android:text="QTY:0"
-                            android:textColor="@color/black"
-                            android:textSize="13sp"
-                            android:gravity="end"
-                            tools:ignore="SmallSp" />
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="20dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/coPrice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/moon_light"
+                                android:text="₱ 0.00"
+                                android:textColor="@color/black"
+                                android:textSize="15sp"
+                                android:gravity="start"
+                                tools:ignore="SmallSp" />
+
+                            <TextView
+                                android:id="@+id/coQty"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/moon_light"
+                                android:text="QTY:0"
+                                android:textColor="@color/black"
+                                android:textSize="15sp"
+                                android:gravity="end"
+                                tools:ignore="SmallSp" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -106,8 +116,42 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:padding="10dp"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/moon_light"
+                android:text="Order Total: "/>
+
+            <TextView
+                android:id="@+id/coNumItems"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/moon_light"
+                android:text="(0 Items)"/>
+
+            <TextView
+                android:id="@+id/coSubTot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/moon_light"
+                android:text="₱ 0"
+                android:gravity="end"
+                android:textSize="20sp"
+                android:textColor="@color/NewUMarketDarkBlue"/>
+
+        </LinearLayout>
+
 
     </LinearLayout>
+
 
 
 </androidx.cardview.widget.CardView>

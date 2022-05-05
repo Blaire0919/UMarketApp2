@@ -236,22 +236,19 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                                     }
 
                                     @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-                                    }
+                                    public void onCancelled(@NonNull DatabaseError error) {  }
                                 });
                             }
 
                             @Override
-                            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                            }
+                            public void onCancelled(@NonNull @NotNull DatabaseError error) {  }
                         });
                     }
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {}
         });
 
         //recommendation recyclerview

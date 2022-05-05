@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rrcard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:layout_marginBottom="20dp"
+    android:backgroundTint="@color/NewUMarketlight"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_margin="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/chat_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/corner_layouts"
+                android:src="@drawable/profile_img" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/rr_name"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/moon_light"
+                    android:gravity="center_vertical"
+                    android:text="Seller Name"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
+
+                <com.nex3z.notificationbadge.NotificationBadge
+                    android:id="@+id/ct_badge"
+                    android:layout_width="35dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="35dp"
+                    android:textColor="@color/black"
+                    app:nbBackground="@drawable/ic_notif"
+                    app:nbMaxTextLength="2" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

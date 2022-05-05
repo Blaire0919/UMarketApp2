@@ -29,9 +29,7 @@ public class FragProfile extends Fragment {
     TextView name, id, editprofile;
     LinearLayout btnsettings;
 
-    public FragProfile() {
-        // Required empty public constructor
-    }
+    public FragProfile() { }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

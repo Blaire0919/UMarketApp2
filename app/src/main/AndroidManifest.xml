@@ -18,6 +18,12 @@
         android:theme="@style/SplashScreenTheme"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".Main.OTPVerificationCode"
+            android:exported="false" />
+        <activity
+            android:name=".Main.OTPAuth"
+            android:exported="false" />
+        <activity
             android:name=".Main.Checkout"
             android:exported="false" />
         <activity
@@ -65,12 +71,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Main.Search"
             android:exported="false" />
-
-
     </application>
 
 </manifest>

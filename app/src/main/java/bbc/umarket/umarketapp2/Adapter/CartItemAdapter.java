@@ -27,17 +27,24 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import bbc.umarket.umarketapp2.Database.SessionManager;
 import bbc.umarket.umarketapp2.Helper.CartHelperClass;
 
+import bbc.umarket.umarketapp2.Helper.CheckOutHelperClass;
 import bbc.umarket.umarketapp2.Main.AddToCart;
 
 import bbc.umarket.umarketapp2.R;
 
 public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartViewHolder> {
     ArrayList<CartHelperClass> cartItem;
+
+    CheckOutHelperClass checkOutHelperClass;
+    List<String> chkitemID = new ArrayList<>();
+
     final Context context;
     String itemqty;
     String studid;
@@ -82,8 +89,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
         holder.selectItem.setOnClickListener(view -> {
             if (holder.selectItem.isChecked()) {
                 sum += Float.parseFloat(currentItem.getTotalPrice());
-                Log.d(TAG, String.format("₱ %.2f", sum));
-                AddToCart.selected_subtotal(String.format("₱ %.2f", sum));
+                AddToCart.selected_subtotal(String.format("%.2f", sum));
                 holder.add.setEnabled(false);
                 holder.add.setBackgroundColor(Color.LTGRAY);
                 holder.minus.setEnabled(false);
@@ -91,7 +97,6 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
             }
 
             if (!holder.selectItem.isChecked()) {
-
                 if (cartItem.get(position).getProdQty().equals("1")) {
                     itemqty = cartItem.get(position).getProdQty();
                     holder.qty.setText(itemqty);
@@ -100,17 +105,13 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
                     holder.add.setEnabled(true);
                     holder.add.setBackgroundColor(Color.WHITE);
                 } else {
-
                     sum -= Float.parseFloat(currentItem.getTotalPrice());
-                    Log.d(TAG, String.format("₱ %.2f", sum));
-                    AddToCart.selected_subtotal(String.format("₱ %.2f", sum));
+                    AddToCart.selected_subtotal(String.format("%.2f", sum));
                     holder.add.setEnabled(true);
                     holder.add.setBackgroundColor(Color.WHITE);
                     holder.minus.setEnabled(true);
                     holder.minus.setBackgroundColor(Color.WHITE);
                 }
-
-
             }
         });
 
@@ -132,7 +133,38 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
                     })
                     .create();
             dialog.show();
+        });
 
+        holder.selectItem.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+            if (isChecked) {
+                chkitemID.add(currentItem.getProdID());
+                String totprice = String.valueOf(Float.parseFloat(currentItem.getProdPrice()) * Integer.parseInt(currentItem.getProdQty()));
+                checkOutHelperClass = new CheckOutHelperClass(
+                        currentItem.getImgUrl(),
+                        currentItem.getProdID(),
+                        currentItem.getSellerName(),
+                        currentItem.getProdName(),
+                        currentItem.getProdQty(),
+                        String.format("%s", currentItem.getProdPrice()),
+                        totprice
+                );
+                AddToCart.check_out(chkitemID, checkOutHelperClass);
+            } else {
+                try {
+                    chkitemID.remove(currentItem.getProdID());
+//                    String totprice = String.valueOf(Float.parseFloat(currentItem.getProdPrice()) * Integer.parseInt(currentItem.getProdQty()));
+//                    checkOutHelperClass = new CheckOutHelperClass(
+//                            currentItem.getProdID(),
+//                            currentItem.getProdName(),
+//                            currentItem.getProdQty(),
+//                            String.format("%s", currentItem.getProdPrice()),
+//                            totprice
+//                    );
+//                    AddToCart.unselectItem();
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
+            }
         });
     }
 
@@ -149,7 +181,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
                 .child(studid)
                 .child(cartHelperClass.getProdID())
                 .setValue(cartHelperClass)
-                .addOnSuccessListener(unused -> Log.d(TAG, "Update Success!"));
+                .addOnSuccessListener(unused -> Log.d(TAG, "Add qty Success!"));
 
         if (cartHelperClass.getProdQty().equals("1")) {
             itemqty = cartHelperClass.getProdQty();
@@ -166,8 +198,6 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
         synchronized (context) {
             context.notifyAll();
         }
-
-
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -184,7 +214,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
                     .child(studid)
                     .child(cartHelperClass.getProdID())
                     .setValue(cartHelperClass)
-                    .addOnSuccessListener(unused -> Log.d(TAG, "Update Success!"));
+                    .addOnSuccessListener(unused -> Log.d(TAG, "minus qty Success!"));
 
             if (cartHelperClass.getProdQty().equals("1")) {
                 itemqty = cartHelperClass.getProdQty();
@@ -211,7 +241,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
                 .child(studid)
                 .child(cartHelperClass.getProdID())
                 .removeValue()
-                .addOnSuccessListener(unused -> Log.d(TAG, "Remove Success!"));
+                .addOnSuccessListener(unused -> Log.d(TAG, "delete Success!"));
         notifyDataSetChanged();
     }
 
@@ -225,7 +255,6 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
         ImageView img, delete;
         TextView sellername, prodname, price, qty;
         CheckBox selectItem;
-
 
         //qty button
         MaterialCardView add, minus;

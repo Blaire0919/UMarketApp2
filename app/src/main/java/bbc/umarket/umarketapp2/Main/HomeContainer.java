@@ -69,7 +69,9 @@ public class HomeContainer extends AppCompatActivity {
             } else if (bundle.getString("back_Home") != null) {
                 selectedFragment = new FragHome();
                 HomeContainer.this.loadFragment(selectedFragment);
-
+            } else if (bundle.getString("back_Chat") != null) {
+                selectedFragment = new FragChat();
+                HomeContainer.this.loadFragment(selectedFragment);
             }
         } else {
             selectedFragment = new FragHome();
