@@ -15,6 +15,7 @@ public class ItemHelperClass {
         this.pID = pID;
     }
 
+
     public String getImageUrl() {
         return imageUrl;
     }

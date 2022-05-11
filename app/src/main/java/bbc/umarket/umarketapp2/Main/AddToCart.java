@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,14 +61,17 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.cartItem_RecyclerView)
     RecyclerView cartItemRView;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.cartlayout)
-    LinearLayout mainlayout;
+
+
+    public static LinearLayout mainlayout;
+
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.cart_back)
     ImageView back;
 
     public static TextView txttotal;
+
+    public static Integer x=0;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btncheckout)
@@ -84,6 +88,7 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
         init();
 
         txttotal = findViewById(R.id.tvTotalPrice);
+        mainlayout = findViewById(R.id.cartlayout);
 
         //studid
         SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
@@ -120,27 +125,32 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
         });
 
         checkout.setOnClickListener(view -> {
-            checkoutmain.put("date", java.text.DateFormat.getDateInstance().format(new Date()));
-
-            FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
-                    .getReference("checkout")
-                    .child(studid)
-                    .setValue(checkoutmain)
-                    .addOnSuccessListener(unused -> Log.d(TAG, "Insert 1st child Success!"));
-
-            for (int i = 0; i < trylang.size(); i++) {
-              //  Log.d("RESULT: ", trylang.get(i).getProdName());
+            if(x !=0){
+                checkoutmain.put("date", java.text.DateFormat.getDateInstance().format(new Date()));
 
                 FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                         .getReference("checkout")
                         .child(studid)
-                        .child("items")
-                        .child(trylang.get(i).getProdId())
-                        .setValue(trylang.get(i))
-                        .addOnSuccessListener(unused -> Log.d(TAG, "Insert 2nd child Success!"));
+                        .setValue(checkoutmain)
+                        .addOnSuccessListener(unused -> Log.d(TAG, "Insert 1st child Success!"));
+
+                for (int i = 0; i < trylang.size(); i++) {
+                    //  Log.d("RESULT: ", trylang.get(i).getProdName());
+
+                    FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                            .getReference("checkout")
+                            .child(studid)
+                            .child("items")
+                            .child(trylang.get(i).getProdId())
+                            .setValue(trylang.get(i))
+                            .addOnSuccessListener(unused -> Log.d(TAG, "Insert 2nd child Success!"));
+                }
+                Intent intent = new Intent(AddToCart.this, Checkout.class);
+                startActivity(intent);
+
+            }else{
+                Snackbar.make(mainlayout, "Select atleast one product to check out", Snackbar.LENGTH_LONG).show();
             }
-              Intent intent = new Intent(AddToCart.this, Checkout.class);
-              startActivity(intent);
         });
     }
 
@@ -167,6 +177,14 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
         }
     }
 
+    public static void selectedItemCount(Integer value){
+        try{
+            x=value;
+        }catch(Exception exception){
+            Snackbar.make(mainlayout, exception.getMessage(), Snackbar.LENGTH_LONG).show();
+        }
+    }
+
     public static void check_out(List<String> idlist, CheckOutHelperClass value) {
         try {
             for (String id : idlist) {
@@ -177,17 +195,6 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
             Log.d("Error: ", ex.getMessage());
         }
     }
-
-//    public static void unselectItem(List<String> idlist, CheckOutHelperClass value){
-//        try {
-//            for (String id : idlist) {
-//                if (value != null && id.equals(value.getProdId()))
-//                    trylang.remove(value);
-//            }
-//        } catch (Exception ex) {
-//            Log.d("Error: ", ex.getMessage());
-//        }
-//    }
 
     @Override
     public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) {

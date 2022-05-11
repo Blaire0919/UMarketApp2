@@ -40,16 +40,31 @@
                 android:layout_marginEnd="15dp"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/rr_name"
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:fontFamily="@font/moon_light"
-                    android:gravity="center_vertical"
-                    android:text="Seller Name"
-                    android:textColor="@color/black"
-                    android:textSize="13sp" />
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/chat_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/moon_light"
+                        android:text="Seller Name"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/chat_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/moon_light"
+                        android:text="Online"
+                        android:textColor="@color/grey_font"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
 
                 <com.nex3z.notificationbadge.NotificationBadge
                     android:id="@+id/ct_badge"
@@ -58,7 +73,7 @@
                     android:layout_height="35dp"
                     android:textColor="@color/black"
                     app:nbBackground="@drawable/ic_notif"
-                    app:nbMaxTextLength="2" />
+                    app:nbMaxTextLength="0" />
 
             </LinearLayout>
 

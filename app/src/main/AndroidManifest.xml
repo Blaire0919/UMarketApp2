@@ -18,6 +18,9 @@
         android:theme="@style/SplashScreenTheme"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".SpecificChat"
+            android:exported="false" />
+        <activity
             android:name=".Main.OTPVerificationCode"
             android:exported="false" />
         <activity

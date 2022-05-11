@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import bbc.umarket.umarketapp2.Adapter.Model;
+import bbc.umarket.umarketapp2.Helper.Model;
 import bbc.umarket.umarketapp2.Database.SessionManager;
 import bbc.umarket.umarketapp2.R;
 

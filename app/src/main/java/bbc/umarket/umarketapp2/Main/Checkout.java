@@ -39,6 +39,7 @@ import butterknife.BindView;
 public class Checkout extends AppCompatActivity {
 
     CheckOutAdapter checkOutAdapter;
+    CheckOutHelperClass checkOutHelperClass = new CheckOutHelperClass();
     ArrayList<CheckOutHelperClass> checkoutList;
     public static HashMap<String, String> orderLog = new HashMap<>();
     public static ArrayList<CheckOutHelperClass> orderedItem = new ArrayList<>();
@@ -75,10 +76,9 @@ public class Checkout extends AppCompatActivity {
         rootNode = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/");
         reference = rootNode.getReference("checkout").child(studid).child("items");
 
-
         //for checkout recyclerview
         checkoutRecyclerView.setHasFixedSize(true);
-        checkoutRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        checkoutRecyclerView.setLayoutManager( new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         checkoutList = new ArrayList<>();
         checkOutAdapter = new CheckOutAdapter(this, checkoutList);
         checkoutRecyclerView.setAdapter(checkOutAdapter);
@@ -88,12 +88,10 @@ public class Checkout extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-
                     for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                        CheckOutHelperClass checkOutHelperClass = snapshot1.getValue(CheckOutHelperClass.class);
+                        checkOutHelperClass = snapshot1.getValue(CheckOutHelperClass.class);
                         checkoutList.add(checkOutHelperClass);
                         orderedItem.add(checkOutHelperClass);
-                     //  Log.d("ItemIdOrdered", snapshot1.child("prodId").getValue(String.class));
                         ItemIdOrdered.add(snapshot1.child("prodId").getValue(String.class));
                     }
                     checkOutAdapter.notifyDataSetChanged();
@@ -106,7 +104,6 @@ public class Checkout extends AppCompatActivity {
         });
 
         ref2 = rootNode.getReference("checkout").child(studid);
-
         ref2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snaps) {
@@ -117,9 +114,7 @@ public class Checkout extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
 
         back.setOnClickListener(view -> {
@@ -128,6 +123,12 @@ public class Checkout extends AppCompatActivity {
                     .child(studid)
                     .removeValue()
                     .addOnSuccessListener(unused -> Log.d(TAG, "Delete Success!"));
+            Integer x=0;
+            AddToCart.selectedItemCount(x);
+
+            checkoutList.clear();
+            ItemIdOrdered.clear();
+            orderLog.clear();
 
 
             Intent intent = new Intent(Checkout.this, AddToCart.class);

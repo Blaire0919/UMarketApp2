@@ -189,8 +189,7 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
             }
 
             @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull @NotNull DatabaseError error) { }
         });
 
         //for product listing
@@ -199,7 +198,6 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
         listItem = new ArrayList<>();
         itemAdapter = new ItemAdapter(context, listItem);
         items.setAdapter(itemAdapter);
-
 
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")

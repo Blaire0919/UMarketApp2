@@ -50,6 +50,8 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
     String studid;
     float sum = 0.00F;
 
+    Integer SelectedCount = 0;
+
     public CartItemAdapter(Context context, ArrayList<CartHelperClass> cartItem) {
         this.cartItem = cartItem;
         this.context = context;
@@ -138,6 +140,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
         holder.selectItem.setOnCheckedChangeListener((compoundButton, isChecked) -> {
             if (isChecked) {
                 chkitemID.add(currentItem.getProdID());
+                SelectedCount++;
                 String totprice = String.valueOf(Float.parseFloat(currentItem.getProdPrice()) * Integer.parseInt(currentItem.getProdQty()));
                 checkOutHelperClass = new CheckOutHelperClass(
                         currentItem.getImgUrl(),
@@ -152,6 +155,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
             } else {
                 try {
                     chkitemID.remove(currentItem.getProdID());
+                    SelectedCount--;
 //                    String totprice = String.valueOf(Float.parseFloat(currentItem.getProdPrice()) * Integer.parseInt(currentItem.getProdQty()));
 //                    checkOutHelperClass = new CheckOutHelperClass(
 //                            currentItem.getProdID(),
@@ -165,6 +169,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
                     e.printStackTrace();
                 }
             }
+            AddToCart.selectedItemCount(SelectedCount);
         });
     }
 

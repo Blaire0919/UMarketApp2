@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/NewUMarketlight"
+    tools:context=".Main.SpecificChat">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarSpecificChat"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="0dp"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <ImageButton
+                android:id="@+id/backbtnSpecificChat"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:background="@color/white"
+                android:src="@drawable/back"
+                app:tint="@color/NewUMarketDarkBlue"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/NameofSpecificUser"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_toRightOf="@+id/backbtnSpecificChat"
+                android:fontFamily="@font/moon_light"
+                android:gravity="center_vertical"
+                android:text="Chat"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/getmessage"
+        android:layout_below="@id/toolbarSpecificChat"
+        android:padding="5dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <EditText
+        android:id="@id/getmessage"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="5dp"
+       android:background="@drawable/corner_layouts"
+        android:layout_marginEnd="55dp"
+        android:layout_marginBottom="5dp"
+        android:hint="Type a message"
+        android:paddingLeft="20dp"
+        android:paddingRight="10dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/black"
+        android:textColorHint="@color/NewUMarketDarkBlue"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="-50dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/sendmessagebutton"
+        android:layout_toRightOf="@+id/getmessage"
+        android:src="@drawable/ic_baseline_send_24" />
+
+</RelativeLayout>

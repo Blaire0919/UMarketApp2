@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -25,13 +26,11 @@ import java.util.concurrent.TimeUnit;
 import bbc.umarket.umarketapp2.R;
 
 public class OTPAuth extends AppCompatActivity {
-
     EditText getphonenum;
     Button sendotp;
     CountryCodePicker mcountrycodepicker;
     String countrycode;
     String phonenumber;
-
     FirebaseAuth firebaseAuth;
     ProgressBar progressBar;
 
@@ -51,9 +50,7 @@ public class OTPAuth extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
 
         firebaseAuth = FirebaseAuth.getInstance();
-
         countrycode = mcountrycodepicker.getSelectedCountryCodeWithPlus();
-
         mcountrycodepicker.setOnCountryChangeListener(() ->
                 countrycode = mcountrycodepicker.getSelectedCountryCodeWithPlus()
         );
@@ -61,7 +58,6 @@ public class OTPAuth extends AppCompatActivity {
         sendotp.setOnClickListener(view -> {
             String number;
             number = getphonenum.getText().toString();
-
             if (number.isEmpty()){
                 Toast.makeText(getApplicationContext(), "Please Enter Your number", Toast.LENGTH_SHORT).show();
             }else if (number.length()<10) {
@@ -77,7 +73,6 @@ public class OTPAuth extends AppCompatActivity {
                         .setCallbacks(mCallbacks)
                         .build();
 
-
                 PhoneAuthProvider.verifyPhoneNumber(options);
             }
         });
@@ -86,11 +81,15 @@ public class OTPAuth extends AppCompatActivity {
             @Override
             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
                 //how to automatically fetch code here
+                Toast.makeText(getApplicationContext(),
+                        "Verification Complete: "+ phoneAuthCredential,
+                        Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onVerificationFailed(@NonNull FirebaseException e) {
-
+                Toast.makeText(getApplicationContext(),  "Error: "+ e.getMessage(),Toast.LENGTH_SHORT).show();
+                Log.d("Error: ", e.getMessage());
             }
 
             @Override

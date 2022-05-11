@@ -1,83 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/NewUMarketlight"
     tools:context=".Fragments.FragChat">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/NewUMarketlight"
+        tools:ignore="UselessParent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
+            android:id="@+id/linearChat"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_marginTop="0dp"
-            android:background="@color/white">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:padding="20dp">
 
-
-            <RelativeLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical">
+                android:fontFamily="@font/moon_light"
+                android:text="Chat"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
-                <TextView
-                    android:id="@+id/chattext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/moon_light"
-                    android:gravity="center_horizontal"
-                    android:text="Chat"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
+        </LinearLayout>
 
-            </RelativeLayout>
-
-        </androidx.appcompat.widget.Toolbar>
-
-        <com.google.android.material.tabs.TabLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvChatThread"
+            android:layout_below="@+id/linearChat"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:id="@+id/include"
-            android:layout_below="@+id/toolbar"
-            app:tabSelectedTextColor="@color/white"
-            app:tabIndicatorColor="@color/white"
-            android:backgroundTint="@color/NewUMarketDarkBlue"
-            app:tabIndicatorHeight="3dp"
-            android:layout_marginTop="0dp">
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chats"
-                android:id="@+id/tabs_chat">
-
-
-            </com.google.android.material.tabs.TabItem>
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Status"
-                android:id="@+id/tabs_status">
-
-
-            </com.google.android.material.tabs.TabItem>
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Calls"
-                android:id="@+id/tabs_calls">
-
-
-            </com.google.android.material.tabs.TabItem>
-
-
-        </com.google.android.material.tabs.TabLayout>
+            android:layout_height="match_parent" />
 
         <Button
             android:id="@+id/testotp"
@@ -97,22 +56,6 @@
             android:text="Test OTP"
             android:textSize="15sp" />
 
-        <androidx.viewpager.widget.ViewPager
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/include"
-            android:layout_marginTop="0dp"
-            android:id="@+id/fragmentcontainer">
-
-
-
-
-
-
-        </androidx.viewpager.widget.ViewPager>
-
-
     </RelativeLayout>
-
 
 </FrameLayout>
