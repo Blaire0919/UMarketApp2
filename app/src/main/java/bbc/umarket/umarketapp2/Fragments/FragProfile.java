@@ -64,9 +64,12 @@ public class FragProfile extends Fragment {
 
         btnsettings.setOnClickListener(v -> startActivity(new Intent(getActivity(), Settings.class)));
 
-        editprofile.setOnClickListener(v -> startActivity(new Intent(getActivity(), EditProfile.class)));
+        editprofile.setOnClickListener(v ->
+                startActivity( new Intent(getActivity(), EditProfile.class)));
 
-        btnsellercenter.setOnClickListener(v -> startActivity(new Intent(getActivity(), SellerCenter.class)));
+        btnsellercenter.setOnClickListener(v ->
+                startActivity(new Intent(getActivity(), SellerCenter.class))
+        );
 
         return view;
     }

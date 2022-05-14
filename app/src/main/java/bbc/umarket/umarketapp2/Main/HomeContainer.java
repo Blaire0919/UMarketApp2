@@ -3,12 +3,15 @@ package bbc.umarket.umarketapp2.Main;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.WindowManager;
+
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import bbc.umarket.umarketapp2.Fragments.FragChat;
 import bbc.umarket.umarketapp2.Fragments.FragHome;
 import bbc.umarket.umarketapp2.Fragments.FragProfile;
@@ -28,20 +31,19 @@ public class HomeContainer extends AppCompatActivity {
 
         //I added this if statement to keep the selected fragment when rotating the device
         if (savedInstanceState == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.frame_layout,
-                    new FragHome()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new FragHome()).commit();
         }
 
-        if (!Python.isStarted()) {   Python.start(new AndroidPlatform(this)); }
+        if (!Python.isStarted()) {
+            Python.start(new AndroidPlatform(this));
+        }
 
         //Assign variables
         bottomnav = findViewById(R.id.bottom_nav);
 
         Bundle bundle = getIntent().getExtras();
 
-        bottomnav.setOnItemSelectedListener( item -> {
+        bottomnav.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.nav_home:
                     selectedFragment = new FragHome();

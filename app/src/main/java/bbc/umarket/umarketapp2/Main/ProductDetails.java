@@ -133,7 +133,8 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
             finish();
         });
 
-        DatabaseReference reference = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+        DatabaseReference reference = FirebaseDatabase
+                .getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                 .getReference("products");
         Query checkID = reference.orderByChild("pID").equalTo(prodID);
 

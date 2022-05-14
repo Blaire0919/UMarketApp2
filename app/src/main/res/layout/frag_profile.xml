@@ -230,7 +230,7 @@
                         android:layout_weight="12"
                         android:backgroundTint="@color/NewUMarketDarkBlue"
                         android:fontFamily="@font/moon_light"
-                        android:text="Seller Centre"
+                        android:text="Seller Center"
                         android:textColor="@color/white"
                         android:drawableLeft="@drawable/ic_store"
                         android:textSize="13sp"

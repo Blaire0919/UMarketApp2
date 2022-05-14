@@ -8,7 +8,7 @@
     tools:context=".Main.SpecificChat">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarSpecificChat"
+        android:id="@+id/SpecificChattoolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_marginTop="0dp"
@@ -25,19 +25,20 @@
                 android:layout_height="40dp"
                 android:layout_centerVertical="true"
                 android:background="@color/white"
+                android:contentDescription="TODO"
                 android:src="@drawable/back"
                 app:tint="@color/NewUMarketDarkBlue"
-                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,ImageContrastCheck" />
 
             <TextView
                 android:id="@+id/NameofSpecificUser"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
-                android:layout_toRightOf="@+id/backbtnSpecificChat"
+                android:layout_toEndOf="@+id/backbtnSpecificChat"
                 android:fontFamily="@font/moon_light"
                 android:gravity="center_vertical"
-                android:text="Chat"
+                android:text="Name of User"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -46,40 +47,45 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RVChatMessages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/getmessage"
-        android:layout_below="@id/toolbarSpecificChat"
+        android:layout_above="@id/et_getmessage"
+        android:layout_below="@id/SpecificChattoolbar"
         android:padding="5dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <EditText
-        android:id="@id/getmessage"
+        android:id="@+id/et_getmessage"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="5dp"
-       android:background="@drawable/corner_layouts"
+        android:layout_marginStart="5dp"
         android:layout_marginEnd="55dp"
         android:layout_marginBottom="5dp"
+        android:background="@drawable/corner_layouts"
         android:hint="Type a message"
-        android:paddingLeft="20dp"
-        android:paddingRight="10dp"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:paddingStart="20dp"
+        android:paddingEnd="10dp"
         android:textAlignment="textStart"
         android:textColor="@color/black"
         android:textColorHint="@color/NewUMarketDarkBlue"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:ignore="TextContrastCheck" />
 
     <ImageView
+        android:id="@+id/sendmessagebutton"
         android:layout_width="45dp"
         android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="-50dp"
         android:layout_marginBottom="5dp"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/sendmessagebutton"
-        android:layout_toRightOf="@+id/getmessage"
-        android:src="@drawable/ic_baseline_send_24" />
+        android:layout_toEndOf="@+id/et_getmessage"
+        android:src="@drawable/ic_baseline_send_24"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
 
 </RelativeLayout>

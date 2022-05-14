@@ -18,7 +18,10 @@
         android:theme="@style/SplashScreenTheme"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".SpecificChat"
+            android:name=".Main.SellerRegistration"
+            android:exported="false" />
+        <activity
+            android:name=".Main.SpecificChat"
             android:exported="false" />
         <activity
             android:name=".Main.OTPVerificationCode"
