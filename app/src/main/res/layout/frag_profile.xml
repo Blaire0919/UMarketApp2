@@ -256,8 +256,6 @@
                         android:clickable="true"
                         android:elevation="8dp"
                         android:foreground="?android:attr/selectableItemBackground"
-                        app:strokeColor="@color/black"
-                        app:strokeWidth="1dp"
                         tools:ignore="TouchTargetSizeCheck">
 
                         <RelativeLayout
@@ -290,8 +288,6 @@
                         android:clickable="true"
                         android:elevation="8dp"
                         android:foreground="?android:attr/selectableItemBackground"
-                        app:strokeColor="@color/black"
-                        app:strokeWidth="1dp"
                         tools:ignore="TouchTargetSizeCheck">
 
                         <RelativeLayout
@@ -321,8 +317,6 @@
                         android:clickable="true"
                         android:elevation="8dp"
                         android:foreground="?android:attr/selectableItemBackground"
-                        app:strokeColor="@color/black"
-                        app:strokeWidth="1dp"
                         tools:ignore="TouchTargetSizeCheck">
 
                         <RelativeLayout

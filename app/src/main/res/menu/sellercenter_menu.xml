@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/sellernav_datainsights"
+        android:title="Data Insights" />
+
+    <item
+        android:id="@+id/sellernav_manageorders"
+        android:title="Manage Orders" />
+
+</menu>

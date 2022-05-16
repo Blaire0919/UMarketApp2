@@ -101,8 +101,7 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
     String sportsequipment;
     ArrayList<String> cat_interests = new ArrayList<>();
 
-    public FragHome() {
-    }
+    public FragHome() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -276,10 +275,6 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
                         }
                     });
 
-
-
-
-
                 } else {
                     itemLoadListener.onItemLoadFailed("Can't find product");
                 }
@@ -291,8 +286,6 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
 
         btncart.setOnClickListener(v -> startActivity(new Intent(getActivity(), AddToCart.class)));
         search.setOnClickListener(v -> startActivity(new Intent(getActivity(), Search.class)));
-
-
 
         return view;
     }
@@ -359,13 +352,11 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
                                 cartItemLoadListener.onCartLoadSuccess(cartHelperClasses);
                             }
                         }
-
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                             Log.d("", error.getDetails());
                         }
                     });
-
         } else {
 
             FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
@@ -381,7 +372,6 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
                                 cartItemLoadListener.onCartLoadSuccess(cartHelperClasses);
                             }
                         }
-
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                             Log.d("", error.getDetails());

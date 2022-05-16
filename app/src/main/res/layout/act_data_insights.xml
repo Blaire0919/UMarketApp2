@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/NewUMarketlight"
+    android:orientation="vertical"
+    tools:context=".Main.DataInsights">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/datainsights_back"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/ic_back" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="-30dp"
+                    android:fontFamily="@font/moon_light"
+                    android:gravity="center"
+                    android:text="Data Insights"
+                    android:textColor="@color/black"
+                    android:textSize="19sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    tools:ignore="TouchTargetSizeCheck">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/TotalSale"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="14dp"
+                            android:fontFamily="@font/moon_light"
+                            android:gravity="center_horizontal"
+                            android:text="Total Sales"
+                            android:textColor="@color/black"
+                            android:textSize="13sp"
+                            tools:ignore="SmallSp" />
+
+                        <TextView
+                            android:id="@+id/txtTotSale"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/TotalSale"
+                            android:fontFamily="@font/moon_light"
+                            android:text="₱ 9,450.50"
+                            android:textColor="@color/NewUMarketDarkBlue"
+                            android:textSize="15sp"
+                            tools:ignore="SmallSp" />
+
+                    </RelativeLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    tools:ignore="TouchTargetSizeCheck">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/TotalOrders"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="14dp"
+                            android:fontFamily="@font/moon_light"
+                            android:gravity="center_horizontal"
+                            android:text="Total Orders"
+                            android:textColor="@color/black"
+                            android:textSize="13sp"
+                            tools:ignore="SmallSp" />
+
+                        <TextView
+                            android:id="@+id/txtTotOrders"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/TotalOrders"
+                            android:fontFamily="@font/moon_light"
+                            android:text="0"
+                            android:textColor="@color/NewUMarketDarkBlue"
+                            android:textSize="15sp"
+                            tools:ignore="SmallSp" />
+
+                    </RelativeLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    tools:ignore="TouchTargetSizeCheck">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/TotalCustomers"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/moon_light"
+                            android:gravity="center_horizontal"
+                            android:text="Total Num. of Customers"
+                            android:textColor="@color/black"
+                            android:textSize="13sp"
+                            tools:ignore="SmallSp" />
+
+                        <TextView
+                            android:id="@+id/txtTotCustomer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/TotalCustomers"
+                            android:fontFamily="@font/moon_light"
+                            android:text="28"
+                            android:textColor="@color/NewUMarketDarkBlue"
+                            android:textSize="15sp"
+                            tools:ignore="SmallSp" />
+
+                    </RelativeLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                android:padding="3dp"
+                android:layout_margin="10dp"
+                android:background="@color/NewUMarketDarkBlue"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/moon_light"
+                    android:textColor="@color/white"
+                    android:layout_margin="5dp"
+                    android:text="Product Ranking"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ranked_Recyclerview"
+                    android:layout_width="match_parent"
+                    android:background="@color/NewUMarketlight"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

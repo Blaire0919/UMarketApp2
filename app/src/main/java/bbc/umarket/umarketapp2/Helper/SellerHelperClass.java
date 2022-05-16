@@ -1,12 +1,13 @@
 package bbc.umarket.umarketapp2.Helper;
 
 public class SellerHelperClass {
-    String sellerID, userID, shopname, email, contact;
+    String sellerID, imgSeller, userID, shopname, email, contact;
 
     public SellerHelperClass() {}
 
-    public SellerHelperClass(String sellerID, String userID, String shopname, String email, String contact) {
+    public SellerHelperClass(String sellerID, String imgSeller, String userID, String shopname, String email, String contact) {
         this.sellerID = sellerID;
+        this.imgSeller = imgSeller;
         this.userID = userID;
         this.shopname = shopname;
         this.email = email;
@@ -16,6 +17,10 @@ public class SellerHelperClass {
     public String getSellerID() { return sellerID; }
 
     public void setSellerID(String sellerID) { this.sellerID = sellerID;}
+
+    public String getImgSeller() {return imgSeller;}
+
+    public void setImgSeller(String imgSeller) {this.imgSeller = imgSeller;}
 
     public String getUserID() {return userID;}
 

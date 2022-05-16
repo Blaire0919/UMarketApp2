@@ -237,19 +237,22 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                                     }
 
                                     @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {  }
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                    }
                                 });
                             }
 
                             @Override
-                            public void onCancelled(@NonNull @NotNull DatabaseError error) {  }
+                            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                            }
                         });
                     }
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {}
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+            }
         });
 
         //recommendation recyclerview
@@ -279,11 +282,11 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                         @SuppressLint("NotifyDataSetChanged")
                         @Override
                         public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                            for (DataSnapshot snap : snapshot.getChildren()) {
-                                ItemHelperClass itemHelperClass = snap.getValue(ItemHelperClass.class);
-                                assert itemHelperClass != null;
-                                if (itemHelperClass.getpName().equals(strTemp)) {
-                                    listItem.add(itemHelperClass);
+                                for (DataSnapshot snap : snapshot.getChildren()) {
+                                    ItemHelperClass itemHelperClass = snap.getValue(ItemHelperClass.class);
+                                    assert itemHelperClass != null;
+                                    if (itemHelperClass.getpName().equals(strTemp)) {
+                                        listItem.add(itemHelperClass);
                                 }
                             }
                             itemAdapter.notifyDataSetChanged();
@@ -310,6 +313,8 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
         ratenreview.setAdapter(rrAdapter);
         DatabaseReference rrRef = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                 .getReference("rateandreview");
+
+//Rate and review         
         rrRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -391,8 +396,11 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
 
 
     @Override
-    public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) { }
+    public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) {
+    }
 
     @Override
-    public void onCartLoadFailed(String message) {Snackbar.make(mlayout, message, Snackbar.LENGTH_LONG).show(); }
+    public void onCartLoadFailed(String message) {
+        Snackbar.make(mlayout, message, Snackbar.LENGTH_LONG).show();
+    }
 }

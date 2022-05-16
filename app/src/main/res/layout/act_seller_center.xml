@@ -8,309 +8,336 @@
     android:orientation="vertical"
     tools:context=".Main.SellerCenter">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/moon_light"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="Seller Center"
-            android:textColor="@color/black"
-            android:textSize="19sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <ImageView
-            android:id="@+id/sc_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/moon_light"
-            android:text="Go Back"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="115dp"
-                android:layout_height="115dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_notif" />
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="-10dp"
-            android:layout_weight="2"
-            android:orientation="vertical">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="3dp"
+                android:background="@color/white">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/sc_back"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="5dp"
+                        android:src="@drawable/ic_back" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="-40dp"
+                        android:fontFamily="@font/moon_light"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="Seller Center"
+                        android:textColor="@color/black"
+                        android:textSize="19sp" />
+
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Seller Name"
-                android:textColor="@color/NewUMarketDarkBlue"
-                android:textSize="18sp" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginEnd="5dp"
-                android:padding="5dp"
-                app:cardCornerRadius="8dp">
+                android:layout_marginTop="25dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@color/NewUMarketDarkBlue"
-                    android:gravity="center">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        tools:ignore="TouchTargetSizeCheck">
+                        android:layout_gravity="center"
+                        android:layout_marginStart="-5dp"
+                        android:background="@drawable/corner_layouts"
+                        app:cardCornerRadius="60dp">
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/NewUMarketDarkBlue"
-                            android:padding="8dp">
-
-                            <TextView
-                                android:id="@+id/followerscount"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="0" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/followerscount"
-                                android:fontFamily="@font/moon_light"
-                                android:gravity="center_horizontal"
-                                android:text="Followers"
-                                android:textColor="@color/white"
-                                android:textSize="9sp"
-                                tools:ignore="SmallSp" />
-
-                        </RelativeLayout>
+                        <ImageView
+                            android:id="@+id/sellercenter_imgview"
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
+                            android:cropToPadding="true"
+                            android:src="@drawable/profile_img"
+                            tools:ignore="ContentDescription" />
 
                     </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="3dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="3dp"
-                        android:layout_marginBottom="3dp" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="-10dp"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/sellercenter_name"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        tools:ignore="TouchTargetSizeCheck">
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Seller Name"
+                        android:textColor="@color/NewUMarketDarkBlue"
+                        android:textSize="18sp" />
 
-                        <RelativeLayout
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="5dp"
+                        android:padding="5dp"
+                        app:cardCornerRadius="8dp">
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/NewUMarketDarkBlue"
-                            android:padding="8dp">
+                            android:gravity="center">
 
-                            <TextView
-                                android:id="@+id/ratingscount"
-                                android:layout_width="match_parent"
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="0" />
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                tools:ignore="TouchTargetSizeCheck">
 
-                            <TextView
-                                android:layout_width="match_parent"
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/NewUMarketDarkBlue"
+                                    android:padding="8dp">
+
+                                    <TextView
+                                        android:id="@+id/followerscount"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="0" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/followerscount"
+                                        android:fontFamily="@font/moon_light"
+                                        android:gravity="center_horizontal"
+                                        android:text="Pending Orders"
+                                        android:textColor="@color/white"
+                                        android:textSize="9sp"
+                                        tools:ignore="SmallSp" />
+
+                                </RelativeLayout>
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="3dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="3dp"
+                                android:layout_marginBottom="3dp" />
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/ratingscount"
-                                android:fontFamily="@font/moon_light"
-                                android:gravity="center_horizontal"
-                                android:text="Ratings"
-                                android:textColor="@color/white"
-                                android:textSize="9sp"
-                                tools:ignore="SmallSp" />
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                tools:ignore="TouchTargetSizeCheck">
 
-                        </RelativeLayout>
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/NewUMarketDarkBlue"
+                                    android:padding="8dp">
 
-                    </com.google.android.material.card.MaterialCardView>
+                                    <TextView
+                                        android:id="@+id/ratingscount"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="0" />
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="3dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="3dp"
-                        android:layout_marginBottom="3dp" />
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/ratingscount"
+                                        android:fontFamily="@font/moon_light"
+                                        android:gravity="center_horizontal"
+                                        android:text="Ratings"
+                                        android:textColor="@color/white"
+                                        android:textSize="9sp"
+                                        tools:ignore="SmallSp" />
+
+                                </RelativeLayout>
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="3dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="3dp"
+                                android:layout_marginBottom="3dp" />
 
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        tools:ignore="TouchTargetSizeCheck">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/NewUMarketDarkBlue"
-                            android:padding="8dp">
-
-                            <TextView
-                                android:id="@+id/availprodcount"
-                                android:layout_width="match_parent"
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="0" />
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                tools:ignore="TouchTargetSizeCheck">
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/availprodcount"
-                                android:fontFamily="@font/moon_light"
-                                android:gravity="center_horizontal"
-                                android:text="Available Products"
-                                android:textColor="@color/white"
-                                android:textSize="9sp"
-                                tools:ignore="SmallSp" />
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/NewUMarketDarkBlue"
+                                    android:padding="8dp">
 
-                        </RelativeLayout>
+                                    <TextView
+                                        android:id="@+id/availprodcount"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="0" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/availprodcount"
+                                        android:fontFamily="@font/moon_light"
+                                        android:gravity="center_horizontal"
+                                        android:text="Available Products"
+                                        android:textColor="@color/white"
+                                        android:textSize="9sp"
+                                        tools:ignore="SmallSp" />
+
+                                </RelativeLayout>
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                        </LinearLayout>
 
                     </com.google.android.material.card.MaterialCardView>
 
                 </LinearLayout>
 
-            </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_margin="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/add"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:clickable="true"
+                    android:elevation="8dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    tools:ignore="TouchTargetSizeCheck">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/NewUMarketDarkBlue"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/moon_light"
+                            android:gravity="center_horizontal"
+                            android:text="Add Product"
+                            android:textColor="@color/white"
+                            android:textSize="13sp"
+                            tools:ignore="SmallSp" />
+
+                    </RelativeLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/saleshistory"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:elevation="8dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    tools:ignore="TouchTargetSizeCheck">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/NewUMarketDarkBlue"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/moon_light"
+                            android:gravity="center_horizontal"
+                            android:text="Sales History"
+                            android:textColor="@color/white"
+                            android:textSize="13sp"
+                            tools:ignore="SmallSp" />
+
+                    </RelativeLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="550dp"
+                android:layout_margin="10dp"
+                android:background="@color/NewUMarketDarkBlue">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/RV_productlisting"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:background="@color/white"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="50dp"/>
 
         </LinearLayout>
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp">
+    </ScrollView>
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            app:cardCornerRadius="5dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/moon_light"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Data Insights"
-                android:textColor="@color/black"
-                android:textSize="17sp" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/listing"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@color/white"
-        android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        tools:ignore="TouchTargetSizeCheck">
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="15dp"
-            android:src="@drawable/ic_list" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:fontFamily="@font/moon_light"
-            android:text="Product Listing"
-            android:layout_marginStart="5dp"
-            android:textColor="@color/NewUMarketDarkBlue"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/add"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@color/white"
-        android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        tools:ignore="TouchTargetSizeCheck">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="15dp"
-            android:src="@drawable/ic_add" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="5dp"
-            android:fontFamily="@font/moon_light"
-            android:text="Add Product"
-            android:textColor="@color/NewUMarketDarkBlue"
-            android:textSize="16sp" />
-
-    </LinearLayout>
 
 </LinearLayout>

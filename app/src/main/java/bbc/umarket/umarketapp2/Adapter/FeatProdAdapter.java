@@ -51,7 +51,6 @@ public class FeatProdAdapter extends RecyclerView.Adapter<FeatProdAdapter.Featur
             intent.putExtra("imageUrl", featprod.get(position).getImageUrl());
             context.startActivity(intent);
         });
-
     }
 
     @Override
@@ -63,7 +62,6 @@ public class FeatProdAdapter extends RecyclerView.Adapter<FeatProdAdapter.Featur
         ImageView image;
         TextView title, price;
         CardView cardView;
-
         public FeaturedViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.ft_img01);

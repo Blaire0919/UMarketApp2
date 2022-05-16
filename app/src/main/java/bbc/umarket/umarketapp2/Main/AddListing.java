@@ -225,8 +225,7 @@ public class AddListing extends AppCompatActivity {
         });
 
         back.setOnClickListener(view -> {
-            Intent intent = new Intent(AddListing.this, HomeContainer.class);
-            intent.putExtra("back_Acc", "Account");
+            Intent intent = new Intent(AddListing.this, SellerCenter.class);
             startActivity(intent);
             finish();
         });
@@ -380,7 +379,6 @@ public class AddListing extends AppCompatActivity {
         }
     }
 
-
     private void Add_ProdOnDB() {
         if (!validatePBrand() | !validatePCat() | !validatePSubCat() | !validatePCondtion() |
                 !validatePDesc() | !validatePHandling() | !validatePName() | !validatePPrice() |
@@ -397,10 +395,10 @@ public class AddListing extends AppCompatActivity {
         pPrice = Objects.requireNonNull(pprice.getEditText()).getText().toString();
         pStock = Objects.requireNonNull(pstock.getEditText()).getText().toString();
         pSellerID = studid;
-        pOverAllrate = (String) "0.00";
-        pSold = (String) "0";
-        pScore = (String) "0.0";
-        pID = (String) Objects.requireNonNull(pid.getEditText()).getText().toString();
+        pOverAllrate = "0.00";
+        pSold = "0";
+        pScore = "0.0";
+        pID = Objects.requireNonNull(pid.getEditText()).getText().toString();
         UploadImage();
     }
 

@@ -66,7 +66,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 int count = 0;
                 if (snapshot.exists()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-
                         if (Objects.equals(dataSnapshot.child("prodID").getValue(String.class), itemlist.get(position).getpID())){
                             rating = Float.parseFloat(Objects.requireNonNull(dataSnapshot.child("rate").getValue(String.class)));
                             total = total + rating;
@@ -74,22 +73,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                             average = total / count;
                             holder.rate.setRating(average);
                         }
-
                     }
 
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError error) {          }
         });
-
-
-      //  holder.rate.setRating(Float.parseFloat(itemlist.get(position).getpOverallRate()));
-
-
 
         holder.cardView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ProductDetails.class);
@@ -113,11 +104,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
         public ItemViewHolder(View view) {
             super(view);
-            image = itemView.findViewById(R.id.item_img);
-            title = itemView.findViewById(R.id.item_name);
-            price = itemView.findViewById(R.id.item_price);
-            rate = itemView.findViewById(R.id.item_rate);
-            cardView = itemView.findViewById(R.id.itemCardView);
+            image = view.findViewById(R.id.item_img);
+            title = view.findViewById(R.id.item_name);
+            price = view.findViewById(R.id.item_price);
+            rate = view.findViewById(R.id.item_rate);
+            cardView = view.findViewById(R.id.itemCardView);
 
         }
 
