@@ -90,4 +90,7 @@ dependencies {
     //country code picker
     implementation 'com.hbb20:ccp:2.5.1'
 
+    //for charts
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
 }

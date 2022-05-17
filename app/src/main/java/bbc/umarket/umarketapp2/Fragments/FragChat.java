@@ -1,39 +1,29 @@
 package bbc.umarket.umarketapp2.Fragments;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-
 import java.util.Objects;
-
 import bbc.umarket.umarketapp2.Helper.FirebaseModel;
 import bbc.umarket.umarketapp2.Main.OTPAuth;
-import bbc.umarket.umarketapp2.Main.ProductDetails;
 import bbc.umarket.umarketapp2.Main.SpecificChat;
 import bbc.umarket.umarketapp2.R;
 
@@ -46,6 +36,8 @@ public class FragChat extends Fragment {
     FirestoreRecyclerAdapter<FirebaseModel, FragChat.NoteViewHolder> chatAdapter;
     FirestoreRecyclerOptions<FirebaseModel> allusername;
     RecyclerView recyclerView;
+
+    String sellerID = "";
 
     public FragChat() {}
 
@@ -69,14 +61,20 @@ public class FragChat extends Fragment {
         test.setOnClickListener(view -> startActivity(new Intent(getActivity(), OTPAuth.class)));
 
         test.setVisibility(View.VISIBLE);
-        recyclerView.setEnabled(false);
+        recyclerView.setVisibility(View.INVISIBLE);
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             test.setVisibility(View.GONE);
-            recyclerView.setEnabled(true);
+            recyclerView.setVisibility(View.VISIBLE);
+
+
+            if (getArguments() != null) {
+                sellerID =  getArguments().getString("sellerid");
+            }
+
         } else {
             test.setVisibility(View.VISIBLE);
-            recyclerView.setEnabled(false);
+            recyclerView.setVisibility(View.INVISIBLE);
         }
 
         Query query = firebaseFirestore.collection("Users").whereNotEqualTo("uid", firebaseAuth.getUid());
@@ -144,7 +142,6 @@ public class FragChat extends Fragment {
         super.onStart();
         chatAdapter.startListening();
         if (documentReference != null) {
-
             try {
                 documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
                 documentReference.update("status", "Online");}

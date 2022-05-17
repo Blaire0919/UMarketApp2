@@ -140,8 +140,8 @@ public class SellerCenter extends AppCompatActivity {
                 break;
 
             case R.id.sellernav_manageorders:
-//                Intent intent = new Intent(SellerCenter.this, DataInsights.class);
-//                startActivity(intent);
+                Intent MOintent = new Intent(SellerCenter.this, ManageOrders.class);
+                startActivity(MOintent);
                 Toast.makeText(getApplicationContext(), "Manage Orders Clicked", Toast.LENGTH_LONG).show();
                 break;
 

@@ -23,8 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="130dp"
             android:layout_gravity="top"
-
-            android:background="@drawable/prod_mockup"
+            android:background="@drawable/ic_image"
             android:scaleType="centerCrop" />
 
         <LinearLayout
@@ -42,7 +41,7 @@
                 android:fontFamily="@font/moon_light"
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
-                android:text="Gaspar on sale"
+                android:text="Item Name"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="7sp"
@@ -61,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:isIndicator="true"
                     android:max="5"
-                    android:progressTint="@color/mustard"
+                    android:progressTint="@color/NewUMarketDarkBlue"
 
                     android:scaleX=".8"
                     android:scaleY=".8"
@@ -75,7 +74,7 @@
                     android:layout_gravity="end"
                     android:fontFamily="@font/moon_light"
                     android:gravity="center"
-                    android:text="Php 350"
+                    android:text="Php 0.00"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="8sp"

@@ -10,13 +10,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:scrollbars="none"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,9 +46,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="20dp"
-                android:layout_margin="10dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
                 <com.google.android.material.card.MaterialCardView
@@ -174,12 +174,268 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="450dp"
-                android:padding="3dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    tools:ignore="TouchTargetSizeCheck">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/PositiveRates"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="14dp"
+                            android:fontFamily="@font/moon_light"
+                            android:gravity="center_horizontal"
+                            android:text="Positive Rating"
+                            android:textColor="@color/black"
+                            android:textSize="13sp"
+                            tools:ignore="SmallSp" />
+
+                        <LinearLayout
+                            android:id="@+id/pr_lin1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/PositiveRates"
+                            android:orientation="horizontal">
+
+                            <RatingBar
+                                android:id="@+id/prFor05"
+                                style="@style/Widget.AppCompat.RatingBar.Small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:isIndicator="true"
+                                android:max="5"
+                                android:progress="5"
+                                android:progressTint="@color/NewUMarketDarkBlue"
+                                android:scaleX=".8"
+                                android:scaleY=".8"
+                                android:transformPivotX="0dp"
+                                android:transformPivotY="0dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/moon_light"
+                                android:text="(3)"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/pr_lin2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/pr_lin1"
+                            android:orientation="horizontal">
+
+                            <RatingBar
+                                android:id="@+id/prFor04"
+                                style="@style/Widget.AppCompat.RatingBar.Small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:isIndicator="true"
+                                android:max="5"
+                                android:progress="4"
+                                android:progressTint="@color/NewUMarketDarkBlue"
+                                android:scaleX=".8"
+                                android:scaleY=".8"
+                                android:transformPivotX="0dp"
+                                android:transformPivotY="0dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/moon_light"
+                                android:text="(5)"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    tools:ignore="TouchTargetSizeCheck">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/NegativeRates"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="14dp"
+                            android:fontFamily="@font/moon_light"
+                            android:gravity="center_horizontal"
+                            android:text="Negative Rating"
+                            android:textColor="@color/black"
+                            android:textSize="13sp"
+                            tools:ignore="SmallSp" />
+
+                        <LinearLayout
+                            android:id="@+id/nr_lin1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/NegativeRates"
+                            android:orientation="horizontal">
+
+                            <RatingBar
+                                android:id="@+id/nrFor03"
+                                style="@style/Widget.AppCompat.RatingBar.Small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:isIndicator="true"
+                                android:max="5"
+                                android:progress="3"
+                                android:progressTint="@color/NewUMarketDarkBlue"
+                                android:scaleX=".8"
+                                android:scaleY=".8"
+                                android:transformPivotX="0dp"
+                                android:transformPivotY="0dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/moon_light"
+                                android:text="(1)"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/nr_lin2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/nr_lin1"
+                            android:orientation="horizontal">
+
+                            <RatingBar
+                                android:id="@+id/prFor02"
+                                style="@style/Widget.AppCompat.RatingBar.Small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:isIndicator="true"
+                                android:max="5"
+                                android:progress="2"
+                                android:progressTint="@color/NewUMarketDarkBlue"
+                                android:scaleX=".8"
+                                android:scaleY=".8"
+                                android:transformPivotX="0dp"
+                                android:transformPivotY="0dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/moon_light"
+                                android:text="(3)"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/nr_lin3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/nr_lin2"
+                            android:orientation="horizontal">
+
+                            <RatingBar
+                                android:id="@+id/prFor01"
+                                style="@style/Widget.AppCompat.RatingBar.Small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:isIndicator="true"
+                                android:max="5"
+                                android:progress="1"
+                                android:progressTint="@color/NewUMarketDarkBlue"
+                                android:scaleX=".8"
+                                android:scaleY=".8"
+                                android:transformPivotX="0dp"
+                                android:transformPivotY="0dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/moon_light"
+                                android:text="(2)"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    tools:ignore="TouchTargetSizeCheck">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/ReportedItems"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/moon_light"
+                            android:gravity="center_horizontal"
+                            android:text="Reported Items"
+                            android:textColor="@color/black"
+                            android:textSize="13sp"
+                            tools:ignore="SmallSp" />
+
+                        <TextView
+                            android:id="@+id/txtReportedItems"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/ReportedItems"
+                            android:layout_marginTop="30dp"
+                            android:fontFamily="@font/moon_light"
+                            android:text="5"
+                            android:textColor="@color/NewUMarketDarkBlue"
+                            android:textSize="15sp"
+                            tools:ignore="SmallSp" />
+
+                    </RelativeLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:padding="3dp"
                 android:background="@color/NewUMarketDarkBlue"
-                android:orientation="vertical"
-                android:layout_marginTop="20dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -187,15 +443,89 @@
                     android:fontFamily="@font/moon_light"
                     android:textColor="@color/white"
                     android:layout_margin="5dp"
-                    android:text="Product Ranking"/>
+                    android:text="Net Income Chart"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:layout_marginTop="5dp">
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/barchart"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_margin="20dp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/NewUMarketDarkBlue"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:fontFamily="@font/moon_light"
+                    android:text="Product Ranking"
+                    android:textColor="@color/white" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/ranked_Recyclerview"
                     android:layout_width="match_parent"
-                    android:background="@color/NewUMarketlight"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:background="@color/NewUMarketlight" />
 
             </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:padding="3dp"
+                android:background="@color/NewUMarketDarkBlue"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/moon_light"
+                    android:textColor="@color/white"
+                    android:layout_margin="5dp"
+                    android:text="Gross Sale Chart"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:layout_marginTop="5dp">
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/piechart"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_margin="30dp"
+                        android:layout_marginTop="20dp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
 
         </LinearLayout>
 

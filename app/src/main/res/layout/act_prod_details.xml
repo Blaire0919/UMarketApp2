@@ -16,22 +16,38 @@
         <LinearLayout
             android:id="@+id/proddetails_lin01"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:background="@color/NewUMarketDarkBlue"
             android:orientation="horizontal"
-            android:padding="20dp">
+            android:padding="10dp">
 
             <ImageView
                 android:id="@+id/proddetails_back"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:layout_marginStart="10dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
                 android:clickable="true"
-                android:elevation="10dp"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:src="@drawable/ic_back"
                 tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="10" />
+
+            <ImageView
+                android:id="@+id/ImageViewreportItem"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:src="@drawable/ic_baseline_report_24"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
 
         </LinearLayout>
 
@@ -60,6 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/prod_mockup" />
+
             </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
@@ -108,11 +125,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-15dp"
                     android:fontFamily="@font/moon_light"
-                    android:text="(0.0)"
-                    android:textSize="20sp"
                     android:gravity="center_horizontal"
+                    android:text="(0.0)"
                     android:textAlignment="center"
-                    android:textColor="@color/NewUMarketDarkBlue" />
+                    android:textColor="@color/NewUMarketDarkBlue"
+                    android:textSize="20sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -123,7 +140,7 @@
                         android:id="@+id/relayout"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
-                        android:layout_marginTop="50dp"
+                        android:layout_marginTop="25dp"
                         android:background="@color/NewUMarketlight"
                         android:orientation="vertical"
                         android:padding="10dp" />
@@ -135,14 +152,15 @@
                         android:padding="15dp">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:layout_width="105dp"
-                            android:layout_height="105dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             app:cardCornerRadius="50dp">
 
-                            <RelativeLayout
+                            <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/profile_img" />
+                                android:cropToPadding="true"
+                                android:src="@drawable/profile_img" />
 
                         </com.google.android.material.card.MaterialCardView>
 
@@ -158,11 +176,10 @@
                                 android:id="@+id/pd_seller_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
                                 android:fontFamily="@font/moon_light"
                                 android:text="Loading..."
                                 android:textColor="@color/black"
-                                android:textSize="14sp" />
+                                android:textSize="10sp" />
                         </LinearLayout>
 
                         <Button
@@ -170,11 +187,22 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
+                            android:layout_marginEnd="5dp"
                             android:backgroundTint="@color/NewUMarketDarkBlue"
                             android:fontFamily="@font/moon_light"
                             android:text="View \nListing"
-                            android:textSize="10sp" />
+                            android:textSize="9sp" />
 
+                        <Button
+                            android:id="@+id/btnReportUser"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:backgroundTint="#D75E5E"
+                            android:fontFamily="@font/moon_light"
+                            android:text="Report \nUser"
+                            android:textSize="9sp" />
 
                     </LinearLayout>
 
@@ -323,13 +351,13 @@
                             android:id="@+id/rec"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
                             android:layout_margin="10dp"
-                            android:gravity="center"
+                            android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
                             android:layout_weight="1"
                             android:elevation="18dp"
                             android:fontFamily="@font/moon_light"
+                            android:gravity="center"
                             android:text="Similar Products"
                             android:textAlignment="center"
                             android:textColor="@color/black"
@@ -358,8 +386,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@color/NewUMarketlight">
+                    android:background="@color/NewUMarketlight"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -367,9 +395,9 @@
                         android:layout_marginTop="15dp"
                         android:background="@color/NewUMarketlight"
                         android:fontFamily="@font/moon_light"
+                        android:gravity="center"
                         android:text="Product Reviews:"
                         android:textAlignment="center"
-                        android:gravity="center"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 

@@ -51,21 +51,26 @@ import bbc.umarket.umarketapp2.Helper.FeatProdtHelperClass;
 import bbc.umarket.umarketapp2.Adapter.ItemAdapter;
 import bbc.umarket.umarketapp2.Helper.ItemHelperClass;
 import bbc.umarket.umarketapp2.Database.SessionManager;
+import bbc.umarket.umarketapp2.Helper.NotifModel;
 import bbc.umarket.umarketapp2.Listener.CartItemLoadListener;
 import bbc.umarket.umarketapp2.Listener.ItemLoadListener;
+import bbc.umarket.umarketapp2.Listener.NotifItemLoadListener;
 import bbc.umarket.umarketapp2.Main.AddListing;
 import bbc.umarket.umarketapp2.Main.AddToCart;
 import bbc.umarket.umarketapp2.Main.EditProfile;
 import bbc.umarket.umarketapp2.Main.HomeContainer;
 import bbc.umarket.umarketapp2.Main.Login;
+import bbc.umarket.umarketapp2.Main.NotificationScreen;
+import bbc.umarket.umarketapp2.Main.ProductDetails;
 import bbc.umarket.umarketapp2.Main.Search;
+import bbc.umarket.umarketapp2.Main.SpecificChat;
 import bbc.umarket.umarketapp2.R;
 import bbc.umarket.umarketapp2.Main.SearchedListing;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class FragHome extends Fragment implements ItemLoadListener, CartItemLoadListener {
+public class FragHome extends Fragment implements ItemLoadListener, CartItemLoadListener, NotifItemLoadListener {
     Context context;
     TextInputEditText search;
     RecyclerView category, items, features;
@@ -80,9 +85,11 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.mainLayout)
     FrameLayout mainLayout;
+
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.badge)
     NotificationBadge badge;
+
     ImageView btncart;
 
     ItemLoadListener itemLoadListener;
@@ -101,6 +108,10 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
     String sportsequipment;
     ArrayList<String> cat_interests = new ArrayList<>();
 
+    ImageView notifbutton;
+    NotificationBadge notificationBadge;
+    NotifItemLoadListener notifItemLoadListener;
+
     public FragHome() {}
 
     @Override
@@ -117,6 +128,11 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
         itemLoadListener = this;
         cartItemLoadListener = this;
         countCartItem();
+
+        notifItemLoadListener = this;
+        countNotif();
+
+
 
         rootNode = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
@@ -138,9 +154,16 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
         features = view.findViewById(R.id.featured_RecyclerView);
         search = view.findViewById(R.id.tilSearch);
         btncart = view.findViewById(R.id.btnCart);
+        notifbutton = view.findViewById(R.id.btn_notif);
+        notificationBadge = view.findViewById(R.id.notifbadge);
 
         reference = rootNode.getReference("products");
         forInterest = rootNode.getReference("interests");
+
+        notifbutton.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getActivity(), NotificationScreen.class);
+            startActivity(intent);
+        });
 
         //for category recycler view
         category.setHasFixedSize(true);
@@ -300,8 +323,7 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
     }
 
     @Override
-    public void onItemLoadSuccess(List<ItemHelperClass> itemList) {
-    }
+    public void onItemLoadSuccess(List<ItemHelperClass> itemList) {}
 
     @Override
     public void onItemLoadFailed(String message) {
@@ -323,9 +345,49 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
     }
 
     @Override
+    public void onNotifLoadSuccess(ArrayList<NotifModel> notifList) {
+        int NotifSum = 0;
+        for (NotifModel notifModel : notifList) {
+            NotifSum += Integer.parseInt(notifModel.getQty());
+            notificationBadge.setNumber(NotifSum);
+        }
+    }
+
+    @Override
+    public void onNotifLoadFailed(String Message) {}
+
+    @Override
     public void onResume() {
         super.onResume();
         countCartItem();
+        countNotif();
+    }
+
+    private void countNotif(){
+        ArrayList<NotifModel> notifList = new ArrayList<>();
+
+        SessionManager sessionManager = new SessionManager(getActivity(), SessionManager.SESSION_USERSESSION);
+        HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
+        studid = usersdetails.get(SessionManager.KEY_STUDID);
+
+        FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("notification").child(studid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                    NotifModel notifModel = dataSnapshot.getValue(NotifModel.class);
+                                    notifList.add(notifModel);
+                            }
+                            notifItemLoadListener.onNotifLoadSuccess(notifList);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.d("", error.getDetails());
+                    }
+                });
 
     }
 
@@ -358,7 +420,6 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
                         }
                     });
         } else {
-
             FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                     .getReference("cart").child(Objects.requireNonNull(usersdetails2.get(SessionManager.KEY_STUDID)))
                     .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -377,10 +438,10 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
                             Log.d("", error.getDetails());
                         }
                     });
-
-
         }
 
 
     }
+
+
 }

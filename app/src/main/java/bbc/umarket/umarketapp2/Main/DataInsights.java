@@ -14,6 +14,16 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,18 +46,23 @@ public class DataInsights extends AppCompatActivity {
 
     public static List<String> productID = new ArrayList<>();
     Integer rrcount = 0;
-    //  Float totalsales = 0.00F;
-
 
     //for Seller Product Ranking
     RecyclerView RankedRecyclerview;
     RankItemAdapter RankedAdapter;
     ArrayList<ItemRankedHelperClass> RankedItemList;
 
-
     //Database references
     DatabaseReference RRroot = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
             .getReference("rateandreview");
+
+
+    //for charts
+    BarChart barChart;
+    PieChart pieChart;
+    ArrayList<BarEntry> barEntries = new ArrayList<>();
+    ArrayList<PieEntry> pieEntries = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +76,10 @@ public class DataInsights extends AppCompatActivity {
         totorders = findViewById(R.id.txtTotOrders);
         totnumCustomers = findViewById(R.id.txtTotCustomer);
         RankedRecyclerview = findViewById(R.id.ranked_Recyclerview);
+
+        //static charts
+        barChart = findViewById(R.id.barchart);
+        pieChart = findViewById(R.id.piechart);
 
         back.setOnClickListener(view -> {
             Intent intent = new Intent(DataInsights.this, SellerCenter.class);
@@ -119,6 +138,38 @@ public class DataInsights extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
+
+
+        //use for loop in charts
+        for (int i=1; i<10;i++){
+                //convert to float value
+                float  value  = (float) (i*10.0);
+                //initialize bar entry
+                BarEntry barEntry  = new BarEntry(i, value);
+                //initialize pie entry
+                PieEntry pieEntry = new PieEntry(i, value);
+                barEntries.add(barEntry);
+                pieEntries.add(pieEntry);
+        }
+
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Income");
+        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        barDataSet.setDrawValues(false);
+        barChart.setData(new BarData(barDataSet));
+        barChart.animateY(5000);
+        barChart.getDescription().setText("Net Income Chart");
+        barChart.getDescription().setTextColor(R.color.NewUMarketDarkBlue);
+
+
+        PieDataSet pieDataSet = new PieDataSet(pieEntries, "Gross Sales");
+        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        pieDataSet.setDrawValues(false);
+        pieChart.setData(new PieData(pieDataSet));
+        pieChart.animateXY(5000, 5000);
+        pieChart.getDescription().setEnabled(false);
+
+
+
 
     }
 

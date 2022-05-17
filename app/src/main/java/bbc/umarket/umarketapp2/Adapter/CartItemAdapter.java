@@ -149,7 +149,8 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
                         currentItem.getProdName(),
                         currentItem.getProdQty(),
                         String.format("%s", currentItem.getProdPrice()),
-                        totprice
+                        totprice,
+                        currentItem.getSellerID()
                 );
                 AddToCart.check_out(chkitemID, checkOutHelperClass);
             } else {

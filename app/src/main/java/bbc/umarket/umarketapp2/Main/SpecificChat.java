@@ -50,7 +50,6 @@ public class SpecificChat extends AppCompatActivity {
     String mreceivername, mreceiveruid, msenderuid;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
-    DocumentReference documentReference;
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/");
     String senderroom, receiverroom;

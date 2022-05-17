@@ -43,7 +43,7 @@ public class OTPVerificationCode extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     ProgressBar progressBarofotpverification;
 
-    String fname, lname;
+    String fname, lname, userID;
     FirebaseStorage firebaseStorage;
     StorageReference storageReference;
     FirebaseFirestore firebaseFirestore;
@@ -60,6 +60,7 @@ public class OTPVerificationCode extends AppCompatActivity {
         //getting data from session
         fname = usersdetails.get(SessionManager.KEY_FNAME);
         lname = usersdetails.get(SessionManager.KEY_LNAME);
+        userID = usersdetails.get(SessionManager.KEY_STUDID);
 
         txtchangenum = findViewById(R.id.changenumber);
         getotp = findViewById(R.id.etgetotp);
@@ -114,6 +115,7 @@ public class OTPVerificationCode extends AppCompatActivity {
         userdata.put("name", fname+ " " +lname);
         userdata.put("uid", firebaseAuth.getUid());
         userdata.put("status", "Online");
+        userdata.put("userid", userID);
 
         documentReference.set(userdata).addOnSuccessListener(unused -> {
             Toast.makeText(getApplicationContext(), "Data on Cloud Firestore send success", Toast.LENGTH_SHORT).show();

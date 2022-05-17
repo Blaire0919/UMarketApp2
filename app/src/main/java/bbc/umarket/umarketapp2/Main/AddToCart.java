@@ -197,10 +197,8 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
     }
 
     @Override
-    public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) {
-    }
+    public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) { }
 
     @Override
-    public void onCartLoadFailed(String Message) {
-    }
+    public void onCartLoadFailed(String Message) { }
 }

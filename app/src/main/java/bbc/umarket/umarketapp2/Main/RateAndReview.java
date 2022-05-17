@@ -39,8 +39,6 @@ public class RateAndReview extends AppCompatActivity {
 
     DatabaseReference reference, refRR;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +52,9 @@ public class RateAndReview extends AppCompatActivity {
         fname = usersdetails.get(SessionManager.KEY_FNAME);
         lname = usersdetails.get(SessionManager.KEY_LNAME);
         buyerName = fname + " "+ lname;
+
+
+
 
 
         //for database

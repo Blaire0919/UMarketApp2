@@ -1,11 +1,11 @@
 package bbc.umarket.umarketapp2.Helper;
 
 public class CheckOutHelperClass {
-    String pUrl, prodId, sellerName , prodName, qty, price, subTotal;
+    String pUrl, prodId, sellerName , prodName, qty, price, subTotal, sellerID;
 
     public CheckOutHelperClass(){}
 
-    public CheckOutHelperClass(String pUrl, String prodId, String sellerName , String prodName, String qty, String price, String subTotal) {
+    public CheckOutHelperClass(String pUrl, String prodId, String sellerName , String prodName, String qty, String price, String subTotal, String sellerID) {
         this.pUrl = pUrl;
         this.prodId = prodId;
         this.sellerName = sellerName;
@@ -13,6 +13,7 @@ public class CheckOutHelperClass {
         this.qty = qty;
         this.price = price;
         this.subTotal = subTotal;
+        this.sellerID = sellerID;
     }
 
     public String getpUrl() { return pUrl; }
@@ -56,4 +57,8 @@ public class CheckOutHelperClass {
     public void setSubTotal(String subTotal) {
         this.subTotal = subTotal;
     }
+
+    public String getSellerID() {return sellerID;}
+
+    public void setSellerID(String sellerID) { this.sellerID = sellerID;}
 }

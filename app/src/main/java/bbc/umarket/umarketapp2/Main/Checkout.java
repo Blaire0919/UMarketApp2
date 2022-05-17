@@ -24,7 +24,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +34,9 @@ import java.util.List;
 import bbc.umarket.umarketapp2.Adapter.CartItemAdapter;
 import bbc.umarket.umarketapp2.Adapter.CheckOutAdapter;
 import bbc.umarket.umarketapp2.Database.SessionManager;
+import bbc.umarket.umarketapp2.Fragments.FragChat;
 import bbc.umarket.umarketapp2.Helper.CheckOutHelperClass;
+import bbc.umarket.umarketapp2.Helper.NotifModel;
 import bbc.umarket.umarketapp2.R;
 import butterknife.BindView;
 
@@ -57,28 +61,38 @@ public class Checkout extends AppCompatActivity {
 
     String totpay;
 
+    String checkoutProduct, sellerID;
+
+    //for user notification
+    Calendar calendar;
+    String un_prodname, un_sellername, un_qty, un_price, currenttime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_checkout);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
-
         SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
         studid = usersdetails.get(SessionManager.KEY_STUDID);
+
+        Intent COintent = getIntent();
+        checkoutProduct = COintent.getExtras().getString("pID");
 
         checkoutRecyclerView = findViewById(R.id.rv_checkout);
         back = findViewById(R.id.checkout_back);
         totPayment = findViewById(R.id.tvCHTotalPayment);
         PlaceOrder = findViewById(R.id.Linear_PlaceOrder);
 
+        calendar = Calendar.getInstance();
+
         rootNode = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/");
         reference = rootNode.getReference("checkout").child(studid).child("items");
 
         //for checkout recyclerview
         checkoutRecyclerView.setHasFixedSize(true);
-        checkoutRecyclerView.setLayoutManager( new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        checkoutRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         checkoutList = new ArrayList<>();
         checkOutAdapter = new CheckOutAdapter(this, checkoutList);
         checkoutRecyclerView.setAdapter(checkOutAdapter);
@@ -93,29 +107,57 @@ public class Checkout extends AppCompatActivity {
                         checkoutList.add(checkOutHelperClass);
                         orderedItem.add(checkOutHelperClass);
                         ItemIdOrdered.add(snapshot1.child("prodId").getValue(String.class));
+                        sellerID = snapshot1.child("sellerID").getValue(String.class);
+
+                        //user notif
+                        un_prodname =  snapshot1.child("prodName").getValue(String.class);
+                        un_sellername = snapshot1.child("sellerName").getValue(String.class);
+                        un_qty = snapshot1.child("qty").getValue(String.class);
+                        un_price = snapshot1.child("price").getValue(String.class);
+
                     }
                     checkOutAdapter.notifyDataSetChanged();
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("Error in CHECKOUT:", error.getMessage());
             }
         });
 
-        ref2 = rootNode.getReference("checkout").child(studid);
-        ref2.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snaps) {
-                if (snaps.exists()) {
-                    totPayment.setText(String.format("₱ %s", snaps.child("subtotal").getValue(String.class)));
-                    totpay = snaps.child("subtotal").getValue(String.class);
+        if (checkoutProduct != null) {
+            ref2 = rootNode.getReference("checkout").child(studid).child("items").child(checkoutProduct);
+            ref2.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snaps) {
+                    if (snaps.exists()) {
+                        totPayment.setText(String.format("₱ %s", snaps.child("subTotal").getValue(String.class)));
+                        totpay = snaps.child("subTotal").getValue(String.class);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        } else {
+            ref2 = rootNode.getReference("checkout").child(studid);
+            ref2.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snaps) {
+                    if (snaps.exists()) {
+                        totPayment.setText(String.format("₱ %s", snaps.child("subTotal").getValue(String.class)));
+                        totpay = snaps.child("subTotal").getValue(String.class);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        }
+
 
         back.setOnClickListener(view -> {
             FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
@@ -123,7 +165,7 @@ public class Checkout extends AppCompatActivity {
                     .child(studid)
                     .removeValue()
                     .addOnSuccessListener(unused -> Log.d(TAG, "Delete Success!"));
-            Integer x=0;
+            Integer x = 0;
             AddToCart.selectedItemCount(x);
 
             checkoutList.clear();
@@ -163,7 +205,7 @@ public class Checkout extends AppCompatActivity {
                     .addOnSuccessListener(unused -> Log.d(TAG, "Delete Success!"));
 
 
-            for (String id : ItemIdOrdered){
+            for (String id : ItemIdOrdered) {
                 FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                         .getReference("cart")
                         .child(studid)
@@ -172,10 +214,33 @@ public class Checkout extends AppCompatActivity {
                         .addOnSuccessListener(unused -> Log.d("REMOVE ITEMS FROM CART", id));
             }
 
+
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm a");
+            currenttime = simpleDateFormat.format(calendar.getTime());
+            NotifModel notifModel = new NotifModel(un_prodname, un_sellername, un_qty, un_price, currenttime);
+            Date date = new Date();
+
+            //usernotif
+            FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                    .getReference("notification")
+                    .child(studid)
+                    .child(String.valueOf(date.getTime()))
+                    .setValue(notifModel)
+                    .addOnSuccessListener(unused -> Log.d(TAG, "Delete Success!"));
+
+
             Intent intent = new Intent(Checkout.this, HomeContainer.class);
-            intent.putExtra("back_Chat","Chat");
+            intent.putExtra("back_Chat", "Chat");
+
+            //for automated chat
+            Bundle bundle = new Bundle();
+            bundle.putString("sellerid", sellerID);
+            // set Fragmentclass Arguments
+            FragChat fragChat = new FragChat();
+            fragChat.setArguments(bundle);
+
             startActivity(intent);
-        } );
+        });
 
     }
 }

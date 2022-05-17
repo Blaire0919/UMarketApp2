@@ -51,6 +51,7 @@
             android:fontFamily="@font/moon_light"
             android:foreground="?android:attr/selectableItemBackground"
             android:padding="30dp"
+            android:visibility="visible"
             android:paddingStart="40dp"
             android:paddingEnd="40dp"
             android:text="Test OTP"

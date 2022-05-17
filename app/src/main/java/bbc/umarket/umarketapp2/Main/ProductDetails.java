@@ -45,6 +45,7 @@ import com.chaquo.python.Python;
 
 import bbc.umarket.umarketapp2.Adapter.CartItemAdapter;
 import bbc.umarket.umarketapp2.Helper.CartHelperClass;
+import bbc.umarket.umarketapp2.Helper.CheckOutHelperClass;
 import bbc.umarket.umarketapp2.Helper.ClickedHistoryHelperClass;
 import bbc.umarket.umarketapp2.Adapter.ItemAdapter;
 import bbc.umarket.umarketapp2.Helper.ItemHelperClass;
@@ -84,6 +85,10 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
 
     Integer qty = 0;
     String itemID;
+
+    //checkout
+    CheckOutHelperClass checkOutHelperClass;
+    public static String coImgUrl, coProdId, coSellerName, coProdName, coQty, coPrice, coSubTotal, coSellerID;
 
     //for add to cart database
     CartHelperClass cartHelperClass;
@@ -158,6 +163,12 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                         PRname.setText(snapshot.child(prodID).child("pName").getValue(String.class));
                         pName = snapshot.child(prodID).child("pName").getValue(String.class);
 
+                        //for checkout single item parameter
+                        coImgUrl = imageUrl;
+                        coProdId = prodID;
+                        coProdName = pName;
+
+
                         DatabaseReference ratingref = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                                 .getReference("rateandreview");
 
@@ -191,6 +202,10 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                         CprodPrice = Objects.requireNonNull(snapshot.child(prodID).child("pPrice").getValue(String.class));
                         CtotalPrice = Objects.requireNonNull(snapshot.child(prodID).child("pPrice").getValue(String.class));
 
+                        coQty = "1";
+                        coPrice =  snapshot.child(prodID).child("pPrice").getValue(String.class);
+                        coSubTotal = coPrice;
+
                         final String SellerID = snapshot.child(prodID).child("pSellerID").getValue(String.class);
 
                         DatabaseReference userRef = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
@@ -206,6 +221,9 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                                     String lnamefromDB = snaps.child(SellerID).child("lname").getValue(String.class);
                                     PRsellername.setText(String.format("%s %s", fnamefromDB, lnamefromDB));
                                     CsellerName = String.format("%s %s", fnamefromDB, lnamefromDB);
+
+                                    coSellerName = String.format("%s %s", fnamefromDB, lnamefromDB);
+                                    coSellerID = SellerID;
                                 }
 
                                 DatabaseReference refCH = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
@@ -314,7 +332,7 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
         DatabaseReference rrRef = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                 .getReference("rateandreview");
 
-//Rate and review         
+        //Rate and review
         rrRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -331,10 +349,8 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                 }
                 rrAdapter.notifyDataSetChanged();
             }
-
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
 
         cart.setOnClickListener(view -> {
@@ -384,20 +400,24 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
         });
 
         buy.setOnClickListener(view -> {
-            Intent intent = new Intent(ProductDetails.this, RateAndReview.class);
+            checkOutHelperClass = new CheckOutHelperClass(coImgUrl, coProdId, coSellerName, coProdName, coQty, coPrice, coSubTotal, coSellerID);
+            FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                    .getReference("checkout")
+                    .child(studid)
+                    .child("items")
+                    .child(prodID)
+                    .setValue(checkOutHelperClass)
+                    .addOnSuccessListener(unused -> Log.d(TAG, "Checkout Success!"));
+
+            Intent intent = new Intent(ProductDetails.this, Checkout.class);
             intent.putExtra("pID", prodID);
-            intent.putExtra("pName", pName);
-            intent.putExtra("pImg", imageUrl);
-            intent.putExtra("datetime", currentdatetime);
             startActivity(intent);
             finish();
         });
     }
 
-
     @Override
-    public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) {
-    }
+    public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) {}
 
     @Override
     public void onCartLoadFailed(String message) {

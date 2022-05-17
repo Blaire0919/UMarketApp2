@@ -173,7 +173,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/moon_light"
                 android:gravity="center"
                 android:text="Interest"
@@ -188,14 +188,14 @@
                 android:fontFamily="@font/moon_light"
                 android:text="Select one or more interest below."
                 android:textColor="@color/black"
-                android:textSize="10sp"
+                android:textSize="9sp"
                 tools:ignore="SmallSp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:padding="5dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -229,6 +229,16 @@
                         android:text="Foods and Beverages"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />
+
+                    <CheckBox
+                        android:id="@+id/chkOthers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/moon_light"
+                        android:text="Others"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -269,7 +279,7 @@
             <Button
                 android:id="@+id/btnRegister"
                 style="@style/ButtonStyle01"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 

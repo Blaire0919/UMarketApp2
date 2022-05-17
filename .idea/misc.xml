@@ -6,6 +6,7 @@
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/drawable-mdpi/receiverchatdrawable.xml" value="0.168" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/drawable-xhdpi/ic_notification.xml" value="0.124" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.2035" />
+        <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/drawable/ic_baseline_report_24.xml" value="0.2145" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/drawable/ic_baseline_send_24.xml" value="0.106" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/drawable/ic_cart.xml" value="0.2845" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/drawable/ic_notif.xml" value="0.124" />
@@ -15,15 +16,17 @@
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_addtocart.xml" value="0.33" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_categorized_listing.xml" value="0.33055555555555555" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_checkout.xml" value="0.33" />
-        <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_data_insights.xml" value="0.33" />
+        <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_data_insights.xml" value="0.40987370838117104" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_editprofile.xml" value="0.33" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_homecontainer.xml" value="0.33055555555555555" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_login.xml" value="0.33" />
+        <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_manageorders.xml" value="0.33055555555555555" />
+        <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_notifscreen.xml" value="0.33055555555555555" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_otp_auth.xml" value="0.5" />
-        <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_otpvcode.xml" value="0.33055555555555555" />
+        <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_otpvcode.xml" value="0.25" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_prod_details.xml" value="0.33" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_ratenreview.xml" value="0.33055555555555555" />
-        <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_register.xml" value="0.33" />
+        <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_register.xml" value="0.5" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_search.xml" value="0.5" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_searched_listing.xml" value="0.33055555555555555" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/act_seller_center.xml" value="0.33" />
@@ -37,6 +40,7 @@
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/des_checkoutprods.xml" value="0.5" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/des_client_rateandreview.xml" value="0.5" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/des_featcard.xml" value="0.75" />
+        <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/des_notif.xml" value="0.5" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/des_proditemcard.xml" value="0.6045723962743438" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/des_ranking_item.xml" value="0.5" />
         <entry key="..\:/Users/Michelle Anne/AndroidStudioProjects/NewUMarketApp2/app/src/main/res/layout/dropdown_item.xml" value="0.33055555555555555" />
