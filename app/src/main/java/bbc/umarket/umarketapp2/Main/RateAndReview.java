@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -35,7 +36,7 @@ public class RateAndReview extends AppCompatActivity {
     RatingBar rate;
     long maxid = 0;
 
-    String studid,fname, lname, buyerName, rrID, pId, p_date, pUrl, ratenum, rrreview;
+    String studid,fname, lname, buyerName, rrID, pId, p_date, pUrl, ratenum, rrreview, prodname;
 
     DatabaseReference reference, refRR;
 
@@ -54,14 +55,18 @@ public class RateAndReview extends AppCompatActivity {
         buyerName = fname + " "+ lname;
 
 
+//        //for database
+//        Bundle bundle = getIntent().getExtras();
+//        pId = bundle.getString("pID");
+//        p_date = bundle.getString("datetime");
+//        pUrl = bundle.getString("pImg");
 
 
-
-        //for database
-        Bundle bundle = getIntent().getExtras();
-        pId = bundle.getString("pID");
-        p_date = bundle.getString("datetime");
-        pUrl = bundle.getString("pImg");
+        Intent rrintent = getIntent();
+        pId = rrintent.getExtras().getString("pID");
+        pUrl = rrintent.getExtras().getString("imageUrl");
+        prodname =  rrintent.getExtras().getString("pname");
+        p_date =  java.text.DateFormat.getDateTimeInstance().format(new Date());
 
         //hooks
         p_img = findViewById(R.id.p_image);
@@ -71,26 +76,27 @@ public class RateAndReview extends AppCompatActivity {
         review = findViewById(R.id.rr_TILreview);
         rate = findViewById(R.id.rrinputratebar);
 
-        reference = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("products");
+        reference = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("products");
         Query checkID = reference.orderByChild("pID").equalTo(pId);
         checkID.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
                     Glide.with(RateAndReview.this)
-                            .load(snapshot.child(pId).child("imageUrl").getValue(String.class))
+                            .load(pUrl)
                             .into(p_img);
-                    p_name.setText(bundle.getString("pName"));
+                    p_name.setText(prodname);
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
 
-        refRR = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("rateandreview");
+        refRR = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("rateandreview");
 
         submit.setOnClickListener(view -> {
-
             ratenum = String.valueOf(rate.getRating());
             rrreview = Objects.requireNonNull(review.getEditText()).getText().toString();
 

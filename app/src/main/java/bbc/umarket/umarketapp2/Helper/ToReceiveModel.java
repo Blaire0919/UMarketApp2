@@ -1,17 +1,17 @@
 package bbc.umarket.umarketapp2.Helper;
 
 public class ToReceiveModel {
-    String ImgUrl, buyerID, prodID, sellerID, shopName, prodName, prodQty, prodPrice;
+    String ImgUrl, buyerID, prodID, sellerID, sellerName, prodName, prodQty, prodPrice;
 
 
     public ToReceiveModel(){}
 
-    public ToReceiveModel(String imgUrl, String buyerID, String prodID, String sellerID, String shopName, String prodName, String prodQty, String prodPrice) {
+    public ToReceiveModel(String imgUrl, String buyerID, String prodID, String sellerID, String sellerName, String prodName, String prodQty, String prodPrice) {
         ImgUrl = imgUrl;
         this.buyerID = buyerID;
         this.prodID = prodID;
         this.sellerID = sellerID;
-        this.shopName = shopName;
+        this.sellerName = sellerName;
         this.prodName = prodName;
         this.prodQty = prodQty;
         this.prodPrice = prodPrice;
@@ -49,12 +49,12 @@ public class ToReceiveModel {
         this.sellerID = sellerID;
     }
 
-    public String getShopName() {
-        return shopName;
+    public String getSellerName() {
+        return sellerName;
     }
 
-    public void setShopName(String shopName) {
-        this.shopName = shopName;
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
     }
 
     public String getProdName() {

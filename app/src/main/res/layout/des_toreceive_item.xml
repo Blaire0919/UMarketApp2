@@ -133,6 +133,7 @@
                         android:layout_marginRight="2dp"
                         android:clickable="true"
                         android:elevation="8dp"
+                        android:backgroundTint="@color/NewUMarketDarkBlue"
                         android:foreground="?android:attr/selectableItemBackground"
                         app:strokeColor="@color/grey_font"
                         app:strokeWidth="1dp">
@@ -153,7 +154,7 @@
                                 android:gravity="center"
                                 android:text="Order Received"
                                 android:textAlignment="center"
-                                android:textColor="@color/grey_font"
+                                android:textColor="@color/white"
                                 android:textSize="10sp"
                                 tools:ignore="SmallSp" />
 

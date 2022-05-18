@@ -57,6 +57,7 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
             intent.putExtra("qty", shippingModel.getQty());
             intent.putExtra("totamt", shippingModel.getTotAmt());
             intent.putExtra("buyerid", shippingModel.getBuyerID());
+            intent.putExtra("sellerid", shippingModel.getSellerID());
 
             context.startActivity(intent);
         });

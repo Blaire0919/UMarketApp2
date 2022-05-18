@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import bbc.umarket.umarketapp2.Helper.ToProcessModel;
 import bbc.umarket.umarketapp2.R;
+import bbc.umarket.umarketapp2.SellerSide.CompletedOrder;
 import bbc.umarket.umarketapp2.SellerSide.ShippingOrder;
 
 
@@ -48,7 +49,7 @@ public class CompletedOrderAdapter extends RecyclerView.Adapter<CompletedOrderAd
         holder.datetime.setText(String.format("%s %s", completedOrderModel.getCurrentdate(), completedOrderModel.getCurrenttime()));
 
         holder.card.setOnClickListener(view -> {
-            Intent intent = new Intent(context, ShippingOrder.class);
+            Intent intent = new Intent(context, CompletedOrder.class);
             intent.putExtra("buyername", completedOrderModel.getBuyerName());
             intent.putExtra("pid", completedOrderModel.getProdID());
             intent.putExtra("prodname", completedOrderModel.getProdName());

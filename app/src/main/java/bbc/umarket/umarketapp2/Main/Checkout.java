@@ -17,11 +17,13 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -38,6 +40,7 @@ import bbc.umarket.umarketapp2.Fragments.FragChat;
 import bbc.umarket.umarketapp2.Helper.CheckOutHelperClass;
 import bbc.umarket.umarketapp2.Helper.NotifModel;
 import bbc.umarket.umarketapp2.Helper.ToProcessModel;
+import bbc.umarket.umarketapp2.Helper.ToReceiveModel;
 import bbc.umarket.umarketapp2.R;
 import butterknife.BindView;
 
@@ -71,6 +74,7 @@ public class Checkout extends AppCompatActivity {
 
     //for managing orders by sellers
     String seller_ID, buyerID, buyerName, prodID, prodName, price, qty, totAmt, order_currentdate, order_currenttime;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,9 +139,10 @@ public class Checkout extends AppCompatActivity {
                         prodName = un_prodname;
                         price = un_price;
                         qty = un_qty;
-                        totAmt = String.valueOf(Float.parseFloat(String.valueOf(Float.parseFloat(price)  * Integer.parseInt(qty))));
-                        order_currentdate =  java.text.DateFormat.getDateInstance().format(new Date());
+                        totAmt = String.valueOf(Float.parseFloat(String.valueOf(Float.parseFloat(price) * Integer.parseInt(qty))));
+                        order_currentdate = java.text.DateFormat.getDateInstance().format(new Date());
                         order_currenttime = currenttime;
+
 
 
                     }
@@ -239,24 +244,26 @@ public class Checkout extends AppCompatActivity {
             }
 
             //usernotif
-            String sentence =  String.format("You placed an order of %s %s from %s with a price of %s", un_qty, un_prodname, un_sellername, un_price);
+            String sentence = String.format("You placed an order of %s %s from %s with a price of %s", un_qty, un_prodname, un_sellername, un_price);
             NotifModel notifModel = new NotifModel(studid, sentence, currenttime);
             FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                     .getReference("notification")
                     .child(studid)
                     .child(String.valueOf(date.getTime()))
                     .setValue(notifModel)
-                    .addOnSuccessListener(unused -> {});
+                    .addOnSuccessListener(unused -> {
+                    });
 
 
             //toprocess order for seller
-            ToProcessModel toProcessModel = new ToProcessModel( seller_ID, buyerID, buyerName, prodID, prodName, price, qty, totAmt, order_currentdate, order_currenttime);
+            ToProcessModel toProcessModel = new ToProcessModel(seller_ID, buyerID, buyerName, prodID, prodName, price, qty, totAmt, order_currentdate, order_currenttime);
             FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                     .getReference("process_order")
                     .child(seller_ID)
                     .push()
                     .setValue(toProcessModel)
-                    .addOnSuccessListener(unused -> {});
+                    .addOnSuccessListener(unused -> {
+                    });
 
 
 //            //for automated chat

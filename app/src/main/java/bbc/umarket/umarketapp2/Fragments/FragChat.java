@@ -37,8 +37,6 @@ public class FragChat extends Fragment {
     FirestoreRecyclerOptions<FirebaseModel> allusername;
     RecyclerView recyclerView;
 
-    String sellerID = "";
-
     public FragChat() {}
 
     @Override
@@ -53,7 +51,6 @@ public class FragChat extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
-
         recyclerView = v.findViewById(R.id.rvChatThread);
         test = v.findViewById(R.id.testotp);
 
@@ -63,26 +60,21 @@ public class FragChat extends Fragment {
         test.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.INVISIBLE);
 
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            test.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
+//        if (FirebaseAuth.getInstance().getCurrentUser()  != null) {
+//            test.setVisibility(View.GONE);
+//            recyclerView.setVisibility(View.VISIBLE);
+//        } else {
+//            test.setVisibility(View.VISIBLE);
+//            recyclerView.setVisibility(View.INVISIBLE);
+//        }
 
+        Query query = firebaseFirestore.collection("Users")
+                .whereNotEqualTo("uid", firebaseAuth.getUid());
 
-            if (getArguments() != null) {
-                sellerID =  getArguments().getString("sellerid");
-            }
-
-        } else {
-            test.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.INVISIBLE);
-        }
-
-        Query query = firebaseFirestore.collection("Users").whereNotEqualTo("uid", firebaseAuth.getUid());
-
-        allusername = new FirestoreRecyclerOptions.Builder<FirebaseModel>().setQuery(query, FirebaseModel.class).build();
+        allusername = new FirestoreRecyclerOptions.Builder<FirebaseModel>()
+                .setQuery(query, FirebaseModel.class).build();
 
         chatAdapter = new FirestoreRecyclerAdapter<FirebaseModel, NoteViewHolder>(allusername) {
-
             @Override
             protected void onBindViewHolder(@NonNull NoteViewHolder noteViewHolder, int i, @NonNull FirebaseModel firebaseModel) {
                 noteViewHolder.name.setText(firebaseModel.getName());

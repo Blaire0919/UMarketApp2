@@ -29,11 +29,12 @@ import java.util.HashMap;
 import bbc.umarket.umarketapp2.Database.SessionManager;
 import bbc.umarket.umarketapp2.Helper.NotifModel;
 import bbc.umarket.umarketapp2.Helper.ToProcessModel;
+import bbc.umarket.umarketapp2.Helper.ToReceiveModel;
 import bbc.umarket.umarketapp2.R;
 
 public class ShippingOrder extends AppCompatActivity {
 
-    String buyerName, prodID, prodName, price, qty, totAmt, buyerid, currenttime, studid, process_key;
+    String buyerName, prodID, prodName, price, qty, totAmt, buyerid, currenttime, studid, process_key, sellerid;
     TextView bname, pID, pname, pprice, pqty, ptotamt;
     ImageView img, back;
     Button shipped;
@@ -41,6 +42,10 @@ public class ShippingOrder extends AppCompatActivity {
     Calendar calendar;
 
     DatabaseReference shippingRef;
+
+    //for to receive buyer
+    String TRImgUrl, TRbuyerID, TRprodID, TRsellerID, TRsellerName, TRprodName, TRprodQty, TRprodPrice;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,7 @@ public class ShippingOrder extends AppCompatActivity {
         qty = intent.getExtras().getString("qty");
         totAmt = intent.getExtras().getString("totamt");
         buyerid = intent.getExtras().getString("buyerid");
+        sellerid = intent.getExtras().getString("sellerid");
 
         //hooks
         back = findViewById(R.id.shipped_back);
@@ -111,6 +117,40 @@ public class ShippingOrder extends AppCompatActivity {
                     pprice.setText(price);
                     pqty.setText(qty);
                     ptotamt.setText(totAmt);
+
+
+                    //for to receive of buyer
+                    TRImgUrl = snapshot.child(prodID).child("imageUrl").getValue(String.class);
+                    TRbuyerID = studid;
+                    TRprodID = prodID;
+                    TRsellerID = sellerid;
+                    TRprodName = prodName;
+                    TRprodQty = qty;
+                    TRprodPrice = price;
+
+
+                    DatabaseReference userRef = FirebaseDatabase
+                            .getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                            .getReference("users");
+
+                    Query checkUser = userRef.orderByChild("studID").equalTo(sellerid);
+
+                    checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot1) {
+                            if (snapshot1.exists()) {
+                               String fname = snapshot1.child(sellerid).child("fname").getValue(String.class);
+                               String lname = snapshot1.child(sellerid).child("lname").getValue(String.class);
+                                TRsellerName = String.format("%s %s", fname, lname);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+
+
                 }
             }
 
@@ -134,6 +174,21 @@ public class ShippingOrder extends AppCompatActivity {
                         Intent backintent = new Intent(ShippingOrder.this, ManageOrders.class);
                         startActivity(backintent);
                     });
+
+
+            //toreceive order for buyer
+            // ImgUrl, buyerID, prodID, sellerID, shopName, prodName, prodQty, prodPrice;
+            ToReceiveModel toReceiveModel = new ToReceiveModel(TRImgUrl, TRbuyerID, TRprodID, TRsellerID, TRsellerName, TRprodName, TRprodQty, TRprodPrice);
+            FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                    .getReference("to_receive")
+                    .child(buyerid)
+                    .push()
+                    .setValue(toReceiveModel)
+                    .addOnSuccessListener(unused -> {
+                        Toast.makeText(this, "To Receive Success", Toast.LENGTH_LONG).show();
+                    });
+
+
 
             //deleting shippped order
             shippingRef.addListenerForSingleValueEvent(new ValueEventListener() {

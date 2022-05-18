@@ -1,6 +1,7 @@
 package bbc.umarket.umarketapp2.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +13,16 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 
 import bbc.umarket.umarketapp2.Helper.RateReviewHelperClass;
 import bbc.umarket.umarketapp2.Helper.ToReceiveModel;
+import bbc.umarket.umarketapp2.Main.ProductDetails;
+import bbc.umarket.umarketapp2.Main.RateAndReview;
 import bbc.umarket.umarketapp2.R;
-
 
 public class ToReceiveAdapter extends RecyclerView.Adapter<ToReceiveAdapter.ToReceiveViewHolder> {
     ArrayList<ToReceiveModel> toReceiveList;
@@ -41,6 +44,24 @@ public class ToReceiveAdapter extends RecyclerView.Adapter<ToReceiveAdapter.ToRe
     public void onBindViewHolder(@NonNull ToReceiveViewHolder holder, int position) {
 
         ToReceiveModel toReceiveModel = toReceiveList.get(position);
+
+        Glide.with(context)
+                .load(toReceiveModel.getImgUrl())
+                .into(holder.img);
+
+        holder.seller.setText(toReceiveModel.getSellerName());
+        holder.prodname.setText(toReceiveModel.getProdName());
+        holder.price.setText(toReceiveModel.getProdPrice());
+        holder.qty.setText(toReceiveModel.getProdQty());
+
+        holder.button.setOnClickListener(view -> {
+            Intent intent = new Intent(context, RateAndReview.class);
+            intent.putExtra("pID", toReceiveModel.getProdID());
+            intent.putExtra("imageUrl",toReceiveModel.getImgUrl());
+            intent.putExtra("pname",toReceiveModel.getProdName());
+
+            context.startActivity(intent);
+        });
 
     }
 
