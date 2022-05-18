@@ -1,9 +1,9 @@
 package bbc.umarket.umarketapp2.Helper;
 
 public class UserHelperClass {
-    String fname, lname, studID, contacts, gender, bday, email, password, is_seller;
+    String fname, lname, studID, contacts, gender, bday, email, password;
 
-    public UserHelperClass(String fname, String lname, String studID, String contacts, String gender, String bday, String email, String password, String is_seller) {
+    public UserHelperClass(String fname, String lname, String studID, String contacts, String gender, String bday, String email, String password) {
         this.fname = fname;
         this.lname = lname;
         this.studID = studID;
@@ -12,7 +12,6 @@ public class UserHelperClass {
         this.bday = bday;
         this.email = email;
         this.password = password;
-        this.is_seller =is_seller;
     }
 
     public String getFname() {
@@ -77,14 +76,6 @@ public class UserHelperClass {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getIs_seller() {
-        return is_seller;
-    }
-
-    public void setIs_seller(String is_seller) {
-        this.is_seller = is_seller;
     }
 
 

@@ -19,14 +19,20 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,21 +51,25 @@ import bbc.umarket.umarketapp2.R;
 //Just Press CTRL+ALT+L on Windows. The android studio will reformat all the code for you
 public class Login extends AppCompatActivity {
     Animation topAnim, bottomAnim;
-    TextView logintext;
+    TextView logintext, btnReg;
     TextInputLayout l_user, l_pass;
     Button login;
     EditText et_studId, et_pass;
-    TextView btnReg;
     public Bundle bundle;
     CheckBox RememberMe;
     String Entered_pass, Entered_studID, fnamefromDB, lnamefromDB, studIDfromDB, phonefromDB, genderfromDB, bdayfromDB, emailfromDB, passFromDB, sellerFromDB;
+
+    ProgressBar login_progressbar;
+
+    //Authentication
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseUser user = firebaseAuth.getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.Theme_UMarketApp2);
         setContentView(R.layout.act_login);
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
         // Animation
@@ -69,6 +79,7 @@ public class Login extends AppCompatActivity {
         //Hooks
         btnReg = findViewById(R.id.txtRegister);
         logintext = findViewById(R.id.logintxt);
+        login_progressbar = findViewById(R.id.login_progressbar);
 
         login = findViewById(R.id.btnLogin);
         l_user = findViewById(R.id.LoginInputStudID);
@@ -97,6 +108,7 @@ public class Login extends AppCompatActivity {
     }
 
     public void letTheUserLoggedIn(View view) {
+        login_progressbar.setVisibility(View.VISIBLE);
         if (validatestudID() | validatePass()) {
 
             if (!isConnected(this)) {
@@ -121,9 +133,10 @@ public class Login extends AppCompatActivity {
     }
 
     private void showCustomDialog() {
+        login_progressbar.setVisibility(View.INVISIBLE);
         AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
         AlertDialog dialog = builder.setTitle("")
-                .setMessage("Please connect to the internet to proceed further")
+                .setMessage("Please connect to the internet")
                 .setCancelable(false)
                 .setPositiveButton("Connect", (dialogInterface, i) -> startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS)))
                 .setNegativeButton("Cancel", (dialogInterface, i) -> {
@@ -131,7 +144,6 @@ public class Login extends AppCompatActivity {
                     finish();
                 })
                 .create();
-
         dialog.show();
 
     }
@@ -167,19 +179,28 @@ public class Login extends AppCompatActivity {
                         passFromDB = snapshot.child(Entered_studID).child("password").getValue(String.class);
                         sellerFromDB = snapshot.child(Entered_studID).child("is_seller").getValue(String.class);
 
-                        //Create a Session
-                        if (RememberMe.isChecked()) {
-                            SessionManager sessionManager = new SessionManager(Login.this, SessionManager.SESSION_REMEMBERME);
-                            sessionManager.createRememberMeSession(Entered_studID, Entered_pass);
-                        }
 
-                        SessionManager sessionManager2 = new SessionManager(Login.this, SessionManager.SESSION_USERSESSION);
-                        sessionManager2.createLoginSession(fnamefromDB, lnamefromDB, studIDfromDB, phonefromDB, genderfromDB,
-                                bdayfromDB, emailfromDB, passFromDB, sellerFromDB);
+                        firebaseAuth.signInWithEmailAndPassword(emailfromDB, passFromDB).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                login_progressbar.setVisibility(View.INVISIBLE);
 
-                        Intent intent = new Intent(Login.this, HomeContainer.class);
-                        startActivity(intent);
-                        finish();
+                                //Create a Session
+                                if (RememberMe.isChecked()) {
+                                    SessionManager sessionManager = new SessionManager(Login.this, SessionManager.SESSION_REMEMBERME);
+                                    sessionManager.createRememberMeSession(Entered_studID, Entered_pass);
+                                }
+
+                                SessionManager sessionManager2 = new SessionManager(Login.this, SessionManager.SESSION_USERSESSION);
+                                sessionManager2.createLoginSession(fnamefromDB, lnamefromDB, studIDfromDB, phonefromDB, genderfromDB,
+                                        bdayfromDB, emailfromDB, passFromDB, sellerFromDB);
+
+                                Intent intent = new Intent(Login.this, HomeContainer.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+
                     } else {
                         l_pass.setError("Wrong Password");
                         l_pass.requestFocus();
@@ -191,8 +212,7 @@ public class Login extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {}
         });
     }
 

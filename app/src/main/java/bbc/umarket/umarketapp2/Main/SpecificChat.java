@@ -1,4 +1,4 @@
-package bbc.umarket.umarketapp2.Chat;
+package bbc.umarket.umarketapp2.Main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,7 +32,6 @@ import java.util.HashMap;
 import bbc.umarket.umarketapp2.Adapter.MessagesAdapter;
 import bbc.umarket.umarketapp2.Database.SessionManager;
 import bbc.umarket.umarketapp2.Helper.MessagesModel;
-import bbc.umarket.umarketapp2.Main.HomeContainer;
 import bbc.umarket.umarketapp2.R;
 
 public class SpecificChat extends AppCompatActivity {

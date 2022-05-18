@@ -4,12 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -35,11 +38,18 @@ public class RateReviewAdapter extends RecyclerView.Adapter<RateReviewAdapter.RR
 
     @Override
     public void onBindViewHolder(@NonNull RRViewHolder holder, int position) {
-        holder.name.setText(rrlist.get(position).getNameofBuyer());
-        holder.studid.setText(rrlist.get(position).getStudID());
-        holder.rate.setRating(Float.parseFloat(rrlist.get(position).getRate()));
-        holder.ratetxt.setText(rrlist.get(position).getRate());
-        holder.comment.setText(rrlist.get(position).getReview());
+
+        RateReviewHelperClass rateReviewHelperClass = rrlist.get(position);
+
+        Glide.with(context)
+                .load(rateReviewHelperClass.getRrImg())
+                .into(holder.OrderImg);
+
+        holder.name.setText(rateReviewHelperClass.getNameofBuyer());
+        holder.studid.setText(rateReviewHelperClass.getStudID());
+        holder.rate.setRating(Float.parseFloat(rateReviewHelperClass.getRate()));
+        holder.ratetxt.setText(rateReviewHelperClass.getRate());
+        holder.comment.setText(rateReviewHelperClass.getReview());
     }
 
     @Override
@@ -51,6 +61,7 @@ public class RateReviewAdapter extends RecyclerView.Adapter<RateReviewAdapter.RR
         TextView name, studid, ratetxt, comment;
         RatingBar rate;
         CardView cardView;
+        ImageView OrderImg;
 
         public RRViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,6 +71,7 @@ public class RateReviewAdapter extends RecyclerView.Adapter<RateReviewAdapter.RR
             comment = itemView.findViewById(R.id.rr_comment);
             rate = itemView.findViewById(R.id.rr_ratingbar);
             cardView = itemView.findViewById(R.id.rrcard);
+            OrderImg = itemView.findViewById(R.id.rrOrderImg);
         }
     }
 

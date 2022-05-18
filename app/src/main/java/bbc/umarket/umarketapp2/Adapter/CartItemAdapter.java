@@ -76,6 +76,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
         Glide.with(context)
                 .load(currentItem.getImgUrl())
                 .into(holder.img);
+
         holder.sellername.setText(currentItem.getSellerName());
         holder.prodname.setText(currentItem.getProdName());
         holder.price.setText(currentItem.getProdPrice());

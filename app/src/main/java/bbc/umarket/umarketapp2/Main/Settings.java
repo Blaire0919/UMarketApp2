@@ -8,6 +8,9 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import bbc.umarket.umarketapp2.Database.SessionManager;
 import bbc.umarket.umarketapp2.R;
 
@@ -15,6 +18,7 @@ public class Settings extends AppCompatActivity {
     ImageView btnsettings;
     LinearLayout btnlogout;
 
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,8 @@ public class Settings extends AppCompatActivity {
 
             SessionManager sessionManager2 = new SessionManager(this, SessionManager.SESSION_REMEMBERME );
             sessionManager2.logoutUserfromSession();
+
+            firebaseAuth.signOut();
 
             Intent intent = new Intent(Settings.this, Login.class);
             startActivity(intent);

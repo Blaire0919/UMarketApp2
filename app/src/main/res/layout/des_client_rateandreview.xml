@@ -6,52 +6,53 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerVertical="true"
-    android:layout_marginStart="20dp"
-    android:layout_marginEnd="20dp"
-    android:layout_marginBottom="20dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardCornerRadius="15dp"
-    app:cardElevation="15dp">
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp">
 
     <LinearLayout
+        android:layout_marginTop="3dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/lin_01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="start"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/rr_img"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/corner_layouts"
+                android:gravity="center_vertical"
+                android:src="@drawable/profile_img"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/lin_01"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:gravity="start"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/rr_img"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/corner_layouts"
-                    android:src="@drawable/profile_img" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/lin_02"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/lin_01"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="15dp"
-                android:layout_toEndOf="@+id/lin_01"
-                android:orientation="horizontal">
-
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                tools:ignore="DisableBaselineAlignment">
                 <LinearLayout
                     android:layout_width="0dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -61,7 +62,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/moon_light"
-                        android:text="Amethyst Smith"
+                        android:text="Buyer's name"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -69,15 +70,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/moon_light"
-                        android:text="K11615687"
+                        android:text="K00000000"
                         android:textColor="@color/NewUMarketDarkBlue"
                         android:textSize="8sp" />
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:layout_gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <RatingBar
@@ -86,15 +86,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="23dp"
                         android:progressTint="@color/mustard"
-                        android:rating="4.3" />
+                        android:rating="5.0" />
 
                     <TextView
                         android:id="@+id/rr_ratetxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="end"
                         android:fontFamily="@font/moon_light"
-                        android:text="(4.3)"
-                       android:layout_gravity="end"
+                        android:text="(5.0)"
                         android:textColor="@color/NewUMarketDarkBlue"
                         android:textSize="20sp" />
 
@@ -102,17 +102,26 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/lin_02"
-                android:layout_alignStart="@id/lin_02"
-                android:layout_alignEnd="@id/lin_02">
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/rrOrderImg"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="end"
+                    android:layout_weight="1"
+                    android:background="@drawable/corner_layouts"
+                    android:src="@drawable/ic_image" />
 
                 <TextView
                     android:id="@+id/rr_comment"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_weight="6"
                     android:fontFamily="@font/moon_light"
                     android:text="“Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.”"
@@ -122,8 +131,9 @@ Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.”
 
             </LinearLayout>
 
+        </LinearLayout>
 
-        </RelativeLayout>
+
 
     </LinearLayout>
 

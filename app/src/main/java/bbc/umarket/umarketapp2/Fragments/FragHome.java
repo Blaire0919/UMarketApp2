@@ -180,24 +180,24 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
 //              convert the returned value from algo to array
-                String[] rec = pyobj.callAttr("main", studid).toJava(String[].class);
-                for (String strTemp : rec) {
+           //     String[] rec = pyobj.callAttr("main", studid).toJava(String[].class);
+          //      for (String strTemp : rec) {
                     reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for (DataSnapshot snapi : snapshot.getChildren()) {
                                 FeatProdtHelperClass featProdtHelperClass = snapi.getValue(FeatProdtHelperClass.class);
                                 assert featProdtHelperClass != null;
-                                if (featProdtHelperClass.getpName().equals(strTemp)) {
+                              //  if (featProdtHelperClass.getpName().equals(strTemp)) {
                                     featprod.add(featProdtHelperClass);
-                                }
+                              //  }
                             }
                             featProdAdapter.notifyDataSetChanged();
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) { }
                     });
-                }
+            //    }
             }
 
             @Override

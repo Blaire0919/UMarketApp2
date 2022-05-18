@@ -1,11 +1,12 @@
 package bbc.umarket.umarketapp2.Helper;
 
 public class RateReviewHelperClass {
-    String rrID, prodID, studID, nameofBuyer, rate, review, currentdate;
+    String rrImg, rrID, prodID, studID, nameofBuyer, rate, review, currentdate;
 
     public RateReviewHelperClass() {}
 
-    public RateReviewHelperClass(String rrID, String prodID, String studID, String nameofBuyer, String rate, String review, String currentdate) {
+    public RateReviewHelperClass(String rrImg, String rrID, String prodID, String studID, String nameofBuyer, String rate, String review, String currentdate) {
+        this.rrImg = rrImg;
         this.rrID = rrID;
         this.prodID = prodID;
         this.studID = studID;
@@ -13,6 +14,14 @@ public class RateReviewHelperClass {
         this.rate = rate;
         this.review = review;
         this.currentdate = currentdate;
+    }
+
+    public String getRrImg() {
+        return rrImg;
+    }
+
+    public void setRrImg(String rrImg) {
+        this.rrImg = rrImg;
     }
 
     public String getRrID() { return rrID; }

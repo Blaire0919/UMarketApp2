@@ -93,6 +93,7 @@
             <CheckBox
                 android:id="@+id/chkremember_me"
                  android:layout_width="wrap_content"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/moon_light"
                 android:buttonTint="@color/lightgray"
@@ -101,6 +102,14 @@
                 android:shadowColor="@color/lightgray"
                 android:textColor="@color/black"
                 android:textSize="10sp" />
+
+            <ProgressBar
+                android:id="@+id/login_progressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:visibility="invisible"
+                />
 
         </LinearLayout>
 
@@ -130,6 +139,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:layout_gravity="center"
                 android:orientation="horizontal"
                 android:padding="5dp">
@@ -150,6 +160,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:clickable="true"
                     android:fontFamily="@font/moon_light"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:gravity="center"
@@ -159,6 +170,8 @@
                     android:transitionName="@string/trans_btnLogin" />
 
             </LinearLayout>
+
+
 
 
         </LinearLayout>

@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -23,12 +22,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import java.util.Objects;
 import bbc.umarket.umarketapp2.Helper.FirebaseModel;
-import bbc.umarket.umarketapp2.Chat.OTPAuth;
-import bbc.umarket.umarketapp2.Chat.SpecificChat;
+import bbc.umarket.umarketapp2.Main.SpecificChat;
 import bbc.umarket.umarketapp2.R;
 
 public class FragChat extends Fragment {
-    Button test;
     Context context;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
@@ -52,24 +49,8 @@ public class FragChat extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = v.findViewById(R.id.rvChatThread);
-        test = v.findViewById(R.id.testotp);
 
-        //tawagin yung button dito kapag verified na yung phone number and may user credential sa firestore
-        test.setOnClickListener(view -> startActivity(new Intent(getActivity(), OTPAuth.class)));
-
-        test.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.INVISIBLE);
-
-//        if (FirebaseAuth.getInstance().getCurrentUser()  != null) {
-//            test.setVisibility(View.GONE);
-//            recyclerView.setVisibility(View.VISIBLE);
-//        } else {
-//            test.setVisibility(View.VISIBLE);
-//            recyclerView.setVisibility(View.INVISIBLE);
-//        }
-
-        Query query = firebaseFirestore.collection("Users")
-                .whereNotEqualTo("uid", firebaseAuth.getUid());
+        Query query = firebaseFirestore.collection("Users").whereNotEqualTo("uid", firebaseAuth.getUid());
 
         allusername = new FirestoreRecyclerOptions.Builder<FirebaseModel>()
                 .setQuery(query, FirebaseModel.class).build();
@@ -133,14 +114,7 @@ public class FragChat extends Fragment {
     public void onStart() {
         super.onStart();
         chatAdapter.startListening();
-        if (documentReference != null) {
-            try {
-                documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
-                documentReference.update("status", "Online");}
-            catch (Exception exception) {
-                Log.d("EXCEPTION", exception.getMessage());
-            }
-        }
+
     }
 
     @Override
@@ -149,18 +123,7 @@ public class FragChat extends Fragment {
         if (chatAdapter != null) {
             chatAdapter.stopListening();
         }
-
-        if (documentReference != null) {
-            try {
-                documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
-                documentReference.update("status", "Offline");
-            } catch (Exception exception) {
-                Log.d("EXCEPTION", exception.getMessage());
-            }
-
-        }
-
-
+        
     }
 
 }
