@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".Main.AddListing">
+    tools:context=".SellerSide.AddListing">
 
     <LinearLayout
         android:id="@+id/linear02"
@@ -278,43 +278,6 @@
                         android:backgroundTint="@color/white"
                         android:dropDownHeight="wrap_content"
                         android:inputType="none" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/InputPHandlingFee"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:hint="Handling Fee"
-                    app:boxBackgroundColor="@color/transparent"
-                    app:boxStrokeColor="@color/black"
-                    app:hintTextColor="@color/black">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:textColor="@color/black" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/InputPID"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:hint="Product ID"
-                    app:boxBackgroundColor="@color/transparent"
-                    app:boxStrokeColor="@color/black"
-                    app:hintTextColor="@color/black">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:textColor="@color/black" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 

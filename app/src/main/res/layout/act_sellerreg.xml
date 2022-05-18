@@ -7,7 +7,7 @@
     android:background="@drawable/background"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".Main.SellerRegistration">
+    tools:context=".SellerSide.SellerRegistration">
 
     <LinearLayout
         android:layout_width="match_parent"

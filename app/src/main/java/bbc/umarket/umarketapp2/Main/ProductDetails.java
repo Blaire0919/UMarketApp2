@@ -59,7 +59,7 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
     ImageView back;
     Button buy, cart;
     ImageView PR_image;
-    TextView PRbrand, PRcondition, PRdesc, PRhandling, PRname, PRrate, PRprice, PRstock, PRsellername;
+    TextView PRbrand, PRcondition, PRdesc, PRname, PRrate, PRprice, PRstock, PRsellername;
     RatingBar PRratingbar;
 
     //for id
@@ -118,7 +118,6 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
         PRbrand = findViewById(R.id.pd_brand);
         PRcondition = findViewById(R.id.pd_condition);
         PRdesc = findViewById(R.id.pd_description);
-        PRhandling = findViewById(R.id.pd_handlingfee);
         PRname = findViewById(R.id.pd_name);
         PRratingbar = findViewById(R.id.pd_rate);
         PRrate = findViewById(R.id.pd_ptotalrate);
@@ -159,7 +158,6 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                         PRbrand.setText(snapshot.child(prodID).child("pBrand").getValue(String.class));
                         PRcondition.setText(snapshot.child(prodID).child("pCondition").getValue(String.class));
                         PRdesc.setText(snapshot.child(prodID).child("pDescription").getValue(String.class));
-                        PRhandling.setText(snapshot.child(prodID).child("pHandlingFee").getValue(String.class));
                         PRname.setText(snapshot.child(prodID).child("pName").getValue(String.class));
                         pName = snapshot.child(prodID).child("pName").getValue(String.class);
 
@@ -167,7 +165,6 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                         coImgUrl = imageUrl;
                         coProdId = prodID;
                         coProdName = pName;
-
 
                         DatabaseReference ratingref = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                                 .getReference("rateandreview");

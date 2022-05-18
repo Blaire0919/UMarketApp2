@@ -1,4 +1,4 @@
-package bbc.umarket.umarketapp2.Main;
+package bbc.umarket.umarketapp2.SellerSide;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import bbc.umarket.umarketapp2.Database.SessionManager;
-import bbc.umarket.umarketapp2.Helper.SellerHelperClass;
+import bbc.umarket.umarketapp2.Main.HomeContainer;
 import bbc.umarket.umarketapp2.R;
 
 public class SellerCenter extends AppCompatActivity {

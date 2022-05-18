@@ -19,17 +19,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
-import bbc.umarket.umarketapp2.Main.AddListing;
 import bbc.umarket.umarketapp2.Database.SessionManager;
 import bbc.umarket.umarketapp2.Main.EditProfile;
-import bbc.umarket.umarketapp2.Main.ProductDetails;
-import bbc.umarket.umarketapp2.Main.SellerCenter;
-import bbc.umarket.umarketapp2.Main.SellerRegistration;
-import bbc.umarket.umarketapp2.Main.SpecificChat;
+import bbc.umarket.umarketapp2.SellerSide.SellerCenter;
+import bbc.umarket.umarketapp2.SellerSide.SellerRegistration;
 import bbc.umarket.umarketapp2.R;
 import bbc.umarket.umarketapp2.Main.Settings;
 
@@ -38,9 +36,12 @@ public class FragProfile extends Fragment {
     Button btnsellercenter;
     TextView name, id, editprofile;
     LinearLayout btnsettings;
+    String studid, fname, lname, userid;
 
-    DatabaseReference sellerroot = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+    DatabaseReference sellerRef = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
             .getReference("seller");
+
+    Query checkseller;
 
     public FragProfile() {
     }
@@ -57,11 +58,11 @@ public class FragProfile extends Fragment {
 
         SessionManager sessionManager = new SessionManager(getActivity(), SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
-
         //getting data from session
-        String fname = usersdetails.get(SessionManager.KEY_FNAME);
-        String lname = usersdetails.get(SessionManager.KEY_LNAME);
-        String studid = usersdetails.get(SessionManager.KEY_STUDID);
+        fname = usersdetails.get(SessionManager.KEY_FNAME);
+        lname = usersdetails.get(SessionManager.KEY_LNAME);
+        studid = usersdetails.get(SessionManager.KEY_STUDID);
+        checkseller = sellerRef.orderByChild("userID").equalTo(studid);
 
         //hooks
         btnsettings = view.findViewById(R.id.prof_settings);
@@ -70,42 +71,34 @@ public class FragProfile extends Fragment {
         name = view.findViewById(R.id.Acc_name);
         id = view.findViewById(R.id.Acc_id);
 
-
         //displaying value
-        name.setText(fname + "\n" + lname);
+        name.setText(String.format("%s\n%s", fname, lname));
         name.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         id.setText(studid);
 
         btnsettings.setOnClickListener(v -> startActivity(new Intent(getActivity(), Settings.class)));
+        editprofile.setOnClickListener(v -> startActivity(new Intent(getActivity(), EditProfile.class)));
 
-        editprofile.setOnClickListener(v ->
-                startActivity(new Intent(getActivity(), EditProfile.class)));
-
-        btnsellercenter.setOnClickListener(v ->
-                sellerroot.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.exists()){
-                            for (DataSnapshot seller : snapshot.getChildren()) {
-                                String userid = seller.child("userID").getValue(String.class);
-                                if (userid.equals(studid)) {
-                                    startActivity(new Intent(getContext(), SellerCenter.class));
-
-                                } else {
-                                    startActivity(new Intent(getContext(), SellerRegistration.class));
-                                }
-                            }
-                        }else{
-                            startActivity(new Intent(getContext(), SellerRegistration.class));
-                        }
-
-
-
+        btnsellercenter.setOnClickListener(v -> {
+            checkseller.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        Intent intent = new Intent(getActivity(), SellerCenter.class);
+                                    startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(getActivity(), SellerRegistration.class);
+                                    startActivity(intent);
                     }
+                }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {  Log.d("ERROR",error.getDetails());}
-                }));
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.d("ERROR", error.getDetails());
+                }
+            });
+        });
+
 
         return view;
     }

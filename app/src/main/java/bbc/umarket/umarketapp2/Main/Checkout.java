@@ -37,6 +37,7 @@ import bbc.umarket.umarketapp2.Database.SessionManager;
 import bbc.umarket.umarketapp2.Fragments.FragChat;
 import bbc.umarket.umarketapp2.Helper.CheckOutHelperClass;
 import bbc.umarket.umarketapp2.Helper.NotifModel;
+import bbc.umarket.umarketapp2.Helper.ToProcessModel;
 import bbc.umarket.umarketapp2.R;
 import butterknife.BindView;
 
@@ -49,7 +50,7 @@ public class Checkout extends AppCompatActivity {
     public static ArrayList<CheckOutHelperClass> orderedItem = new ArrayList<>();
     public static List<String> ItemIdOrdered = new ArrayList<>();
 
-    public static String studid;
+    public static String studid, firstname, lastname;
 
     FirebaseDatabase rootNode;
     DatabaseReference reference, ref2;
@@ -67,6 +68,10 @@ public class Checkout extends AppCompatActivity {
     Calendar calendar;
     String un_prodname, un_sellername, un_qty, un_price, currenttime;
 
+
+    //for managing orders by sellers
+    String seller_ID, buyerID, buyerName, prodID, prodName, price, qty, totAmt, order_currentdate, order_currenttime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +81,8 @@ public class Checkout extends AppCompatActivity {
         SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
         studid = usersdetails.get(SessionManager.KEY_STUDID);
+        firstname = usersdetails.get(SessionManager.KEY_FNAME);
+        lastname = usersdetails.get(SessionManager.KEY_LNAME);
 
         Intent COintent = getIntent();
         checkoutProduct = COintent.getExtras().getString("pID");
@@ -85,7 +92,11 @@ public class Checkout extends AppCompatActivity {
         totPayment = findViewById(R.id.tvCHTotalPayment);
         PlaceOrder = findViewById(R.id.Linear_PlaceOrder);
 
+        //usernotif
         calendar = Calendar.getInstance();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm a");
+        currenttime = simpleDateFormat.format(calendar.getTime());
+        Date date = new Date();
 
         rootNode = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/");
         reference = rootNode.getReference("checkout").child(studid).child("items");
@@ -110,10 +121,24 @@ public class Checkout extends AppCompatActivity {
                         sellerID = snapshot1.child("sellerID").getValue(String.class);
 
                         //user notif
-                        un_prodname =  snapshot1.child("prodName").getValue(String.class);
+                        un_prodname = snapshot1.child("prodName").getValue(String.class);
                         un_sellername = snapshot1.child("sellerName").getValue(String.class);
                         un_qty = snapshot1.child("qty").getValue(String.class);
                         un_price = snapshot1.child("price").getValue(String.class);
+
+
+                        //for seller managing orders
+                        seller_ID = sellerID;
+                        buyerID = studid;
+                        buyerName = String.format("%s %s", firstname, lastname);
+                        prodID = snapshot1.child("prodId").getValue(String.class);
+                        prodName = un_prodname;
+                        price = un_price;
+                        qty = un_qty;
+                        totAmt = String.valueOf(Float.parseFloat(String.valueOf(Float.parseFloat(price)  * Integer.parseInt(qty))));
+                        order_currentdate =  java.text.DateFormat.getDateInstance().format(new Date());
+                        order_currenttime = currenttime;
+
 
                     }
                     checkOutAdapter.notifyDataSetChanged();
@@ -157,7 +182,6 @@ public class Checkout extends AppCompatActivity {
                 }
             });
         }
-
 
         back.setOnClickListener(view -> {
             FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
@@ -214,31 +238,35 @@ public class Checkout extends AppCompatActivity {
                         .addOnSuccessListener(unused -> Log.d("REMOVE ITEMS FROM CART", id));
             }
 
-
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm a");
-            currenttime = simpleDateFormat.format(calendar.getTime());
-            NotifModel notifModel = new NotifModel(un_prodname, un_sellername, un_qty, un_price, currenttime);
-            Date date = new Date();
-
             //usernotif
+            String sentence =  String.format("You placed an order of %s %s from %s with a price of %s", un_qty, un_prodname, un_sellername, un_price);
+            NotifModel notifModel = new NotifModel(studid, sentence, currenttime);
             FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                     .getReference("notification")
                     .child(studid)
                     .child(String.valueOf(date.getTime()))
                     .setValue(notifModel)
-                    .addOnSuccessListener(unused -> Log.d(TAG, "Delete Success!"));
+                    .addOnSuccessListener(unused -> {});
 
 
+            //toprocess order for seller
+            ToProcessModel toProcessModel = new ToProcessModel( seller_ID, buyerID, buyerName, prodID, prodName, price, qty, totAmt, order_currentdate, order_currenttime);
+            FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                    .getReference("process_order")
+                    .child(seller_ID)
+                    .push()
+                    .setValue(toProcessModel)
+                    .addOnSuccessListener(unused -> {});
+
+
+//            //for automated chat
+//            Bundle bundle = new Bundle();
+//            bundle.putString("sellerid", sellerID);
+//            // set Fragmentclass Arguments
+//            FragChat fragChat = new FragChat();
+//            fragChat.setArguments(bundle);
             Intent intent = new Intent(Checkout.this, HomeContainer.class);
             intent.putExtra("back_Chat", "Chat");
-
-            //for automated chat
-            Bundle bundle = new Bundle();
-            bundle.putString("sellerid", sellerID);
-            // set Fragmentclass Arguments
-            FragChat fragChat = new FragChat();
-            fragChat.setArguments(bundle);
-
             startActivity(intent);
         });
 

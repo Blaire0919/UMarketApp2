@@ -41,11 +41,7 @@ public class NotifAdapter extends RecyclerView.Adapter<NotifAdapter.NotifViewHol
 
         holder.time.setText(notifModel.getCurrenttime());
 
-       String sentence =  String.format("You placed an order of %s %s from %s with a price of %s",
-               notifModel.getQty(), notifModel.getProdName(), notifModel.getSellerName(), notifModel.getPrice()
-       );
-
-        holder.notif.setText(sentence);
+        holder.notif.setText(notifModel.getNotification());
 
     }
 

@@ -1,6 +1,5 @@
-package bbc.umarket.umarketapp2.Main;
+package bbc.umarket.umarketapp2.Chat;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -14,10 +13,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
@@ -32,6 +27,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import bbc.umarket.umarketapp2.Database.SessionManager;
+import bbc.umarket.umarketapp2.Main.HomeContainer;
 import bbc.umarket.umarketapp2.R;
 
 public class OTPVerificationCode extends AppCompatActivity {

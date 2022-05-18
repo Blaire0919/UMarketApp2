@@ -1,4 +1,4 @@
-package bbc.umarket.umarketapp2.Main;
+package bbc.umarket.umarketapp2.Chat;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,11 +18,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.google.firebase.database.FirebaseDatabase;
 import com.hbb20.CountryCodePicker;
 
 import java.util.concurrent.TimeUnit;
 
+import bbc.umarket.umarketapp2.Main.HomeContainer;
 import bbc.umarket.umarketapp2.R;
 
 public class OTPAuth extends AppCompatActivity {

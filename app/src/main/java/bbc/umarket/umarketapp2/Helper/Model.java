@@ -2,7 +2,7 @@ package bbc.umarket.umarketapp2.Helper;
 
 public class Model {
 
-    String imageUrl, pID, pBrand, pCategory, pSubCategory, pCondition, pDescription, pHandlingFee, pName, pPrice, pStock, pSellerID, pSoldItems, pOverallRate, pScore;
+    String imageUrl, pID, pBrand, pCategory, pSubCategory, pCondition, pDescription, pName, pPrice, pStock, pSellerID, pSoldItems, pOverallRate, pScore;
 
     public Model() {    }
 
@@ -59,14 +59,6 @@ public class Model {
 
     public void setpDescription(String pDescription) {
         this.pDescription = pDescription;
-    }
-
-    public String getpHandlingFee() {
-        return pHandlingFee;
-    }
-
-    public void setpHandlingFee(String pHandlingFee) {
-        this.pHandlingFee = pHandlingFee;
     }
 
     public String getpName() {
@@ -126,7 +118,7 @@ public class Model {
     }
 
     public Model(String imageUrl, String pID, String pBrand, String pCategory, String pSubCategory, String pCondition,
-                 String pDescription, String pHandlingFee, String pName, String pPrice, String pStock, String pSellerID,
+                 String pDescription, String pName, String pPrice, String pStock, String pSellerID,
                  String pOverallRate, String pSoldItems, String pScore) {
         this.imageUrl = imageUrl;
         this.pID = pID;
@@ -135,7 +127,6 @@ public class Model {
         this.pSubCategory = pSubCategory;
         this.pCondition = pCondition;
         this.pDescription = pDescription;
-        this.pHandlingFee = pHandlingFee;
         this.pName = pName;
         this.pPrice = pPrice;
         this.pStock = pStock;

@@ -260,15 +260,6 @@
                                 android:textColor="@color/black"
                                 android:textSize="12sp" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:fontFamily="@font/moon_light"
-                                android:text="Handling Fee:"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-
                         </LinearLayout>
 
                         <LinearLayout
@@ -304,16 +295,6 @@
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/moon_light"
                                 android:text="Never been used"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/pd_handlingfee"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:fontFamily="@font/moon_light"
-                                android:text="₱ 45.00"
                                 android:textColor="@color/black"
                                 android:textSize="12sp" />
 

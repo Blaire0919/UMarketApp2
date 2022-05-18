@@ -23,8 +23,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import java.util.Objects;
 import bbc.umarket.umarketapp2.Helper.FirebaseModel;
-import bbc.umarket.umarketapp2.Main.OTPAuth;
-import bbc.umarket.umarketapp2.Main.SpecificChat;
+import bbc.umarket.umarketapp2.Chat.OTPAuth;
+import bbc.umarket.umarketapp2.Chat.SpecificChat;
 import bbc.umarket.umarketapp2.R;
 
 public class FragChat extends Fragment {

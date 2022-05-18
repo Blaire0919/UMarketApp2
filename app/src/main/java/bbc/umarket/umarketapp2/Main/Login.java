@@ -140,7 +140,8 @@ public class Login extends AppCompatActivity {
         Entered_studID = Objects.requireNonNull(l_user.getEditText()).getText().toString().toLowerCase();
         Entered_pass = Objects.requireNonNull(l_pass.getEditText()).getText().toString();
 
-        DatabaseReference reference = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users");
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("users");
         Query checkUser = reference.orderByChild("studID").equalTo(Entered_studID);
 
 

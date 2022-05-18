@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/NewUMarketlight"
     android:orientation="vertical"
-    tools:context=".Main.DataInsights">
+    tools:context=".SellerSide.DataInsights">
 
     <ScrollView
         android:layout_width="match_parent"

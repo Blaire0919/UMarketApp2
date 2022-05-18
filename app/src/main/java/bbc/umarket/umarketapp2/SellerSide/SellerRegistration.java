@@ -1,6 +1,5 @@
-package bbc.umarket.umarketapp2.Main;
+package bbc.umarket.umarketapp2.SellerSide;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,7 +9,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
-import android.view.View;
 import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -18,12 +16,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -31,8 +25,8 @@ import java.util.HashMap;
 import java.util.Objects;
 
 import bbc.umarket.umarketapp2.Database.SessionManager;
-import bbc.umarket.umarketapp2.Helper.Model;
 import bbc.umarket.umarketapp2.Helper.SellerHelperClass;
+import bbc.umarket.umarketapp2.Main.HomeContainer;
 import bbc.umarket.umarketapp2.R;
 
 public class SellerRegistration extends AppCompatActivity {
@@ -148,8 +142,6 @@ public class SellerRegistration extends AppCompatActivity {
         }
     }
 
-
-
     private void Add_OnSellerDB() {
         if (!validateSName() | !validateSEmail() | !validateSContact() ) {
             return;
@@ -161,9 +153,6 @@ public class SellerRegistration extends AppCompatActivity {
         UploadImage();
 
     }
-
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -179,15 +168,10 @@ public class SellerRegistration extends AppCompatActivity {
         sellerKey = sellerroot.push().getKey();
         imageref = storageref.child("seller_imgprof/" + sellerKey + "." + getFileExtension(imageUri));
 
-        imageref.putFile(imageUri)
-                .addOnSuccessListener(taskSnapshot -> {
-
-                    imageref.getDownloadUrl()
-                            .addOnSuccessListener(uri -> {
-
+        imageref.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
+                    imageref.getDownloadUrl().addOnSuccessListener(uri -> {
                                 sellerHelperClass = new SellerHelperClass(sellerKey, uri.toString(), studid, sellername, selleremail, sellercontact);
-                                sellerroot.child(sellerKey).setValue(sellerHelperClass);
-
+                                sellerroot.child(studid).setValue(sellerHelperClass);
                                 Intent intent = new Intent(SellerRegistration.this, SellerCenter.class);
                                 startActivity(intent);
                                 finish();

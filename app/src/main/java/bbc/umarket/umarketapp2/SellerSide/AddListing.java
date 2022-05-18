@@ -1,4 +1,4 @@
-package bbc.umarket.umarketapp2.Main;
+package bbc.umarket.umarketapp2.SellerSide;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,13 +32,14 @@ import java.util.Objects;
 
 import bbc.umarket.umarketapp2.Helper.Model;
 import bbc.umarket.umarketapp2.Database.SessionManager;
+import bbc.umarket.umarketapp2.Main.HomeContainer;
 import bbc.umarket.umarketapp2.R;
 
 public class AddListing extends AppCompatActivity {
     ImageView back, selectedimg;
     TextView save;
     MaterialCardView mcvaddphoto, forimg;
-    TextInputLayout pname, pdesc, pbrand, pcat, psubcat, pprice, pstock, pcondition, phandling, pid;
+    TextInputLayout pname, pdesc, pbrand, pcat, psubcat, pprice, pstock, pcondition;
     AutoCompleteTextView autocat, autosubcat, autocondition;
     List<String> ListCat, ListSubCat, ListCondition;
     ArrayAdapter<String> arrayAdapter_Cat, arrayAdapter_SubCat, arrayAdapter_Condition;
@@ -49,7 +50,7 @@ public class AddListing extends AppCompatActivity {
     FirebaseStorage storage = FirebaseStorage.getInstance("gs://umarketapp2-58178.appspot.com");
     StorageReference storageref, imageref;
     private Uri imageUri;
-    String pBrand, pCat, pSubCat, pCondition, pDescription, pHandling, pName, pPrice, pStock, pSellerID, pSold, pOverAllrate, pScore, pID;
+    String pBrand, pCat, pSubCat, pCondition, pDescription, pName, pPrice, pStock, pSellerID, pSold, pOverAllrate, pScore, pID;
     Model model;
 
 
@@ -79,11 +80,9 @@ public class AddListing extends AppCompatActivity {
         pbrand = findViewById(R.id.InputPBrand);
         pprice = findViewById(R.id.InputPrice);
         pstock = findViewById(R.id.InputPStock);
-        phandling = findViewById(R.id.InputPHandlingFee);
         pcat = findViewById(R.id.InputPCategory);
         psubcat = findViewById(R.id.InputPSubCategory);
         pcondition = findViewById(R.id.InputPCondition);
-        pid = findViewById(R.id.InputPID);
 
         autocat = findViewById(R.id.acCat);
         autosubcat = findViewById(R.id.acSubCat);
@@ -314,19 +313,6 @@ public class AddListing extends AppCompatActivity {
         }
     }
 
-    private Boolean validatePHandling() {
-        String val = Objects.requireNonNull(phandling.getEditText()).getText().toString();
-
-        if (val.isEmpty()) {
-            phandling.setError("Field cannot be empty");
-            return false;
-        } else {
-            phandling.setError(null);
-            phandling.setErrorEnabled(false);
-            return true;
-        }
-    }
-
     private Boolean validatePCat() {
         String val = Objects.requireNonNull(pcat.getEditText()).getText().toString();
 
@@ -366,23 +352,11 @@ public class AddListing extends AppCompatActivity {
         }
     }
 
-    private Boolean validatePID() {
-        String val = Objects.requireNonNull(pid.getEditText()).getText().toString();
-
-        if (val.isEmpty()) {
-            pid.setError("Field cannot be empty");
-            return false;
-        } else {
-            pid.setError(null);
-            pid.setErrorEnabled(false);
-            return true;
-        }
-    }
 
     private void Add_ProdOnDB() {
         if (!validatePBrand() | !validatePCat() | !validatePSubCat() | !validatePCondtion() |
-                !validatePDesc() | !validatePHandling() | !validatePName() | !validatePPrice() |
-                !validatePStock() | !validatePID()) {
+                !validatePDesc()| !validatePName() | !validatePPrice() |
+                !validatePStock()) {
             return;
         }
         pBrand = Objects.requireNonNull(pbrand.getEditText()).getText().toString();
@@ -390,7 +364,6 @@ public class AddListing extends AppCompatActivity {
         pSubCat = Objects.requireNonNull(psubcat.getEditText()).getText().toString();
         pCondition = Objects.requireNonNull(pcondition.getEditText()).getText().toString();
         pDescription = Objects.requireNonNull(pdesc.getEditText()).getText().toString();
-        pHandling = Objects.requireNonNull(phandling.getEditText()).getText().toString();
         pName = Objects.requireNonNull(pname.getEditText()).getText().toString();
         pPrice = Objects.requireNonNull(pprice.getEditText()).getText().toString();
         pStock = Objects.requireNonNull(pstock.getEditText()).getText().toString();
@@ -398,7 +371,7 @@ public class AddListing extends AppCompatActivity {
         pOverAllrate = "0.00";
         pSold = "0";
         pScore = "0.0";
-        pID = Objects.requireNonNull(pid.getEditText()).getText().toString();
+        pID = root.push().getKey();
         UploadImage();
     }
 
@@ -418,8 +391,7 @@ public class AddListing extends AppCompatActivity {
 
         imageref.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
             imageref.getDownloadUrl().addOnSuccessListener(uri -> {
-                model = new Model(uri.toString(), pID, pBrand, pCat, pSubCat, pCondition,
-                        pDescription, pHandling, pName, pPrice, pStock, pSellerID, pOverAllrate, pSold, pScore);
+                model = new Model(uri.toString(), pID, pBrand, pCat, pSubCat, pCondition, pDescription, pName, pPrice, pStock, pSellerID, pOverAllrate, pSold, pScore);
                 root.child(pID).setValue(model);
                 Intent intent = new Intent(AddListing.this, HomeContainer.class);
                 intent.putExtra("back_Acc", "Account");

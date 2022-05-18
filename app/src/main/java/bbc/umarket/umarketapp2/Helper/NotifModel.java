@@ -1,33 +1,31 @@
 package bbc.umarket.umarketapp2.Helper;
 
 public class NotifModel {
-    String prodName, sellerName, Qty, Price, currenttime;
+    String userID, notification, currenttime;
 
     public NotifModel() {}
 
-    public NotifModel(String prodName, String sellerName, String Qty, String Price, String currenttime){
-        this.prodName = prodName;
-        this.sellerName = sellerName;
-        this.Qty = Qty;
-        this.Price = Price;
+    public NotifModel(String userID, String notification, String currenttime){
+       this.userID = userID;
+       this.notification = notification;
         this.currenttime = currenttime;
     }
 
-    public String getProdName() {return prodName;}
+    public String getUserID() {
+        return userID;
+    }
 
-    public void setProdName(String prodName) {this.prodName = prodName; }
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
 
-    public String getSellerName() {return sellerName;}
+    public String getNotification() {
+        return notification;
+    }
 
-    public void setSellerName(String sellerName) {this.sellerName = sellerName;}
-
-    public String getQty() {return Qty;}
-
-    public void setQty(String qty) {Qty = qty;}
-
-    public String getPrice() {return Price;}
-
-    public void setPrice(String price) { Price = price;}
+    public void setNotification(String notification) {
+        this.notification = notification;
+    }
 
     public String getCurrenttime() { return currenttime;}
 

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,8 +26,6 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,17 +52,10 @@ import bbc.umarket.umarketapp2.Helper.NotifModel;
 import bbc.umarket.umarketapp2.Listener.CartItemLoadListener;
 import bbc.umarket.umarketapp2.Listener.ItemLoadListener;
 import bbc.umarket.umarketapp2.Listener.NotifItemLoadListener;
-import bbc.umarket.umarketapp2.Main.AddListing;
 import bbc.umarket.umarketapp2.Main.AddToCart;
-import bbc.umarket.umarketapp2.Main.EditProfile;
-import bbc.umarket.umarketapp2.Main.HomeContainer;
-import bbc.umarket.umarketapp2.Main.Login;
 import bbc.umarket.umarketapp2.Main.NotificationScreen;
-import bbc.umarket.umarketapp2.Main.ProductDetails;
 import bbc.umarket.umarketapp2.Main.Search;
-import bbc.umarket.umarketapp2.Main.SpecificChat;
 import bbc.umarket.umarketapp2.R;
-import bbc.umarket.umarketapp2.Main.SearchedListing;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -348,7 +338,11 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
     public void onNotifLoadSuccess(ArrayList<NotifModel> notifList) {
         int NotifSum = 0;
         for (NotifModel notifModel : notifList) {
-            NotifSum += Integer.parseInt(notifModel.getQty());
+            int count = 0;
+            if (notifModel.getNotification()!=null){
+                count++;
+            }
+            NotifSum += count;
             notificationBadge.setNumber(NotifSum);
         }
     }

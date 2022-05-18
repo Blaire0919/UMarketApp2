@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/NewUMarketlight"
     android:orientation="vertical"
-    tools:context=".Main.SellerCenter">
+    tools:context=".SellerSide.SellerCenter">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,12 +18,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="3dp" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="3dp"
                 android:background="@color/white">
 
                 <RelativeLayout
@@ -244,9 +247,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
 
@@ -254,8 +257,8 @@
                     android:id="@+id/add"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_margin="5dp"
+                    android:layout_weight="1"
                     android:clickable="true"
                     android:elevation="8dp"
                     android:foreground="?android:attr/selectableItemBackground"
@@ -330,9 +333,9 @@
 
             </LinearLayout>
 
-         <LinearLayout
-             android:layout_width="match_parent"
-             android:layout_height="50dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
 
         </LinearLayout>
 
