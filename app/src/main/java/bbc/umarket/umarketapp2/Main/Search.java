@@ -1,6 +1,7 @@
 package bbc.umarket.umarketapp2.Main;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -21,15 +22,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 import bbc.umarket.umarketapp2.Adapter.ItemAdapter;
+import bbc.umarket.umarketapp2.Database.SessionManager;
 import bbc.umarket.umarketapp2.Helper.FeatProdtHelperClass;
 import bbc.umarket.umarketapp2.Helper.ItemHelperClass;
 import bbc.umarket.umarketapp2.R;
@@ -38,6 +45,7 @@ public class Search extends AppCompatActivity {
 
     ImageView back;
     DatabaseReference mref;
+    String studid;
 
     private ListView listdata;
     private AutoCompleteTextView txtSearch;
@@ -45,11 +53,23 @@ public class Search extends AppCompatActivity {
     ArrayList<ItemHelperClass> searched_item;
     ItemAdapter itemAdapter;
 
+
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore firebaseFirestore;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_UMarketApp2);
         setContentView(R.layout.act_search);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
+     //   getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
+
+        SessionManager sessionManager = new SessionManager(Search.this, SessionManager.SESSION_USERSESSION);
+        HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
+        studid = usersdetails.get(SessionManager.KEY_STUDID);
+
+     firebaseAuth = FirebaseAuth.getInstance();
+      firebaseFirestore = FirebaseFirestore.getInstance();
 
 //        Database Reference on Products
         mref = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
@@ -69,7 +89,8 @@ public class Search extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled( DatabaseError error) {  }
+            public void onCancelled(DatabaseError error) {
+            }
         };
 
         mref.addListenerForSingleValueEvent(event);
@@ -91,7 +112,8 @@ public class Search extends AppCompatActivity {
 
     }
 
-//    Methods
+    //    Methods
+    @SuppressLint("NotifyDataSetChanged")
     private void populateSearch(DataSnapshot snapshot) {
         ArrayList<String> pnames = new ArrayList<>();
 
@@ -103,14 +125,14 @@ public class Search extends AppCompatActivity {
         itemAdapter = new ItemAdapter(this, searched_item);
         searchrv.setAdapter(itemAdapter);
 
-        if(snapshot.exists()){
+        if (snapshot.exists()) {
 
-            for(DataSnapshot ds:snapshot.getChildren()){
+            for (DataSnapshot ds : snapshot.getChildren()) {
                 String pname = ds.child("pName").getValue(String.class);
                 pnames.add(pname);
 
                 ItemHelperClass itemHelperClass = ds.getValue(ItemHelperClass.class);
-                if (itemHelperClass != null && itemHelperClass.getpName().equals(pname)) {
+                if (itemHelperClass != null && itemHelperClass.getpName().equals(pname) && !itemHelperClass.getpSellerID().equals(studid)) {
                     searched_item.add(itemHelperClass);
                 }
             }
@@ -119,10 +141,32 @@ public class Search extends AppCompatActivity {
             ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, pnames);
             txtSearch.setAdapter(adapter);
 
-        }else{Log.d("Users", "No data found");
+        } else {
+            Log.d("Users", "No data found");
+        }
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Online");}
+        catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
         }
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Offline");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
+
+        }
+    }
 
 
 

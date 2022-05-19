@@ -14,17 +14,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Objects;
 
 import bbc.umarket.umarketapp2.Adapter.ToProcessAdapter;
 import bbc.umarket.umarketapp2.Database.SessionManager;
@@ -46,17 +50,23 @@ public class ProcessOrder extends AppCompatActivity {
 
     DatabaseReference processRef;
 
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore firebaseFirestore;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_UMarketApp2);
         setContentView(R.layout.act_processorder);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
+        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
         SessionManager sessionManager = new SessionManager(ProcessOrder.this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
         studid = usersdetails.get(SessionManager.KEY_STUDID);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         //process database reference
         processRef = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
@@ -134,7 +144,7 @@ public class ProcessOrder extends AppCompatActivity {
                     .setValue(notifModel)
                     .addOnSuccessListener(unused -> {
                         Toast.makeText(this, "Order is being processed", Toast.LENGTH_LONG).show();
-                        Intent backintent = new Intent(ProcessOrder.this, ManageOrders.class);
+                        Intent backintent = new Intent(ProcessOrder.this, SellerCenter.class);
                         startActivity(backintent);
                     });
 
@@ -150,7 +160,7 @@ public class ProcessOrder extends AppCompatActivity {
                             if (toProcessModel != null && toProcessModel.getProdName().equals(prodName)) {
                                 FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                                         .getReference("shipping_order")
-                                        .child(studid)
+                                        .child(toProcessModel.getSellerID())
                                         .push()
                                         .setValue(toProcessModel)
                                         .addOnSuccessListener(unused -> {
@@ -159,15 +169,13 @@ public class ProcessOrder extends AppCompatActivity {
 
                                                     FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                                                             .getReference("process_order")
-                                                            .child(studid)
+                                                            .child(toProcessModel.getSellerID())
                                                             .child(process_key)
                                                             .removeValue()
                                                             .addOnSuccessListener(unused1 -> {
                                                                         Toast.makeText(ProcessOrder.this, "Removed from Process Order with Key " + process_key, Toast.LENGTH_LONG)
                                                                                 .show();
                                                                     }
-
-
                                                             );
                                                 }
                                         );
@@ -181,9 +189,32 @@ public class ProcessOrder extends AppCompatActivity {
 
                 }
             });
-
-
         });
-
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Online");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Offline");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
+
+        }
+    }
+
+
 }

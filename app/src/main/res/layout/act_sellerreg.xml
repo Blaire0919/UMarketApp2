@@ -18,25 +18,43 @@
             android:id="@+id/sellerreg_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:foregroundGravity="left"
+            android:layout_gravity="start"
             android:padding="10dp"
+            android:layout_weight="1"
             android:src="@drawable/ic_back"
             tools:ignore="ContentDescription" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="20"/>
+
+        <Button
+            android:id="@+id/sellerreg_button"
+            style="@style/ButtonStyle01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="13sp"
+            android:background="@drawable/corner_layouts"
+            android:fontFamily="@font/moon_light"
+            android:text="Register" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/logintxt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="25dp"
             android:fontFamily="@font/moon_light"
-            android:gravity="end"
+            android:gravity="center_horizontal"
             android:text="Seller Registration"
             android:textColor="@color/NewUMarketDarkBlue"
             android:textSize="40sp" />
@@ -67,42 +85,23 @@
             <Button
                 android:id="@+id/sellerreg_upload"
                 style="@style/ButtonStyle01"
-                android:layout_width="wrap_content"
+                android:layout_width="186dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="10dp"
-                android:padding="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_margin="8dp"
                 android:background="@drawable/corner_layouts"
                 android:fontFamily="@font/moon_light"
+                android:padding="10dp"
                 android:text="upload image"
-                android:textSize="12sp" />
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
 
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/sellerreg_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="Enter shop name here"
-                android:padding="5dp"
-                app:boxBackgroundColor="@color/transparent"
-                app:boxStrokeColor="@color/black"
-                app:hintTextColor="@color/black">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/sellerreg_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:hint="@string/reg_email"
                 android:padding="10dp"
                 android:transitionName="@string/trans_Id"
@@ -122,7 +121,7 @@
                 android:id="@+id/sellerreg_contact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:hint="Enter Seller's contact number here"
                 android:padding="10dp"
                 app:boxBackgroundColor="@color/transparent"
@@ -140,20 +139,6 @@
 
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/sellerreg_button"
-            style="@style/ButtonStyle01"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="50dp"
-            android:background="@drawable/corner_layouts"
-            android:elevation="2dp"
-            android:fontFamily="@font/moon_light"
-            android:text="Register" />
-
 
     </LinearLayout>
 

@@ -29,20 +29,23 @@ import java.util.HashMap;
 
 import bbc.umarket.umarketapp2.Database.SessionManager;
 import bbc.umarket.umarketapp2.Helper.ToReceiveModel;
+import bbc.umarket.umarketapp2.Listener.ToRateLoadListener;
 import bbc.umarket.umarketapp2.Listener.ToReceiveLoadListener;
 import bbc.umarket.umarketapp2.Main.EditProfile;
+import bbc.umarket.umarketapp2.Main.PurchaseHistory;
+import bbc.umarket.umarketapp2.Main.ToRate;
 import bbc.umarket.umarketapp2.Main.ToReceive;
 import bbc.umarket.umarketapp2.SellerSide.SellerCenter;
 import bbc.umarket.umarketapp2.SellerSide.SellerRegistration;
 import bbc.umarket.umarketapp2.R;
 import bbc.umarket.umarketapp2.Main.Settings;
 
-public class FragProfile extends Fragment implements ToReceiveLoadListener {
+public class FragProfile extends Fragment implements ToReceiveLoadListener, ToRateLoadListener {
     Context context;
     Button btnsellercenter;
     TextView name, id, editprofile;
     LinearLayout btnsettings;
-    String studid, fname, lname, userid;
+    String studid, fname, lname;
 
     DatabaseReference sellerRef = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
             .getReference("seller");
@@ -50,9 +53,10 @@ public class FragProfile extends Fragment implements ToReceiveLoadListener {
     Query checkseller;
 
     ToReceiveLoadListener toReceiveLoadListener;
-    NotificationBadge toreceivebadge;
+    ToRateLoadListener toRateLoadListener;
+    NotificationBadge toreceivebadge, toratebadge;
 
-    MaterialCardView toreceive;
+    MaterialCardView toreceive, torate, phistorycard;
 
     public FragProfile() {
     }
@@ -69,6 +73,8 @@ public class FragProfile extends Fragment implements ToReceiveLoadListener {
 
         toReceiveLoadListener = this;
         countToReceive();
+        toRateLoadListener = this;
+        countToRate();
 
         SessionManager sessionManager = new SessionManager(getActivity(), SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
@@ -86,9 +92,22 @@ public class FragProfile extends Fragment implements ToReceiveLoadListener {
         id = view.findViewById(R.id.Acc_id);
         toreceivebadge = view.findViewById(R.id.toReceivebadge);
         toreceive = view.findViewById(R.id.cardToReceive);
+        toratebadge = view.findViewById(R.id.toRatebadge);
+        torate = view.findViewById(R.id.cardToRate);
+        phistorycard = view.findViewById(R.id.cardphistory);
 
         toreceive.setOnClickListener( view1 -> {
             Intent intent = new Intent(getActivity(), ToReceive.class);
+            startActivity(intent);
+        });
+
+        torate.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getActivity(), ToRate.class);
+            startActivity(intent);
+        });
+
+        phistorycard.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getActivity(), PurchaseHistory.class);
             startActivity(intent);
         });
 
@@ -121,7 +140,6 @@ public class FragProfile extends Fragment implements ToReceiveLoadListener {
             });
         });
 
-
         return view;
     }
 
@@ -129,8 +147,8 @@ public class FragProfile extends Fragment implements ToReceiveLoadListener {
     public void onResume() {
         super.onResume();
         countToReceive();
+        countToRate();
     }
-
 
     private void countToReceive() {
         ArrayList<ToReceiveModel> toReceiveList = new ArrayList<>();
@@ -172,4 +190,44 @@ public class FragProfile extends Fragment implements ToReceiveLoadListener {
     public void onToReceiveLoadFailed(String Message) {
 
     }
+
+    private void countToRate() {
+        ArrayList<ToReceiveModel> toRateList = new ArrayList<>();
+        SessionManager sessionManager = new SessionManager(getActivity(), SessionManager.SESSION_USERSESSION);
+        HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
+        studid = usersdetails.get(SessionManager.KEY_STUDID);
+
+        FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("to_rate").child(studid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                ToReceiveModel toRateModel = dataSnapshot.getValue(ToReceiveModel.class);
+                                toRateList.add(toRateModel);
+                            }
+                            toRateLoadListener.onToRateLoadSuccess(toRateList);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.d("", error.getDetails());
+                    }
+                });
+    }
+    @Override
+    public void onToRateLoadSuccess(ArrayList<ToReceiveModel> toRateList) {
+        int TRSum = 0;
+        for (ToReceiveModel toRateModel : toRateList) {
+            TRSum += Integer.parseInt(toRateModel.getProdQty());
+        //    if (TRSum!=0){
+                toratebadge.setNumber(TRSum);
+        //    }
+
+        }
+    }
+
+    @Override
+    public void onToRateLoadFailed(String Message) {}
 }

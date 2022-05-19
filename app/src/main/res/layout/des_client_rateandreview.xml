@@ -32,6 +32,7 @@
             <ImageView
                 android:id="@+id/rr_img"
                 android:layout_width="50dp"
+
                 android:layout_height="50dp"
                 android:background="@drawable/corner_layouts"
                 android:gravity="center_vertical"
@@ -59,7 +60,7 @@
 
                     <TextView
                         android:id="@+id/rr_name"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/moon_light"
                         android:text="Buyer's name"
@@ -67,7 +68,7 @@
 
                     <TextView
                         android:id="@+id/rr_studid"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/moon_light"
                         android:text="K00000000"
@@ -111,15 +112,18 @@
                 <ImageView
                     android:id="@+id/rrOrderImg"
                     android:layout_width="0dp"
-                    android:layout_height="30dp"
+                    android:layout_height="35dp"
                     android:layout_gravity="end"
+                    android:cropToPadding="true"
                     android:layout_weight="1"
+                    android:padding="-10dp"
                     android:background="@drawable/corner_layouts"
                     android:src="@drawable/ic_image" />
 
                 <TextView
                     android:id="@+id/rr_comment"
                     android:layout_width="0dp"
+                   android:layout_marginStart="1dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
                     android:fontFamily="@font/moon_light"

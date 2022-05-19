@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.ContextThemeWrapper;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -63,14 +64,17 @@ public class Login extends AppCompatActivity {
 
     //Authentication
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    FirebaseUser user = firebaseAuth.getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.Theme_UMarketApp2);
         setContentView(R.layout.act_login);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
+
+        //STATUS BAR yun yung sa phone na top bar mo na may clock
+        //ACTION / APP / TOOL BAR yun yung sa app na top bar na may title
+       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
+
 
         // Animation
         topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
@@ -109,6 +113,7 @@ public class Login extends AppCompatActivity {
 
     public void letTheUserLoggedIn(View view) {
         login_progressbar.setVisibility(View.VISIBLE);
+
         if (validatestudID() | validatePass()) {
 
             if (!isConnected(this)) {
@@ -183,7 +188,7 @@ public class Login extends AppCompatActivity {
                         firebaseAuth.signInWithEmailAndPassword(emailfromDB, passFromDB).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                login_progressbar.setVisibility(View.INVISIBLE);
+
 
                                 //Create a Session
                                 if (RememberMe.isChecked()) {
@@ -194,7 +199,7 @@ public class Login extends AppCompatActivity {
                                 SessionManager sessionManager2 = new SessionManager(Login.this, SessionManager.SESSION_USERSESSION);
                                 sessionManager2.createLoginSession(fnamefromDB, lnamefromDB, studIDfromDB, phonefromDB, genderfromDB,
                                         bdayfromDB, emailfromDB, passFromDB, sellerFromDB);
-
+                                login_progressbar.setVisibility(View.INVISIBLE);
                                 Intent intent = new Intent(Login.this, HomeContainer.class);
                                 startActivity(intent);
                                 finish();

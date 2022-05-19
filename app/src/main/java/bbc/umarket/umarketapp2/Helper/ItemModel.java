@@ -1,10 +1,10 @@
 package bbc.umarket.umarketapp2.Helper;
 
-public class Model {
+public class ItemModel {
 
     String imageUrl, pID, pBrand, pCategory, pSubCategory, pCondition, pDescription, pName, pPrice, pStock, pSellerID, pSoldItems, pOverallRate, pScore;
 
-    public Model() {    }
+    public ItemModel() {    }
 
     public String getImageUrl() {
         return imageUrl;
@@ -117,9 +117,9 @@ public class Model {
         this.pScore = pScore;
     }
 
-    public Model(String imageUrl, String pID, String pBrand, String pCategory, String pSubCategory, String pCondition,
-                 String pDescription, String pName, String pPrice, String pStock, String pSellerID,
-                 String pOverallRate, String pSoldItems, String pScore) {
+    public ItemModel(String imageUrl, String pID, String pBrand, String pCategory, String pSubCategory, String pCondition,
+                     String pDescription, String pName, String pPrice, String pStock, String pSellerID,
+                     String pOverallRate, String pSoldItems, String pScore) {
         this.imageUrl = imageUrl;
         this.pID = pID;
         this.pBrand = pBrand;

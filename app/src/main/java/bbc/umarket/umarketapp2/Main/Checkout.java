@@ -19,12 +19,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,6 +35,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import bbc.umarket.umarketapp2.Adapter.CartItemAdapter;
 import bbc.umarket.umarketapp2.Adapter.CheckOutAdapter;
@@ -65,6 +69,8 @@ public class Checkout extends AppCompatActivity {
 
     String totpay;
 
+
+
     String checkoutProduct, sellerID;
 
     //for user notification
@@ -75,12 +81,18 @@ public class Checkout extends AppCompatActivity {
     //for managing orders by sellers
     String seller_ID, buyerID, buyerName, prodID, prodName, price, qty, totAmt, order_currentdate, order_currenttime;
 
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore firebaseFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_UMarketApp2);
         setContentView(R.layout.act_checkout);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
+       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
@@ -130,7 +142,6 @@ public class Checkout extends AppCompatActivity {
                         un_qty = snapshot1.child("qty").getValue(String.class);
                         un_price = snapshot1.child("price").getValue(String.class);
 
-
                         //for seller managing orders
                         seller_ID = sellerID;
                         buyerID = studid;
@@ -142,8 +153,6 @@ public class Checkout extends AppCompatActivity {
                         totAmt = String.valueOf(Float.parseFloat(String.valueOf(Float.parseFloat(price) * Integer.parseInt(qty))));
                         order_currentdate = java.text.DateFormat.getDateInstance().format(new Date());
                         order_currenttime = currenttime;
-
-
 
                     }
                     checkOutAdapter.notifyDataSetChanged();
@@ -189,51 +198,33 @@ public class Checkout extends AppCompatActivity {
         }
 
         back.setOnClickListener(view -> {
+            checkoutList.clear();
+            ItemIdOrdered.clear();
+            orderLog.clear();
+            Integer x = 0;
+            AddToCart.selectedItemCount(x);
+
             FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                     .getReference("checkout")
                     .child(studid)
                     .removeValue()
                     .addOnSuccessListener(unused -> Log.d(TAG, "Delete Success!"));
-            Integer x = 0;
-            AddToCart.selectedItemCount(x);
 
-            checkoutList.clear();
-            ItemIdOrdered.clear();
-            orderLog.clear();
-
-
-            Intent intent = new Intent(Checkout.this, AddToCart.class);
+            Intent intent = new Intent(Checkout.this, HomeContainer.class);
+            intent.putExtra("back_Home", "Home");
             startActivity(intent);
             finish();
         });
 
         PlaceOrder.setOnClickListener(view -> {
-            orderLog.put("date", java.text.DateFormat.getDateInstance().format(new Date()));
-            orderLog.put("totPayment", totpay);
-
-            FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
-                    .getReference("order")
-                    .child(studid)
-                    .setValue(orderLog)
-                    .addOnSuccessListener(unused -> Log.d("ORDER in DB", "Order Success!"));
-
-            for (int i = 0; i < orderedItem.size(); i++) {
-                FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
-                        .getReference("order")
-                        .child(studid)
-                        .child("itemsOrdered")
-                        .child(orderedItem.get(i).getProdId())
-                        .setValue(orderedItem.get(i))
-                        .addOnSuccessListener(unused -> Log.d("ORDERED ITEMS", "Inserted order_items Successfully!"));
-            }
-
+            //remove from checkout
             FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                     .getReference("checkout")
                     .child(studid)
                     .removeValue()
                     .addOnSuccessListener(unused -> Log.d(TAG, "Delete Success!"));
 
-
+            //remove from cart
             for (String id : ItemIdOrdered) {
                 FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                         .getReference("cart")
@@ -250,10 +241,7 @@ public class Checkout extends AppCompatActivity {
                     .getReference("notification")
                     .child(studid)
                     .child(String.valueOf(date.getTime()))
-                    .setValue(notifModel)
-                    .addOnSuccessListener(unused -> {
-                    });
-
+                    .setValue(notifModel);
 
             //toprocess order for seller
             ToProcessModel toProcessModel = new ToProcessModel(seller_ID, buyerID, buyerName, prodID, prodName, price, qty, totAmt, order_currentdate, order_currenttime);
@@ -261,21 +249,36 @@ public class Checkout extends AppCompatActivity {
                     .getReference("process_order")
                     .child(seller_ID)
                     .push()
-                    .setValue(toProcessModel)
-                    .addOnSuccessListener(unused -> {
-                    });
+                    .setValue(toProcessModel);
 
-
-//            //for automated chat
-//            Bundle bundle = new Bundle();
-//            bundle.putString("sellerid", sellerID);
-//            // set Fragmentclass Arguments
-//            FragChat fragChat = new FragChat();
-//            fragChat.setArguments(bundle);
             Intent intent = new Intent(Checkout.this, HomeContainer.class);
-            intent.putExtra("back_Chat", "Chat");
+            intent.putExtra("back_Home", "Home");
             startActivity(intent);
         });
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+            try {
+             DocumentReference   documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+                documentReference.update("status", "Online");}
+            catch (Exception exception) {
+                Log.d("EXCEPTION", exception.getMessage());
+
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+            try {
+           DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+                documentReference.update("status", "Offline");
+            } catch (Exception exception) {
+                Log.d("EXCEPTION", exception.getMessage());
+
+        }
     }
 }

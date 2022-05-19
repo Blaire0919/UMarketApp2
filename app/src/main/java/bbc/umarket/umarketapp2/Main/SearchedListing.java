@@ -7,13 +7,18 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import bbc.umarket.umarketapp2.Adapter.ItemAdapter;
 import bbc.umarket.umarketapp2.Helper.ItemHelperClass;
@@ -24,19 +29,24 @@ public class SearchedListing extends AppCompatActivity {
     ItemAdapter itemAdapter;
     ArrayList<ItemHelperClass> listItem;
     FirebaseDatabase rootNode;
-    DatabaseReference reference;
     RecyclerView sprod;
-    ItemHelperClass itemHelperClass;
+
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore firebaseFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_UMarketApp2);
         setContentView(R.layout.act_searched_listing);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
+       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
         Intent searchintent = getIntent();
         String searched = searchintent.getExtras().getString("searched");
+
+    firebaseAuth = FirebaseAuth.getInstance();
+    firebaseFirestore = FirebaseFirestore.getInstance();
 
         rootNode = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
@@ -76,7 +86,29 @@ public class SearchedListing extends AppCompatActivity {
             intent.putExtra("back_Home", "Dashboard");
             startActivity(intent);
         });
-
-
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Online");}
+        catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Offline");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
+
+        }
+    }
+
 }

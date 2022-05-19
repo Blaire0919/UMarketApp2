@@ -74,12 +74,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                             holder.rate.setRating(average);
                         }
                     }
-
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {          }
+            public void onCancelled(@NonNull DatabaseError error) {  }
         });
 
         holder.cardView.setOnClickListener(v -> {

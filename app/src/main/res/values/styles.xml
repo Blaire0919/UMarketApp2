@@ -12,7 +12,7 @@
 
     <!--OutlineBoxStyle-->
     <style name="InputLayoutOutlineBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="fontFamily">@font/moon_light</item>
         <item name="boxStrokeColor">@color/black</item>
         <item name="tooltipForegroundColor">@color/black</item>
         <item name="boxBackgroundMode">outline</item>
@@ -39,15 +39,15 @@
 
     <!--User Profile InputLayout Style -->
     <style name="UserProfileInputLayout">
-        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="fontFamily">@font/moon_light</item>
         <item name="boxStrokeColor">@color/black</item>
 
     </style>
 
     <!--Alert Dialog Style-->
-    <style name="AlertDialogCustom" parent="Theme.MaterialComponents.Light.Dialog">
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:textSize">15sp</item>
+    <style name="CustomAlertDialog" parent="Theme.Material3.Light.Dialog">
+        <item name="fontFamily">@font/moon_light</item>
+
     </style>
 
 </resources>

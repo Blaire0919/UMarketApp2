@@ -8,11 +8,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
 import android.util.Log;
 
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -23,16 +25,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import bbc.umarket.umarketapp2.Adapter.CartItemAdapter;
 import bbc.umarket.umarketapp2.Database.SessionManager;
@@ -46,22 +52,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AddToCart extends AppCompatActivity implements CartItemLoadListener {
-
     CartItemAdapter cartItemAdapter;
     ArrayList<CartHelperClass> cartitem;
-
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore firebaseFirestore;
     public static String studid;
-
     FirebaseDatabase rootNode;
     DatabaseReference reference;
-
     public static HashMap<String, String> checkoutmain = new HashMap<>();
     public static ArrayList<CheckOutHelperClass> trylang = new ArrayList<>();
-
+    AlertDialog dialog;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.cartItem_RecyclerView)
     RecyclerView cartItemRView;
-
 
     public static LinearLayout mainlayout;
 
@@ -70,8 +73,7 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
     ImageView back;
 
     public static TextView txttotal;
-
-    public static Integer x=0;
+    public static Integer x = 0;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btncheckout)
@@ -82,13 +84,15 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_UMarketApp2);
         setContentView(R.layout.act_addtocart);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
         init();
 
         txttotal = findViewById(R.id.tvTotalPrice);
         mainlayout = findViewById(R.id.cartlayout);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         //studid
         SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
@@ -125,31 +129,38 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
         });
 
         checkout.setOnClickListener(view -> {
-            if(x !=0){
-                checkoutmain.put("date", java.text.DateFormat.getDateInstance().format(new Date()));
+            if (x != 0) {
+//                checkoutmain.put("date", java.text.DateFormat.getDateInstance().format(new Date()));
+//                FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+//                        .getReference("checkout")
+//                        .child(studid)
+//                        .setValue(checkoutmain)
+//                        .addOnSuccessListener(unused -> Log.d(TAG, "Insert 1st child Success!"));
+//
+//                for (int i = 0; i < trylang.size(); i++) {
+//                    FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+//                            .getReference("checkout")
+//                            .child(studid)
+//                            .child("items")
+//                            .child(trylang.get(i).getProdId())
+//                            .setValue(trylang.get(i))
+//                            .addOnSuccessListener(unused -> Log.d(TAG, "Insert 2nd child Success!"));
+//                }
 
-                FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
-                        .getReference("checkout")
-                        .child(studid)
-                        .setValue(checkoutmain)
-                        .addOnSuccessListener(unused -> Log.d(TAG, "Insert 1st child Success!"));
+                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(AddToCart.this, R.style.CustomAlertDialog));
+                dialog = builder.setTitle("")
+                        .setMessage("Feature will be available soon. Please buy directly at Product Details for now.")
+                        .setNeutralButton("OK", null)
+                        .create();
+                dialog.show();
 
-                for (int i = 0; i < trylang.size(); i++) {
-                    //  Log.d("RESULT: ", trylang.get(i).getProdName());
-
-                    FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
-                            .getReference("checkout")
-                            .child(studid)
-                            .child("items")
-                            .child(trylang.get(i).getProdId())
-                            .setValue(trylang.get(i))
-                            .addOnSuccessListener(unused -> Log.d(TAG, "Insert 2nd child Success!"));
-                }
-                Intent intent = new Intent(AddToCart.this, Checkout.class);
-                startActivity(intent);
-
-            }else{
-                Snackbar.make(mainlayout, "Select atleast one product to check out", Snackbar.LENGTH_LONG).show();
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(AddToCart.this, R.style.CustomAlertDialog));
+                dialog = builder.setTitle("")
+                        .setMessage("Select atleast one product to check out")
+                        .setNeutralButton("OK", null)
+                        .create();
+                dialog.show();
             }
         });
     }
@@ -177,10 +188,10 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
         }
     }
 
-    public static void selectedItemCount(Integer value){
-        try{
-            x=value;
-        }catch(Exception exception){
+    public static void selectedItemCount(Integer value) {
+        try {
+            x = value;
+        } catch (Exception exception) {
             Snackbar.make(mainlayout, exception.getMessage(), Snackbar.LENGTH_LONG).show();
         }
     }
@@ -188,8 +199,9 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
     public static void check_out(List<String> idlist, CheckOutHelperClass value) {
         try {
             for (String id : idlist) {
-                if (value != null && id.equals(value.getProdId()))
+                if (value != null && id.equals(value.getProdId())) {
                     trylang.add(value);
+                }
             }
         } catch (Exception ex) {
             Log.d("Error: ", ex.getMessage());
@@ -197,8 +209,33 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
     }
 
     @Override
-    public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) { }
+    public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) {
+    }
 
     @Override
-    public void onCartLoadFailed(String Message) { }
+    public void onCartLoadFailed(String Message) {
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Online");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Offline");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
+
+        }
+    }
 }

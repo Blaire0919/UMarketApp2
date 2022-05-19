@@ -9,7 +9,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -26,80 +25,74 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
-import bbc.umarket.umarketapp2.Adapter.NotifAdapter;
+import bbc.umarket.umarketapp2.Adapter.ToRateAdapter;
+import bbc.umarket.umarketapp2.Adapter.ToReceiveAdapter;
 import bbc.umarket.umarketapp2.Database.SessionManager;
-import bbc.umarket.umarketapp2.Helper.NotifModel;
+import bbc.umarket.umarketapp2.Helper.ToReceiveModel;
 import bbc.umarket.umarketapp2.R;
 
-public class NotificationScreen extends AppCompatActivity {
+public class ToRate extends AppCompatActivity {
 
     ImageView back;
-
-    RecyclerView notifRecyclerview;
-    NotifAdapter notifAdapter;
-    ArrayList<NotifModel> notifList;
-
     String studid;
+    RecyclerView torateRecyclerView;
+    ArrayList<ToReceiveModel> toRateList;
+    ToRateAdapter toRateAdapter;
 
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
+    String removeToReceiveKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.Theme_UMarketApp2);
-        setContentView(R.layout.act_notifscreen);
+        setContentView(R.layout.act_torate);
 
-        //  getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
-
-        SessionManager sessionManager = new SessionManager(NotificationScreen.this, SessionManager.SESSION_USERSESSION);
+        SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
         studid = usersdetails.get(SessionManager.KEY_STUDID);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        back = findViewById(R.id.notif_back);
-        notifRecyclerview = findViewById(R.id.notification_recyclerview);
+        back = findViewById(R.id.torate_back);
+        torateRecyclerView = findViewById(R.id.torate_recyclerview);
 
         back.setOnClickListener(view -> {
-            Intent intent = new Intent(NotificationScreen.this, HomeContainer.class);
-            intent.putExtra("back_Home", "Home");
+            Intent intent = new Intent(ToRate.this, HomeContainer.class);
+            intent.putExtra("back_Acc", "Account");
             startActivity(intent);
             finish();
         });
 
-        notifRecyclerview.setHasFixedSize(true);
-        notifRecyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        notifList = new ArrayList<>();
-        notifAdapter = new NotifAdapter(this, notifList);
-        notifRecyclerview.setAdapter(notifAdapter);
+        //to rate recyclerview
+        torateRecyclerView.setHasFixedSize(true);
+        torateRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        toRateList = new ArrayList<>();
+        toRateAdapter = new ToRateAdapter(this, toRateList);
+        torateRecyclerView.setAdapter(toRateAdapter);
 
-        DatabaseReference notifRef = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
-                .getReference("notification").child(studid);
-
-        notifRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @SuppressLint("NotifyDataSetChanged")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                        NotifModel notifModel = snapshot1.getValue(NotifModel.class);
-                        if (notifModel != null) {
-                            notifList.add(notifModel);
+        FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("to_rate").child(studid).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                ToReceiveModel toRateModel = snapshot1.getValue(ToReceiveModel.class);
+                                if (toRateModel != null) {
+                                    toRateList.add(toRateModel);
+                                }
+                            }
                         }
+                        toRateAdapter.notifyDataSetChanged();
                     }
-                } else {
-                    Toast.makeText(NotificationScreen.this, "No notifications", Toast.LENGTH_LONG).show();
-                }
-                notifAdapter.notifyDataSetChanged();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("ERROROROR", error.getDetails());
-            }
-        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
     }
 
     @Override
@@ -121,7 +114,6 @@ public class NotificationScreen extends AppCompatActivity {
             documentReference.update("status", "Offline");
         } catch (Exception exception) {
             Log.d("EXCEPTION", exception.getMessage());
-
         }
     }
 

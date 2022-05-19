@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +43,8 @@ import java.util.Objects;
 //Python Imports
 import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import bbc.umarket.umarketapp2.Adapter.CartItemAdapter;
 import bbc.umarket.umarketapp2.Helper.CartHelperClass;
@@ -96,11 +99,16 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
     LinearLayout mlayout;
     CartItemLoadListener cartItemLoadListener;
 
+    DocumentReference documentReference;
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore firebaseFirestore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_UMarketApp2);
         setContentView(R.layout.act_prod_details);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
+        //   getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
         cartItemLoadListener = this;
 
@@ -108,6 +116,9 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
         SessionManager sessionManager = new SessionManager(ProductDetails.this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
         studid = usersdetails.get(SessionManager.KEY_STUDID);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         Intent prodintent = getIntent();
         prodID = prodintent.getExtras().getString("pID");
@@ -137,8 +148,7 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
             finish();
         });
 
-        DatabaseReference reference = FirebaseDatabase
-                .getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                 .getReference("products");
         Query checkID = reference.orderByChild("pID").equalTo(prodID);
 
@@ -200,7 +210,7 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                         CtotalPrice = Objects.requireNonNull(snapshot.child(prodID).child("pPrice").getValue(String.class));
 
                         coQty = "1";
-                        coPrice =  snapshot.child(prodID).child("pPrice").getValue(String.class);
+                        coPrice = snapshot.child(prodID).child("pPrice").getValue(String.class);
                         coSubTotal = coPrice;
 
                         final String SellerID = snapshot.child(prodID).child("pSellerID").getValue(String.class);
@@ -297,11 +307,14 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                         @SuppressLint("NotifyDataSetChanged")
                         @Override
                         public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                                for (DataSnapshot snap : snapshot.getChildren()) {
-                                    ItemHelperClass itemHelperClass = snap.getValue(ItemHelperClass.class);
-                                    assert itemHelperClass != null;
-                                    if (itemHelperClass.getpName().equals(strTemp)) {
+                            for (DataSnapshot snap : snapshot.getChildren()) {
+                                ItemHelperClass itemHelperClass = snap.getValue(ItemHelperClass.class);
+                                assert itemHelperClass != null;
+                                if (itemHelperClass.getpName().equals(strTemp)) {
+                                    if (!itemHelperClass.getpSellerID().equals(studid)) {
                                         listItem.add(itemHelperClass);
+                                    }
+
                                 }
                             }
                             itemAdapter.notifyDataSetChanged();
@@ -309,7 +322,6 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
 
                         @Override
                         public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
                         }
                     });
                 }
@@ -342,12 +354,14 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                         }
                     }
                 } else {
-                    Toast.makeText(ProductDetails.this, "HINDI GUMAGANA", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "AYAW GUMANA");
                 }
                 rrAdapter.notifyDataSetChanged();
             }
+
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
         });
 
         cart.setOnClickListener(view -> {
@@ -404,20 +418,50 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                     .child("items")
                     .child(prodID)
                     .setValue(checkOutHelperClass)
-                    .addOnSuccessListener(unused -> Log.d(TAG, "Checkout Success!"));
+                    .addOnSuccessListener(unused -> {
+                        Log.d(TAG, "Checkout Success!");
+                        Intent intent = new Intent(ProductDetails.this, Checkout.class);
+                        intent.putExtra("pID", prodID);
+                        startActivity(intent);
+                        finish();
+                    });
 
-            Intent intent = new Intent(ProductDetails.this, Checkout.class);
-            intent.putExtra("pID", prodID);
-            startActivity(intent);
-            finish();
+
         });
     }
 
     @Override
-    public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) {}
+    public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) {
+    }
 
     @Override
     public void onCartLoadFailed(String message) {
         Snackbar.make(mlayout, message, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (documentReference != null) {
+            try {
+                documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+                documentReference.update("status", "Online");
+            } catch (Exception exception) {
+                Log.d("EXCEPTION", exception.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (documentReference != null) {
+            try {
+                documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+                documentReference.update("status", "Offline");
+            } catch (Exception exception) {
+                Log.d("EXCEPTION", exception.getMessage());
+            }
+        }
     }
 }

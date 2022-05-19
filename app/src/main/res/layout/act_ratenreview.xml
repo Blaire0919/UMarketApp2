@@ -52,9 +52,9 @@
                 android:fontFamily="@font/moon_light"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:text="Submit"
-                android:textAlignment="textEnd"
-                android:textColor="@color/red"
-                android:textSize="20sp" />
+                android:gravity="end"
+                android:textColor="@color/NewUMarketlight"
+                android:textSize="21sp" />
         </LinearLayout>
 
     </RelativeLayout>
@@ -68,10 +68,10 @@
 
         <ImageView
             android:id="@+id/p_image"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_vertical"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:src="@drawable/ic_image" />
 
         <TextView
@@ -82,7 +82,7 @@
             android:fontFamily="@font/moon_light"
             android:text="Product Name"
             android:textColor="@color/black"
-            android:textSize="11sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
     <RatingBar
@@ -105,15 +105,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:clickable="true"
-            android:elevation="20dp">
+            android:layout_margin="10dp">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:background="@color/NewUMarketlight"
                 android:padding="10dp">
 
                 <TextView
@@ -203,7 +200,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:backgroundTint="@color/lightgray"
-            android:fontFamily="@font/moon_light"
+            android:fontFamily="@font/poppins_regular"
             android:hint="What do you think of the product?"
             android:maxEms="5"
             android:textColor="@color/black"

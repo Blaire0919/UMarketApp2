@@ -122,8 +122,6 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
         notifItemLoadListener = this;
         countNotif();
 
-
-
         rootNode = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
         //for image slider on dashboard fragment
@@ -180,24 +178,27 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
 //              convert the returned value from algo to array
-           //     String[] rec = pyobj.callAttr("main", studid).toJava(String[].class);
-          //      for (String strTemp : rec) {
+               String[] rec = pyobj.callAttr("main", studid).toJava(String[].class);
+               for (String strTemp : rec) {
                     reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for (DataSnapshot snapi : snapshot.getChildren()) {
                                 FeatProdtHelperClass featProdtHelperClass = snapi.getValue(FeatProdtHelperClass.class);
                                 assert featProdtHelperClass != null;
-                              //  if (featProdtHelperClass.getpName().equals(strTemp)) {
-                                    featprod.add(featProdtHelperClass);
-                              //  }
+                                if (featProdtHelperClass.getpName().equals(strTemp)) {
+                                    if(!featProdtHelperClass.getpSellerID().equals(studid)){
+                                        featprod.add(featProdtHelperClass);
+                                    }
+
+                                }
                             }
                             featProdAdapter.notifyDataSetChanged();
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) { }
                     });
-            //    }
+                }
             }
 
             @Override
@@ -272,8 +273,11 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
                                 for (DataSnapshot snap : snapshot.getChildren()) {
                                     ItemHelperClass itemHelperClass = snap.getValue(ItemHelperClass.class);
                                     for (String x : cat_interests){
-                                        if (itemHelperClass != null && itemHelperClass.getpCategory().equals(x)){
-                                            listItem.add(itemHelperClass);
+                                        if (itemHelperClass != null && itemHelperClass.getpCategory().equals(x) ){
+                                            if(!itemHelperClass.getpSellerID().equals(studid)){
+                                                listItem.add(itemHelperClass);
+                                            }
+
                                         }
                                     }
 
@@ -284,8 +288,7 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-                            Log.d("Error: ", error.getDetails());
-                        }
+                            Log.d("Error: ", error.getDetails());}
                     });
 
                 } else {

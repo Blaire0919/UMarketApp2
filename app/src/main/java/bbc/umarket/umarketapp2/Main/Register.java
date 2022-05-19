@@ -1,6 +1,7 @@
 package bbc.umarket.umarketapp2.Main;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -79,14 +80,17 @@ public class Register extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_UMarketApp2);
         setContentView(R.layout.act_register);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
+      //  getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(Register.this, R.style.CustomAlertDialog));
+
         dialog = builder.setTitle("")
                 .setMessage("REQUIRED: Please use your UMak email address upon registering.")
                 .setNeutralButton("OK", null)
                 .create();
+
         dialog.show();
 
         //Hook
@@ -155,6 +159,14 @@ public class Register extends AppCompatActivity {
                         Answer = 1;
                     }
                 });
+            }else {
+                progress_bar.setVisibility(View.INVISIBLE);
+                dialog = builder.setTitle("")
+                        .setMessage("REQUIRED: Please enter your password for email authentication.")
+                        .setNeutralButton("OK", null)
+                        .create();
+
+                dialog.show();
             }
         });
 
@@ -249,13 +261,15 @@ public class Register extends AppCompatActivity {
 
                     AlertDialog dialog = builder.setTitle("")
                             .setMessage("Registered Successfully!")
+                            .setNeutralButton("OK", (dialogInterface, i) -> {
+                                Intent intent = new Intent(Register.this, Login.class);
+                                startActivity(intent);
+                                finish();
+                            })
                             .create();
 
                     dialog.show();
 
-                    Intent intent = new Intent(Register.this, Login.class);
-                    startActivity(intent);
-                    finish();
                 }
             }
         });

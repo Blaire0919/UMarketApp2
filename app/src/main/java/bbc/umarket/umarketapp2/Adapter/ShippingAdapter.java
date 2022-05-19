@@ -2,6 +2,7 @@ package bbc.umarket.umarketapp2.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import bbc.umarket.umarketapp2.Helper.ToProcessModel;
 import bbc.umarket.umarketapp2.R;
@@ -33,6 +35,7 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
     public ShippingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.des_orders, parent, false);
         return new ShippingViewHolder(view);
+
     }
 
     @Override
@@ -59,6 +62,7 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
             intent.putExtra("buyerid", shippingModel.getBuyerID());
             intent.putExtra("sellerid", shippingModel.getSellerID());
 
+
             context.startActivity(intent);
         });
 
@@ -73,8 +77,10 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
         TextView buyerName, prodID, prodName, price, qty, totAmt, datetime;
         CardView card;
 
+
         public ShippingViewHolder(@NonNull View itemView) {
             super(itemView);
+
 
             card = itemView.findViewById(R.id.order_card);
             buyerName = itemView.findViewById(R.id.txt_buyersname);
@@ -84,6 +90,7 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
             qty = itemView.findViewById(R.id.txt_qty);
             totAmt = itemView.findViewById(R.id.txt_totamt);
             datetime = itemView.findViewById(R.id.txt_datetime);
+
 
 
         }

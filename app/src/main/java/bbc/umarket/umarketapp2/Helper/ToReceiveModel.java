@@ -1,13 +1,13 @@
 package bbc.umarket.umarketapp2.Helper;
 
 public class ToReceiveModel {
-    String ImgUrl, buyerID, prodID, sellerID, sellerName, prodName, prodQty, prodPrice;
+    String imgUrl, buyerID, prodID, sellerID, sellerName, prodName, prodQty, prodPrice;
 
 
     public ToReceiveModel(){}
 
     public ToReceiveModel(String imgUrl, String buyerID, String prodID, String sellerID, String sellerName, String prodName, String prodQty, String prodPrice) {
-        ImgUrl = imgUrl;
+        this.imgUrl = imgUrl;
         this.buyerID = buyerID;
         this.prodID = prodID;
         this.sellerID = sellerID;
@@ -17,13 +17,9 @@ public class ToReceiveModel {
         this.prodPrice = prodPrice;
     }
 
-    public String getImgUrl() {
-        return ImgUrl;
-    }
+    public String getImgUrl() {  return imgUrl; }
 
-    public void setImgUrl(String imgUrl) {
-        ImgUrl = imgUrl;
-    }
+    public void setImgUrl(String imgUrl) { this.imgUrl = imgUrl; }
 
     public String getBuyerID() {
         return buyerID;

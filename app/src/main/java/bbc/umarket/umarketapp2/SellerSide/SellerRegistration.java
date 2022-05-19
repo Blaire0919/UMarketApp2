@@ -8,6 +8,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
@@ -16,8 +17,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -31,12 +35,12 @@ import bbc.umarket.umarketapp2.R;
 
 public class SellerRegistration extends AppCompatActivity {
 
-    TextInputLayout sname, semail, scontactnum;
+    TextInputLayout semail, scontactnum;
     Button register, upload;
     ImageView back, sellerimg;
     String studid;
     String sellerKey;
-    String sellername, selleremail, sellercontact;
+    String selleremail, sellercontact;
 
 
     //for seller profile image upload and creating uri
@@ -48,12 +52,16 @@ public class SellerRegistration extends AppCompatActivity {
     SellerHelperClass sellerHelperClass;
 
 
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore firebaseFirestore;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_UMarketApp2);
         setContentView(R.layout.act_sellerreg);
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
+       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
         SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
@@ -61,7 +69,9 @@ public class SellerRegistration extends AppCompatActivity {
 
         storageref = storage.getReference();
 
-        sname = findViewById(R.id.sellerreg_name);
+       firebaseAuth = FirebaseAuth.getInstance();
+       firebaseFirestore = FirebaseFirestore.getInstance();
+
         semail = findViewById(R.id.sellerreg_email);
         scontactnum = findViewById(R.id.sellerreg_contact);
         register = findViewById(R.id.sellerreg_button);
@@ -88,7 +98,7 @@ public class SellerRegistration extends AppCompatActivity {
             if (imageUri != null) {
                 Add_OnSellerDB();
             } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
+                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(SellerRegistration.this, R.style.CustomAlertDialog));
                 builder.setTitle("");
                 builder.setMessage("Please select an image");
 
@@ -102,19 +112,6 @@ public class SellerRegistration extends AppCompatActivity {
 
         });
 
-    }
-
-    private Boolean validateSName() {
-        String val = Objects.requireNonNull(sname.getEditText()).getText().toString();
-
-        if (val.isEmpty()) {
-            sname.setError("Field cannot be empty");
-            return false;
-        } else {
-            sname.setError(null);
-            sname.setErrorEnabled(false);
-            return true;
-        }
     }
 
     private Boolean validateSEmail() {
@@ -143,11 +140,11 @@ public class SellerRegistration extends AppCompatActivity {
     }
 
     private void Add_OnSellerDB() {
-        if (!validateSName() | !validateSEmail() | !validateSContact() ) {
+        if (!validateSEmail() | !validateSContact() ) {
             return;
         }
 
-        sellername = Objects.requireNonNull(sname.getEditText()).getText().toString();
+
         selleremail = Objects.requireNonNull(semail.getEditText()).getText().toString();
         sellercontact = Objects.requireNonNull(scontactnum.getEditText()).getText().toString();
         UploadImage();
@@ -170,7 +167,7 @@ public class SellerRegistration extends AppCompatActivity {
 
         imageref.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
                     imageref.getDownloadUrl().addOnSuccessListener(uri -> {
-                                sellerHelperClass = new SellerHelperClass(sellerKey, uri.toString(), studid, sellername, selleremail, sellercontact);
+                                sellerHelperClass = new SellerHelperClass(sellerKey, uri.toString(), studid, selleremail, sellercontact);
                                 sellerroot.child(studid).setValue(sellerHelperClass);
                                 Intent intent = new Intent(SellerRegistration.this, SellerCenter.class);
                                 startActivity(intent);
@@ -184,7 +181,30 @@ public class SellerRegistration extends AppCompatActivity {
         ContentResolver cr = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cr.getType(mUri));
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Online");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
+
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Offline");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
+
+        }
     }
 
 }

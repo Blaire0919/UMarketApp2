@@ -20,22 +20,26 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import bbc.umarket.umarketapp2.Database.SessionManager;
 import bbc.umarket.umarketapp2.Main.HomeContainer;
 import bbc.umarket.umarketapp2.R;
 
 public class SellerCenter extends AppCompatActivity {
-    ImageView back, sellerimg;
+    ImageView back, sellerimg, chat;
     TextView sellername, availProdCount;
     Integer prodCount = 0;
     Toolbar toolbar;
@@ -50,15 +54,23 @@ public class SellerCenter extends AppCompatActivity {
             .getReference("products");
 
 
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore firebaseFirestore;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_UMarketApp2);
         setContentView(R.layout.act_seller_center);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
+       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
         SessionManager sessionManager = new SessionManager(SellerCenter.this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
         studid = usersdetails.get(SessionManager.KEY_STUDID);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+     firebaseFirestore = FirebaseFirestore.getInstance();
 
         toolbar = findViewById(R.id.toolbar);
         back = findViewById(R.id.sc_back);
@@ -67,6 +79,7 @@ public class SellerCenter extends AppCompatActivity {
         sellerimg = findViewById(R.id.sellercenter_imgview);
         sellername = findViewById(R.id.sellercenter_name);
         availProdCount = findViewById(R.id.availprodcount);
+        chat = findViewById(R.id.seller_chat);
 
         setSupportActionBar(toolbar);
         Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_baseline_more_vert_24);
@@ -78,6 +91,14 @@ public class SellerCenter extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+
+        chat.setOnClickListener(view -> {
+            Intent intent = new Intent(SellerCenter.this, HomeContainer.class);
+            intent.putExtra("back_Chat", "Chat");
+            startActivity(intent);
+            finish();
+        });
+
         btnaddprod.setOnClickListener(view1 -> {
             Intent intent = new Intent(SellerCenter.this, AddListing.class);
             startActivity(intent);
@@ -156,6 +177,33 @@ public class SellerCenter extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Online");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
+
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Offline");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
+
+        }
+    }
+
+
 }
 
 

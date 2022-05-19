@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/NewUMarketlight"
-            android:padding="16dp">
+            android:padding="10dp">
 
             <LinearLayout
                 android:id="@+id/linear03"
@@ -86,126 +86,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/linear03"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginBottom="5dp"
                 android:layout_toEndOf="@id/linear03"
                 android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/NewUMarketlight"
-                        android:padding="5dp">
-
-                        <TextView
-                            android:id="@+id/num_followers"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:fontFamily="@font/moon_light"
-                            android:text="21.5k"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"
-                            android:textSize="23sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/num_followers"
-                            android:layout_centerHorizontal="true"
-                            android:fontFamily="@font/moon_light"
-                            android:text="Followers"
-                            android:textColor="@color/NewUMarketDarkBlue"
-                            android:textSize="13sp"
-                            tools:ignore="SmallSp" />
-
-                    </RelativeLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/NewUMarketlight"
-                        android:padding="5dp">
-
-                        <TextView
-                            android:id="@+id/num_following"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:fontFamily="@font/moon_light"
-                            android:text="210"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"
-                            android:textSize="23sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/num_following"
-                            android:layout_centerHorizontal="true"
-                            android:fontFamily="@font/moon_light"
-                            android:text="Following"
-                            android:textColor="@color/NewUMarketDarkBlue"
-                            android:textSize="13sp"
-                            tools:ignore="SmallSp,TextContrastCheck" />
-
-                    </RelativeLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/NewUMarketlight"
-                        android:padding="5dp">
-
-                        <TextView
-                            android:id="@+id/num_likes"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:fontFamily="@font/moon_light"
-                            android:text="55k"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"
-                            android:textSize="23sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/num_likes"
-                            android:layout_alignStart="@id/num_likes"
-                            android:layout_centerHorizontal="true"
-                            android:fontFamily="@font/moon_light"
-                            android:text="Likes"
-                            android:textColor="@color/NewUMarketDarkBlue"
-                            android:textSize="13sp"
-                            tools:ignore="SmallSp" />
-
-                    </RelativeLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-
-            </LinearLayout>
+                android:orientation="horizontal" />
 
             <LinearLayout
                 android:id="@+id/linear05"
@@ -214,7 +99,7 @@
                 android:layout_below="@id/linear04"
                 android:layout_alignStart="@id/linear04"
                 android:layout_alignEnd="@id/linear04"
-                android:layout_marginTop="-5dp"
+                android:layout_marginTop="5dp"
                 android:layout_toEndOf="@id/linear04"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -232,7 +117,7 @@
                     android:fontFamily="@font/moon_light"
                     android:text="Seller Center"
                     android:textColor="@color/white"
-                    android:textSize="13sp"
+                    android:textSize="16sp"
                     android:transitionName="@string/trans_btnLogin" />
 
             </LinearLayout>
@@ -241,6 +126,7 @@
                 android:id="@+id/linear06"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_below="@id/linear05"
                 android:layout_alignStart="@id/linear05"
                 android:layout_alignEnd="@id/linear05"
@@ -262,7 +148,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/NewUMarketDarkBlue"
-                        android:padding="8dp">
+                        android:padding="5dp">
 
                         <TextView
                             android:id="@+id/toReceivelbl"
@@ -271,10 +157,11 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="10dp"
                             android:fontFamily="@font/moon_light"
-                            android:gravity="center_horizontal"
+                            android:gravity="start"
                             android:text="To\nReceive"
+                            android:textAlignment="textStart"
                             android:textColor="@color/white"
-                            android:textSize="9sp"
+                            android:textSize="10sp"
                             tools:ignore="SmallSp" />
 
                         <com.nex3z.notificationbadge.NotificationBadge
@@ -295,6 +182,7 @@
 
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardToRate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -308,25 +196,41 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/NewUMarketDarkBlue"
-                        android:padding="8dp">
+                        android:padding="5dp">
 
                         <TextView
                             android:id="@+id/toRatelbl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="10dp"
                             android:fontFamily="@font/moon_light"
-                            android:gravity="center_horizontal"
+                            android:gravity="start"
                             android:text="To\nRate"
+                            android:textAlignment="textStart"
                             android:textColor="@color/white"
-                            android:textSize="9sp"
+                            android:textSize="10sp"
                             tools:ignore="SmallSp" />
+
+                        <com.nex3z.notificationbadge.NotificationBadge
+                            android:id="@+id/toRatebadge"
+                            android:layout_width="35dp"
+                            android:layout_height="30dp"
+                            android:layout_alignTop="@id/toRatelbl"
+                            android:layout_marginStart="-28dp"
+                            android:layout_marginTop="-4dp"
+                            android:layout_toEndOf="@id/toRatelbl"
+                            android:textColor="@color/black"
+                            app:nbBackground="@drawable/ic_notif"
+                            app:nbMaxTextLength="2" />
+
                     </RelativeLayout>
+
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
+                    android:id="@+id/cardphistory"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
@@ -339,7 +243,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/NewUMarketDarkBlue"
-                        android:padding="8dp">
+                        android:padding="5dp">
 
                         <TextView
                             android:id="@+id/PurchaseHistory"
@@ -351,7 +255,7 @@
                             android:gravity="center_horizontal"
                             android:text="Purchase\nHistory"
                             android:textColor="@color/white"
-                            android:textSize="9sp"
+                            android:textSize="10sp"
                             tools:ignore="SmallSp" />
                     </RelativeLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -363,7 +267,7 @@
             android:id="@+id/prof_settings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:background="@color/NewUMarketlight"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
@@ -386,7 +290,7 @@
                 android:fontFamily="@font/moon_light"
                 android:text="Settings"
                 android:textColor="@color/black"
-                android:textSize="13sp" />
+                android:textSize="20sp" />
 
         </LinearLayout>
     </LinearLayout>

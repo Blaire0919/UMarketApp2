@@ -22,15 +22,19 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import bbc.umarket.umarketapp2.Adapter.RankItemAdapter;
 import bbc.umarket.umarketapp2.Helper.ItemRankedHelperClass;
@@ -61,18 +65,26 @@ public class DataInsights extends AppCompatActivity {
     ArrayList<PieEntry> pieEntries = new ArrayList<>();
 
 
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_UMarketApp2);
         setContentView(R.layout.act_data_insights);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
+       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
         back = findViewById(R.id.datainsights_back);
         totsales = findViewById(R.id.txtTotSale);
         totorders = findViewById(R.id.txtTotOrders);
         totnumCustomers = findViewById(R.id.txtTotCustomer);
         RankedRecyclerview = findViewById(R.id.ranked_Recyclerview);
+
+      firebaseAuth = FirebaseAuth.getInstance();
+       firebaseFirestore = FirebaseFirestore.getInstance();
 
         //static charts
         barChart = findViewById(R.id.barchart);
@@ -165,9 +177,6 @@ public class DataInsights extends AppCompatActivity {
         pieChart.animateXY(5000, 5000);
         pieChart.getDescription().setEnabled(false);
 
-
-
-
     }
 
     public static void getListProdID(List<String> value) {
@@ -177,5 +186,31 @@ public class DataInsights extends AppCompatActivity {
             Log.d("EXCEPTION", e.getMessage());
         }
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Online");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
+
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Offline");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
+
+        }
+    }
+
 
 }

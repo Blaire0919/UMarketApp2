@@ -27,6 +27,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
+                    android:paddingTop="10dp"
                     tools:ignore="UseCompoundDrawables">
 
                     <ImageView
@@ -44,6 +45,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="@font/moon_light"
                         android:gravity="end"
+                        android:layout_gravity="center_vertical"
                         android:text="@string/registertext"
                         android:textColor="@color/NewUMarketDarkBlue"
                         android:textSize="37sp" />
@@ -56,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:hint="@string/reg_fname"
-                    android:padding="5dp"
+                    android:padding="10dp"
                     android:transitionName="@string/trans_Id"
                     app:boxBackgroundColor="@color/transparent"
                     app:boxStrokeColor="@color/black"
@@ -175,7 +177,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
                                 android:clickable="true"
-                                android:elevation="8dp"
                                 android:foreground="?android:attr/selectableItemBackground"
                                 tools:ignore="TouchTargetSizeCheck">
 
@@ -193,23 +194,22 @@
                                         android:layout_marginBottom="5dp"
                                         android:fontFamily="@font/moon_light"
                                         android:gravity="center_horizontal"
-                                        android:text="send\ncode"
+                                        android:text="Verify"
                                         android:textColor="@color/white"
-                                        android:textSize="9sp"
+                                        android:textSize="11sp"
                                         tools:ignore="SmallSp" />
                                 </RelativeLayout>
                             </com.google.android.material.card.MaterialCardView>
 
 
                         </LinearLayout>
-
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent">
-
                             <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                tools:ignore="UselessParent">
 
                                 <ImageView
                                     android:id="@+id/ImageView_emailVerified"
@@ -225,10 +225,8 @@
                                     android:id="@+id/regprogressbar"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_centerVertical="true"
-                                    android:visibility="invisible"
-                                    />
+                                    android:layout_centerInParent="true"
+                                    android:visibility="invisible" />
 
 
                             </RelativeLayout>

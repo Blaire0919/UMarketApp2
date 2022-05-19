@@ -23,7 +23,7 @@
             android:padding="10dp">
 
             <TextView
-                android:id="@+id/toreceive_sellername"
+                android:id="@+id/torate_sellername"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
@@ -54,7 +54,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/toreceive_img"
+                    android:id="@+id/torate_img"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:background="@drawable/corner_layouts"
@@ -78,7 +78,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/toreceive_prodname"
+                        android:id="@+id/torate_prodname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/moon_light"
@@ -93,7 +93,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/toreceive_price"
+                            android:id="@+id/torate_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/moon_light"
@@ -103,7 +103,7 @@
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/toreceive_qty"
+                            android:id="@+id/torate_qty"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/moon_light"
@@ -126,7 +126,7 @@
                     android:layout_marginTop="5dp">
 
                     <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/card_orderreceived"
+                        android:id="@+id/card_rateproduct"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="2dp"
@@ -149,11 +149,11 @@
                                 android:layout_marginStart="5dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginEnd="5dp"
-                                android:padding="5dp"
                                 android:layout_marginBottom="5dp"
                                 android:fontFamily="@font/moon_light"
+                                android:padding="5dp"
                                 android:gravity="center"
-                                android:text="Order Received"
+                                android:text="Rate product"
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
                                 android:textSize="14sp"

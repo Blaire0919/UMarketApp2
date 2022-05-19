@@ -158,15 +158,6 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
                 try {
                     chkitemID.remove(currentItem.getProdID());
                     SelectedCount--;
-//                    String totprice = String.valueOf(Float.parseFloat(currentItem.getProdPrice()) * Integer.parseInt(currentItem.getProdQty()));
-//                    checkOutHelperClass = new CheckOutHelperClass(
-//                            currentItem.getProdID(),
-//                            currentItem.getProdName(),
-//                            currentItem.getProdQty(),
-//                            String.format("%s", currentItem.getProdPrice()),
-//                            totprice
-//                    );
-//                    AddToCart.unselectItem();
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }

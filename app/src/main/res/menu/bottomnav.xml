@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/nav_chat"
-    android:icon="@drawable/ic_chat"
+    android:icon="@drawable/sellerchat_icon"
     android:title="Chat" />
 
     <item

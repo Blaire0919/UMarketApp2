@@ -18,11 +18,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="3dp" />
-
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
@@ -33,25 +28,44 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <ImageView
-                        android:id="@+id/sc_back"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="5dp"
-                        android:src="@drawable/ic_back" />
-
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="-40dp"
-                        android:fontFamily="@font/moon_light"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="Seller Center"
-                        android:textColor="@color/black"
-                        android:textSize="19sp" />
+                        android:orientation="horizontal">
+
+
+                        <ImageView
+                            android:id="@+id/sc_back"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/ic_back" />
+
+                        <TextView
+                            android:id="@+id/oy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="8"
+                            android:fontFamily="@font/moon_light"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Seller Center"
+                            android:textColor="@color/black"
+                            android:textSize="19sp" />
+
+                        <ImageView
+                            android:id="@+id/seller_chat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:padding="10dp"
+                            android:src="@drawable/sellerchat_icon"
+                            android:tint="@color/NewUMarketDarkBlue"
+                            tools:ignore="UseAppTint" />
+
+                    </LinearLayout>
+
 
                 </RelativeLayout>
 

@@ -20,7 +20,7 @@
             android:background="@color/NewUMarketDarkBlue"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:padding="17dp">
+            android:padding="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tilSearch"

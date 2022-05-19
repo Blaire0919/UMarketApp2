@@ -8,10 +8,12 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
@@ -20,8 +22,11 @@ import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -30,14 +35,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import bbc.umarket.umarketapp2.Helper.Model;
+import bbc.umarket.umarketapp2.Helper.ItemModel;
 import bbc.umarket.umarketapp2.Database.SessionManager;
 import bbc.umarket.umarketapp2.Main.HomeContainer;
 import bbc.umarket.umarketapp2.R;
 
 public class AddListing extends AppCompatActivity {
     ImageView back, selectedimg;
-    TextView save;
+    MaterialCardView save;
     MaterialCardView mcvaddphoto, forimg;
     TextInputLayout pname, pdesc, pbrand, pcat, psubcat, pprice, pstock, pcondition;
     AutoCompleteTextView autocat, autosubcat, autocondition;
@@ -51,15 +56,19 @@ public class AddListing extends AppCompatActivity {
     StorageReference storageref, imageref;
     private Uri imageUri;
     String pBrand, pCat, pSubCat, pCondition, pDescription, pName, pPrice, pStock, pSellerID, pSold, pOverAllrate, pScore, pID;
-    Model model;
+    ItemModel itemModel;
+
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore firebaseFirestore;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_UMarketApp2);
         setContentView(R.layout.act_add_listing);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
+        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
         storageref = storage.getReference();
 
@@ -67,6 +76,9 @@ public class AddListing extends AppCompatActivity {
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
         studid = usersdetails.get(SessionManager.KEY_STUDID);
         pSellerID = usersdetails.get(SessionManager.KEY_STUDID);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         //hooks
         back = findViewById(R.id.settings_back);
@@ -105,19 +117,23 @@ public class AddListing extends AppCompatActivity {
         autocat.setAdapter(arrayAdapter_Cat);
         autocat.setThreshold(1);
 
+
         autocat.setOnItemClickListener((parent, view, position, id) -> {
             autosubcat.clearListSelection();
             arrayAdapter_SubCat.clear();
             autocondition.clearListSelection();
             arrayAdapter_Condition.clear();
+            //   psubcat.getEditText().setText("");
 
             switch (arrayAdapter_Cat.getItem(position)) {
                 case "Foods and Beverages":
-
                     ListSubCat.add("Instant Foods");
+                    ListSubCat.add("Candies");
+                    ListSubCat.add("Delicacies");
                     ListSubCat.add("Canned Goods");
                     ListSubCat.add("Frozen and Fresh");
                     ListSubCat.add("Beverages");
+                    ListSubCat.add("Snacks");
                     autosubcat.setAdapter(arrayAdapter_SubCat);
                     autosubcat.setThreshold(1);
 
@@ -125,9 +141,10 @@ public class AddListing extends AppCompatActivity {
                     ListCondition.add("Processed");
                     autocondition.setAdapter(arrayAdapter_Condition);
                     autocondition.setThreshold(1);
-
                     break;
+
                 case "School Supplies":
+
                     ListSubCat.add("Art Supplies");
                     ListSubCat.add("Writing Materials");
                     ListSubCat.add("Calculator");
@@ -141,14 +158,15 @@ public class AddListing extends AppCompatActivity {
                     ListCondition.add("Used");
                     autocondition.setAdapter(arrayAdapter_Condition);
                     autocondition.setThreshold(1);
-
                     break;
+
                 case "Electronics":
+                    ListSubCat.add("Chargers");
                     ListSubCat.add("Devices");
                     ListSubCat.add("Earphones");
                     ListSubCat.add("Adhesive Wall Hooks");
                     ListSubCat.add("Tools");
-                    ListSubCat.add("Cables and Chargers");
+                    ListSubCat.add("Cables");
                     ListSubCat.add("Keyboards");
                     ListSubCat.add("USB Hubs");
                     autosubcat.setAdapter(arrayAdapter_SubCat);
@@ -158,9 +176,13 @@ public class AddListing extends AppCompatActivity {
                     ListCondition.add("Used");
                     autocondition.setAdapter(arrayAdapter_Condition);
                     autocondition.setThreshold(1);
-
                     break;
+
                 case "Clothes and Accessories":
+                    ListSubCat.add("Sweatshirts");
+                    ListSubCat.add("Hats");
+                    ListSubCat.add("Rings");
+                    ListSubCat.add("Necklace");
                     ListSubCat.add("Tops");
                     ListSubCat.add("Shorts");
                     ListSubCat.add("Underwear");
@@ -175,9 +197,10 @@ public class AddListing extends AppCompatActivity {
                     ListCondition.add("Used");
                     autocondition.setAdapter(arrayAdapter_Condition);
                     autocondition.setThreshold(1);
-
                     break;
+
                 case "Beauty Products":
+
                     ListSubCat.add("Skincare");
                     ListSubCat.add("Cosmetics");
                     ListSubCat.add("Cleanser and Scrubs");
@@ -190,9 +213,10 @@ public class AddListing extends AppCompatActivity {
                     ListCondition.add("Used");
                     autocondition.setAdapter(arrayAdapter_Condition);
                     autocondition.setThreshold(1);
-
                     break;
+
                 case "Sports Equipment":
+
                     ListSubCat.add("Support");
                     ListSubCat.add("Exercise and Fitness");
                     ListSubCat.add("Tennis");
@@ -213,6 +237,7 @@ public class AddListing extends AppCompatActivity {
                     autocondition.setAdapter(arrayAdapter_Condition);
                     autocondition.setThreshold(1);
                     break;
+                default:
             }
 
         });
@@ -233,7 +258,7 @@ public class AddListing extends AppCompatActivity {
             if (imageUri != null) {
                 Add_ProdOnDB();
             } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
+                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(AddListing.this, R.style.CustomAlertDialog));
                 builder.setTitle("");
                 builder.setMessage("Please select an Image.");
 
@@ -355,7 +380,7 @@ public class AddListing extends AppCompatActivity {
 
     private void Add_ProdOnDB() {
         if (!validatePBrand() | !validatePCat() | !validatePSubCat() | !validatePCondtion() |
-                !validatePDesc()| !validatePName() | !validatePPrice() |
+                !validatePDesc() | !validatePName() | !validatePPrice() |
                 !validatePStock()) {
             return;
         }
@@ -383,6 +408,7 @@ public class AddListing extends AppCompatActivity {
             imageUri = data.getData();
             forimg.setVisibility(View.VISIBLE);
             selectedimg.setImageURI(imageUri);
+            selectedimg.setVisibility(View.VISIBLE);
         }
     }
 
@@ -391,10 +417,9 @@ public class AddListing extends AppCompatActivity {
 
         imageref.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
             imageref.getDownloadUrl().addOnSuccessListener(uri -> {
-                model = new Model(uri.toString(), pID, pBrand, pCat, pSubCat, pCondition, pDescription, pName, pPrice, pStock, pSellerID, pOverAllrate, pSold, pScore);
-                root.child(pID).setValue(model);
-                Intent intent = new Intent(AddListing.this, HomeContainer.class);
-                intent.putExtra("back_Acc", "Account");
+                itemModel = new ItemModel(uri.toString(), pID, pBrand, pCat, pSubCat, pCondition, pDescription, pName, pPrice, pStock, pSellerID, pOverAllrate, pSold, pScore);
+                root.child(pID).setValue(itemModel);
+                Intent intent = new Intent(AddListing.this, SellerCenter.class);
                 startActivity(intent);
                 finish();
             });
@@ -408,5 +433,31 @@ public class AddListing extends AppCompatActivity {
         return mime.getExtensionFromMimeType(cr.getType(mUri));
 
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Online");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
+
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Offline");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
+
+        }
+    }
+
 
 }

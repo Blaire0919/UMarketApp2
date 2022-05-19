@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -21,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Objects;
 
 import bbc.umarket.umarketapp2.Adapter.MessagesAdapter;
 import bbc.umarket.umarketapp2.Database.SessionManager;
@@ -63,8 +66,9 @@ public class SpecificChat extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_UMarketApp2);
         setContentView(R.layout.act_specific_chat);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
+        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
         SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
@@ -117,7 +121,8 @@ public class SpecificChat extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
         });
 
         send.setOnClickListener(view -> {
@@ -140,7 +145,8 @@ public class SpecificChat extends AppCompatActivity {
                                         .child("messages")
                                         .push()
                                         .setValue(messages)
-                                        .addOnSuccessListener(unused1 -> {}));
+                                        .addOnSuccessListener(unused1 -> {
+                                        }));
 
                 et_getmessage.setText(null);
             }
@@ -152,6 +158,13 @@ public class SpecificChat extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         messagesAdapter.notifyDataSetChanged();
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Online");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
+
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -161,6 +174,14 @@ public class SpecificChat extends AppCompatActivity {
         if (messagesAdapter != null) {
             messagesAdapter.notifyDataSetChanged();
         }
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Offline");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
+
+        }
+
     }
 
 }

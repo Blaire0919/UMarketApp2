@@ -26,7 +26,7 @@ import bbc.umarket.umarketapp2.R;
 public class HomeContainer extends AppCompatActivity {
     //initialize variables
     BottomNavigationView bottomnav;
-    DocumentReference documentReference;
+
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
     Fragment selectedFragment = null;
@@ -35,12 +35,12 @@ public class HomeContainer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_UMarketApp2);
         setContentView(R.layout.act_homecontainer);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
+        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
-
 
         //I added this if statement to keep the selected fragment when rotating the device
         if (savedInstanceState == null) {
@@ -108,29 +108,24 @@ public class HomeContainer extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        if (documentReference != null) {
-            try {
-                documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
-                documentReference.update("status", "Online");}
-            catch (Exception exception) {
-                Log.d("EXCEPTION", exception.getMessage());
-            }
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Online");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
+
         }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (documentReference != null) {
-            try {
-                documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
-                documentReference.update("status", "Offline");
-            } catch (Exception exception) {
-                Log.d("EXCEPTION", exception.getMessage());
-            }
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Offline");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
 
         }
-
     }
-
 }

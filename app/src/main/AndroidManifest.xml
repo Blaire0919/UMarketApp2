@@ -18,6 +18,16 @@
         android:theme="@style/SplashScreenTheme"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".Main.PurchaseHistory"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".Main.ToRate"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".Main.ToReceive"
             android:exported="false"
             android:screenOrientation="portrait"
@@ -125,6 +135,11 @@
             android:windowSoftInputMode="adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
+            android:name=".Main.Search"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".Main.Login"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -136,11 +151,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Main.Search"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
     </application>
 
 </manifest>
