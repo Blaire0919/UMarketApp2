@@ -45,8 +45,10 @@ import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.nex3z.notificationbadge.NotificationBadge;
 
 import bbc.umarket.umarketapp2.Adapter.CartItemAdapter;
+import bbc.umarket.umarketapp2.Fragments.FragChat;
 import bbc.umarket.umarketapp2.Helper.CartHelperClass;
 import bbc.umarket.umarketapp2.Helper.CheckOutHelperClass;
 import bbc.umarket.umarketapp2.Helper.ClickedHistoryHelperClass;
@@ -61,7 +63,7 @@ import bbc.umarket.umarketapp2.R;
 public class ProductDetails extends AppCompatActivity implements CartItemLoadListener {
     ImageView back;
     Button buy, cart;
-    ImageView PR_image;
+    ImageView PR_image, ChatSeller;
     TextView PRbrand, PRcondition, PRdesc, PRname, PRrate, PRprice, PRstock, PRsellername;
     RatingBar PRratingbar;
     ImageView gotocart;
@@ -102,7 +104,9 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
     DocumentReference documentReference;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
-
+    
+    NotificationBadge cartCount;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +115,7 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
         //   getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
         cartItemLoadListener = this;
+        countCartItem();
 
         //getting data from session
         SessionManager sessionManager = new SessionManager(ProductDetails.this, SessionManager.SESSION_USERSESSION);
@@ -141,6 +146,8 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
         cart = findViewById(R.id.btnaddtocart);
         mlayout = findViewById(R.id.mlayout);
         gotocart = findViewById(R.id.proddetails_cart);
+        cartCount = findViewById(R.id.prodDetails_cartbadge);
+        ChatSeller = findViewById(R.id.ImageViewChatSeller);
 
         gotocart.setOnClickListener(view -> {
             Intent intent = new Intent(ProductDetails.this, AddToCart.class);
@@ -269,22 +276,17 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                                     }
 
                                     @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-                                    }
+                                    public void onCancelled(@NonNull DatabaseError error) {}
                                 });
                             }
-
                             @Override
-                            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                            }
+                            public void onCancelled(@NonNull @NotNull DatabaseError error) {}
                         });
                     }
                 }
             }
-
             @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {}
         });
 
         //recommendation recyclerview
@@ -308,8 +310,8 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                 String itemName = snapshot.child(prodID).child("pName").getValue(String.class);
                 //return to a array
                 //    String[] rec = pyobj.callAttr("main", itemName).toJava(String[].class);
-          //      String[] rec = pyobj.callAttr("main", itemName).toJava(String[].class);
-         //       for (String strTemp : rec) {
+                String[] rec = pyobj.callAttr("main", itemName).toJava(String[].class);
+                for (String strTemp : rec) {
                     ItemRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @SuppressLint("NotifyDataSetChanged")
                         @Override
@@ -317,12 +319,12 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                             for (DataSnapshot snap : snapshot.getChildren()) {
                                 ItemHelperClass itemHelperClass = snap.getValue(ItemHelperClass.class);
                                 assert itemHelperClass != null;
-                              //  if (itemHelperClass.getpName().equals(strTemp)) {
+                                if (itemHelperClass.getpName().equals(strTemp)) {
                                     if (!itemHelperClass.getpSellerID().equals(studid)) {
                                         listItem.add(itemHelperClass);
                                     }
 
-                            //    }
+                                }
                             }
                             itemAdapter.notifyDataSetChanged();
                         }
@@ -330,7 +332,7 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                         @Override
                         public void onCancelled(@NonNull @NotNull DatabaseError error) {}
                     });
-             //   }
+                }
             }
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {}
@@ -430,15 +432,83 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                         finish();
                     });
         });
+
+        ChatSeller.setOnClickListener(view -> {
+            FragChat.GoToSeller(coSellerID);
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        countCartItem();
+    }
+
+
+    private void countCartItem() {
+        ArrayList<CartHelperClass> cartHelperClasses = new ArrayList<>();
+
+        SessionManager sessionManager = new SessionManager(ProductDetails.this, SessionManager.SESSION_REMEMBERME);
+        HashMap<String, String> usersdetails = sessionManager.getRememberMeDetailsFromSession();
+
+        SessionManager sessionManager2 = new SessionManager(ProductDetails.this, SessionManager.SESSION_USERSESSION);
+        HashMap<String, String> usersdetails2 = sessionManager2.getUserDetailSession();
+
+        if (usersdetails.get(SessionManager.KEY_SESSIONSTUDID) != null) {
+            FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                    .getReference("cart").child(Objects.requireNonNull(usersdetails.get(SessionManager.KEY_SESSIONSTUDID)))
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                for (DataSnapshot cartsnapshot : snapshot.getChildren()) {
+                                    CartHelperClass cartHelperClass = cartsnapshot.getValue(CartHelperClass.class);
+                                    cartHelperClasses.add(cartHelperClass);
+                                }
+                                cartItemLoadListener.onCartLoadSuccess(cartHelperClasses);
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.d("", error.getDetails());
+                        }
+                    });
+        } else {
+            FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                    .getReference("cart").child(Objects.requireNonNull(usersdetails2.get(SessionManager.KEY_STUDID)))
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                for (DataSnapshot cartsnapshot : snapshot.getChildren()) {
+                                    CartHelperClass cartHelperClass = cartsnapshot.getValue(CartHelperClass.class);
+                                    cartHelperClasses.add(cartHelperClass);
+                                }
+                                cartItemLoadListener.onCartLoadSuccess(cartHelperClasses);
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.d("", error.getDetails());
+                        }
+                    });
+        }
+
+
     }
 
     @Override
     public void onCartLoadSuccess(ArrayList<CartHelperClass> cartItemList) {
+        int cartSum = 0;
+        for (CartHelperClass cartHelperClass : cartItemList) {
+            cartSum += Integer.parseInt(cartHelperClass.getProdQty());
+            cartCount.setNumber(cartSum);
+        }
     }
 
     @Override
     public void onCartLoadFailed(String message) {
-        Snackbar.make(mlayout, message, Snackbar.LENGTH_LONG).show();
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     @Override

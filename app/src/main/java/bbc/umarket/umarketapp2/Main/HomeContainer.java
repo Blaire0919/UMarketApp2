@@ -112,8 +112,7 @@ public class HomeContainer extends AppCompatActivity {
             DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
             documentReference.update("status", "Online");
         } catch (Exception exception) {
-            Log.d("EXCEPTION", exception.getMessage());
-
+            Log.d("EXCEPTION", String.valueOf(exception));
         }
     }
 
@@ -124,8 +123,7 @@ public class HomeContainer extends AppCompatActivity {
             DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
             documentReference.update("status", "Offline");
         } catch (Exception exception) {
-            Log.d("EXCEPTION", exception.getMessage());
-
+            Log.d("EXCEPTION", String.valueOf(exception));
         }
     }
 }

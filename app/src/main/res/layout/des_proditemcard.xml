@@ -36,13 +36,13 @@
                 android:id="@+id/item_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/moon_light"
+                android:fontFamily="@font/poppins_regular"
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
                 android:text="Item Name"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="7sp"
+                android:textSize="8sp"
                 tools:ignore="SmallSp" />
 
             <LinearLayout

@@ -17,6 +17,9 @@ import android.widget.TextView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -29,10 +32,17 @@ public class FragChat extends Fragment {
     Context context;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
-    DocumentReference documentReference;
     FirestoreRecyclerAdapter<FirebaseModel, FragChat.NoteViewHolder> chatAdapter;
     FirestoreRecyclerOptions<FirebaseModel> allusername;
     RecyclerView recyclerView;
+    
+    public static String IDseller;
+
+
+
+    //for database
+    DatabaseReference sellerRef = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+            .getReference("seller");
 
     public FragChat() {}
 
@@ -49,6 +59,16 @@ public class FragChat extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = v.findViewById(R.id.rvChatThread);
+
+
+        if (IDseller!=null){
+            // Create a reference to the cities collection
+            CollectionReference sellerRef = firebaseFirestore.collection("Users");
+
+            // Create a query against the collection.
+            Query querySeller = sellerRef.whereEqualTo("userid", IDseller);
+        }
+
 
         Query query = firebaseFirestore.collection("Users").whereNotEqualTo("uid", firebaseAuth.getUid());
 
@@ -110,10 +130,23 @@ public class FragChat extends Fragment {
         }
     }
 
+
+    public static void GoToSeller(String ID){
+        IDseller = ID;
+    }
+
+
     @Override
     public void onStart() {
         super.onStart();
         chatAdapter.startListening();
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Online");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", String.valueOf(exception));
+        }
+
 
     }
 

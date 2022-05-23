@@ -218,37 +218,50 @@ public class Checkout extends AppCompatActivity {
                     .getReference("checkout")
                     .child(studid)
                     .removeValue()
-                    .addOnSuccessListener(unused -> Log.d(TAG, "Delete Success!"));
+                    .addOnSuccessListener(unused -> {
+                        Log.d(TAG, "Delete Success!");
 
-            //usernotif
-            String sentence = String.format("You placed an order of %s %s from %s with a price of %s", un_qty, un_prodname, un_sellername, un_price);
-            NotifModel notifModel = new NotifModel(studid, sentence, currenttime);
-            FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
-                    .getReference("notification")
-                    .child(studid)
-                    .child(String.valueOf(date.getTime()))
-                    .setValue(notifModel);
+                        //usernotif
+                        String sentence = String.format("You placed an order of %s %s from %s with a price of %s", un_qty, un_prodname, un_sellername, un_price);
+                        NotifModel notifModel = new NotifModel(studid, sentence, currenttime);
+                        FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                                .getReference("notification")
+                                .child(studid)
+                                .child(String.valueOf(date.getTime()))
+                                .setValue(notifModel).addOnSuccessListener(unused1 -> {
 
-            //toprocess order for seller
-            ToProcessModel toProcessModel = new ToProcessModel(seller_ID, buyerID, buyerName, prodID, prodName, price, qty, totAmt, order_currentdate, order_currenttime);
-            FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
-                    .getReference("process_order")
-                    .child(seller_ID)
-                    .push()
-                    .setValue(toProcessModel);
+                                    //toprocess order for seller
+                                    ToProcessModel toProcessModel = new ToProcessModel(seller_ID, buyerID, buyerName, prodID, prodName, price, qty, totAmt, order_currentdate, order_currenttime);
+                                    FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                                            .getReference("process_order")
+                                            .child(seller_ID)
+                                            .push()
+                                            .setValue(toProcessModel).addOnSuccessListener(unused2 -> {
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(Checkout.this, R.style.CustomAlertDialog));
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(Checkout.this, R.style.CustomAlertDialog));
+                                                dialog = builder.setTitle("")
+                                                        .setMessage("Successfully ordered the product!")
+                                                        .setNeutralButton("OK", null)
+                                                        .create();
 
-            dialog = builder.setTitle("")
-                    .setMessage("Successfully ordered the product!")
-                    .setNeutralButton("OK", null)
-                    .create();
+                                                dialog.show();
 
-            dialog.show();
+                                                FragChat.IDseller(seller_ID);
 
-            Intent intent = new Intent(Checkout.this, HomeContainer.class);
-            intent.putExtra("back_Home", "Home");
-            startActivity(intent);
+                                                Intent intent = new Intent(Checkout.this, HomeContainer.class);
+                                                intent.putExtra("back_Home", "Home");
+                                                startActivity(intent);
+
+                                            });
+                                });
+
+                    });
+
+
+
+
+
+
         });
 
     }

@@ -59,7 +59,7 @@
     <EditText
         android:id="@+id/et_getmessage"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="35dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="5dp"
@@ -74,13 +74,13 @@
         android:textAlignment="textStart"
         android:textColor="@color/black"
         android:textColorHint="@color/NewUMarketDarkBlue"
-        android:textSize="18sp"
+        android:textSize="16sp"
         tools:ignore="TextContrastCheck" />
 
     <ImageView
         android:id="@+id/sendmessagebutton"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="-50dp"
         android:layout_marginBottom="5dp"

@@ -188,7 +188,7 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
         try {
             x = value;
         } catch (Exception exception) {
-           Log.d("Exception", exception.getMessage());
+           Log.d("Exception", String.valueOf(exception));
         }
     }
 
@@ -220,7 +220,7 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
             DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
             documentReference.update("status", "Online");
         } catch (Exception exception) {
-            Log.d("EXCEPTION", exception.getMessage());
+            Log.d("EXCEPTION", String.valueOf(exception));
         }
     }
 
@@ -231,7 +231,7 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
             DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
             documentReference.update("status", "Offline");
         } catch (Exception exception) {
-            Log.d("EXCEPTION", exception.getMessage());
+            Log.d("EXCEPTION", String.valueOf(exception));
 
         }
     }

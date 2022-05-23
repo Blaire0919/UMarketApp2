@@ -1,28 +1,16 @@
 package bbc.umarket.umarketapp2.Main;
 
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.ListView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,14 +19,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
-
 import bbc.umarket.umarketapp2.Adapter.ItemAdapter;
 import bbc.umarket.umarketapp2.Database.SessionManager;
-import bbc.umarket.umarketapp2.Helper.FeatProdtHelperClass;
 import bbc.umarket.umarketapp2.Helper.ItemHelperClass;
 import bbc.umarket.umarketapp2.R;
 
@@ -63,7 +48,6 @@ public class Search extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTheme(R.style.Theme_UMarketApp2);
         setContentView(R.layout.act_search);
-     //   getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
         SessionManager sessionManager = new SessionManager(Search.this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersdetails = sessionManager.getUserDetailSession();
@@ -77,10 +61,10 @@ public class Search extends AppCompatActivity {
                 .getReference("products");
 
 //        Hooks
-        listdata = (ListView) findViewById(R.id.listData);
-        txtSearch = (AutoCompleteTextView) findViewById(R.id.txtSearch);
-        back = (ImageView) findViewById(R.id.search_back);
-        searchrv = (RecyclerView) findViewById(R.id.search_recyclerview);
+        listdata = findViewById(R.id.listData);
+        txtSearch = findViewById(R.id.txtSearch);
+        back = findViewById(R.id.search_back);
+        searchrv = findViewById(R.id.search_recyclerview);
 
 
         ValueEventListener event = new ValueEventListener() {
