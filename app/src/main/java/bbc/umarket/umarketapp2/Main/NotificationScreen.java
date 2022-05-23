@@ -70,7 +70,7 @@ public class NotificationScreen extends AppCompatActivity {
         });
 
         notifRecyclerview.setHasFixedSize(true);
-        notifRecyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        notifRecyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         notifList = new ArrayList<>();
         notifAdapter = new NotifAdapter(this, notifList);
         notifRecyclerview.setAdapter(notifAdapter);

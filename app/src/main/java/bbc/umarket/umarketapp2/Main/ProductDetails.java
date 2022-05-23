@@ -64,7 +64,7 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
     ImageView PR_image;
     TextView PRbrand, PRcondition, PRdesc, PRname, PRrate, PRprice, PRstock, PRsellername;
     RatingBar PRratingbar;
-
+    ImageView gotocart;
     //for id
     String pID, prodID, studid;
 
@@ -140,6 +140,13 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
         buy = findViewById(R.id.btnbuy);
         cart = findViewById(R.id.btnaddtocart);
         mlayout = findViewById(R.id.mlayout);
+        gotocart = findViewById(R.id.proddetails_cart);
+
+        gotocart.setOnClickListener(view -> {
+            Intent intent = new Intent(ProductDetails.this, AddToCart.class);
+            startActivity(intent);
+            finish();
+        });
 
         back.setOnClickListener(view -> {
             Intent intent = new Intent(ProductDetails.this, HomeContainer.class);
@@ -301,8 +308,8 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                 String itemName = snapshot.child(prodID).child("pName").getValue(String.class);
                 //return to a array
                 //    String[] rec = pyobj.callAttr("main", itemName).toJava(String[].class);
-                String[] rec = pyobj.callAttr("main", itemName).toJava(String[].class);
-                for (String strTemp : rec) {
+          //      String[] rec = pyobj.callAttr("main", itemName).toJava(String[].class);
+         //       for (String strTemp : rec) {
                     ItemRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @SuppressLint("NotifyDataSetChanged")
                         @Override
@@ -310,26 +317,23 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                             for (DataSnapshot snap : snapshot.getChildren()) {
                                 ItemHelperClass itemHelperClass = snap.getValue(ItemHelperClass.class);
                                 assert itemHelperClass != null;
-                                if (itemHelperClass.getpName().equals(strTemp)) {
+                              //  if (itemHelperClass.getpName().equals(strTemp)) {
                                     if (!itemHelperClass.getpSellerID().equals(studid)) {
                                         listItem.add(itemHelperClass);
                                     }
 
-                                }
+                            //    }
                             }
                             itemAdapter.notifyDataSetChanged();
                         }
 
                         @Override
-                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                        }
+                        public void onCancelled(@NonNull @NotNull DatabaseError error) {}
                     });
-                }
+             //   }
             }
-
             @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {}
         });
 
         //create and review recyclerview
@@ -400,7 +404,7 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                         refCart.setValue(cartHelperClass);
 
 
-                        Snackbar.make(mlayout, "Add to Cart Successful", Snackbar.LENGTH_LONG).show();
+                        Toast.makeText(ProductDetails.this, "Add to Cart Successful", Toast.LENGTH_LONG).show();
                     }
                 }
 
@@ -425,8 +429,6 @@ public class ProductDetails extends AppCompatActivity implements CartItemLoadLis
                         startActivity(intent);
                         finish();
                     });
-
-
         });
     }
 

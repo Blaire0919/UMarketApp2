@@ -118,7 +118,7 @@ public class SellerRegistration extends AppCompatActivity {
         String val = Objects.requireNonNull(semail.getEditText()).getText().toString();
 
         if (val.isEmpty()) {
-            semail.setError("Field cannot be empty");
+            semail.setError("Email is required");
             return false;
         } else {
             semail.setError(null);
@@ -129,8 +129,13 @@ public class SellerRegistration extends AppCompatActivity {
 
     private Boolean validateSContact() {
         String val = Objects.requireNonNull(scontactnum.getEditText()).getText().toString();
+        String initialPart = val.substring(0, 2);
+        String phonePattern = "09[0-9]{9}";
         if (val.isEmpty()) {
-            scontactnum.setError("Field cannot be empty");
+            scontactnum.setError("Contact number is required");
+            return false;
+        } else if (!initialPart.equals("09") && !val.matches(phonePattern) ) {
+            scontactnum.setError("Invalid. Input a valid number");
             return false;
         } else {
             scontactnum.setError(null);
@@ -138,6 +143,7 @@ public class SellerRegistration extends AppCompatActivity {
             return true;
         }
     }
+
 
     private void Add_OnSellerDB() {
         if (!validateSEmail() | !validateSContact() ) {

@@ -18,31 +18,31 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="1dp"
-            android:background="@color/NewUMarketDarkBlue">
-
-            <ImageView
-                android:id="@+id/manageorders_back"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:layout_margin="5dp"
-                android:src="@drawable/ic_back" />
-
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="-30dp"
-                android:fontFamily="@font/moon_light"
-                android:gravity="center"
-                android:text="Manage orders"
-                android:textColor="@color/white"
-                android:textSize="19sp" />
-        </LinearLayout>
+                android:layout_height="50dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/NewUMarketDarkBlue">
+
+                <ImageView
+                    android:id="@+id/manageorders_back"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/ic_back" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="-30dp"
+                    android:fontFamily="@font/moon_light"
+                    android:gravity="center"
+                    android:text="Manage orders"
+                    android:textColor="@color/white"
+                    android:textSize="19sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -53,81 +53,102 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="350dp"
                     android:layout_margin="20dp"
+                    android:background="@color/white"
                     android:orientation="vertical"
                     tools:ignore="UselessParent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/moon_light"
-                        android:textSize="19sp"
-                        android:padding="10dp"
-                        android:textColor="@color/black"
-                        android:text="To Process"/>
+                        android:background="@color/NewUMarketlight">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/moon_light"
+                            android:padding="10dp"
+                            android:text="To Process"
+                            android:textColor="@color/black"
+                            android:textSize="19sp" />
+                    </LinearLayout>
+
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
                         android:id="@+id/toProcess_RecyclerView"
-                        android:layout_height="350dp"
-                        android:background="@color/white"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white" />
 
                 </LinearLayout>
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="350dp"
                     android:layout_margin="20dp"
+                    android:background="@color/white"
                     android:orientation="vertical"
                     tools:ignore="UselessParent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/moon_light"
-                        android:textSize="19sp"
-                        android:padding="10dp"
-                        android:textColor="@color/black"
-                        android:text="Shipping"/>
+                        android:background="@color/NewUMarketlight">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/moon_light"
+                            android:padding="10dp"
+                            android:text="Shipping"
+                            android:textColor="@color/black"
+                            android:textSize="19sp" />
+                    </LinearLayout>
+
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
                         android:id="@+id/shipping_RecyclerView"
-                        android:layout_height="350dp"
-                        android:background="@color/white"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="350dp"
                     android:layout_margin="20dp"
                     android:orientation="vertical"
+                    android:background="@color/white"
                     tools:ignore="UselessParent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/moon_light"
-                        android:textSize="19sp"
-                        android:padding="10dp"
-                        android:textColor="@color/black"
-                        android:text="completed orders"/>
+                        android:background="@color/NewUMarketlight">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/moon_light"
+                            android:padding="10dp"
+                            android:text="completed orders"
+                            android:textColor="@color/black"
+                            android:textSize="19sp" />
+                    </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
                         android:id="@+id/completedOrders_RecyclerView"
-                        android:layout_height="350dp"
-                        android:background="@color/white"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white" />
 
                 </LinearLayout>
-
 
 
             </LinearLayout>
-
 
 
         </LinearLayout>

@@ -201,6 +201,22 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/isshippedout"
+                    android:visibility="invisible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/moon_light"
+                        android:textColor="@color/red"
+                        android:text="This item is shipped out already."/>
+
+                </LinearLayout>
+
                 <Button
                     android:id="@+id/btnShipped"
                     style="@style/ButtonStyle01"

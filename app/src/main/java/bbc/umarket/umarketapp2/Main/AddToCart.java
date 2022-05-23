@@ -65,20 +65,15 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.cartItem_RecyclerView)
     RecyclerView cartItemRView;
-
     public static LinearLayout mainlayout;
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.cart_back)
     ImageView back;
-
     public static TextView txttotal;
     public static Integer x = 0;
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btncheckout)
     Button checkout;
-
     CartItemLoadListener cartItemLoadListener;
 
     @Override
@@ -124,36 +119,36 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
 
         checkout.setOnClickListener(view -> {
             if (x != 0) {
-//                checkoutmain.put("date", java.text.DateFormat.getDateInstance().format(new Date()));
-//                FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
-//                        .getReference("checkout")
-//                        .child(studid)
-//                        .setValue(checkoutmain)
-//                        .addOnSuccessListener(unused -> Log.d(TAG, "Insert 1st child Success!"));
-//
-//                for (int i = 0; i < trylang.size(); i++) {
-//                    FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
-//                            .getReference("checkout")
-//                            .child(studid)
-//                            .child("items")
-//                            .child(trylang.get(i).getProdId())
-//                            .setValue(trylang.get(i))
-//                            .addOnSuccessListener(unused -> Log.d(TAG, "Insert 2nd child Success!"));
-//                }
+                checkoutmain.put("date", java.text.DateFormat.getDateInstance().format(new Date()));
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(AddToCart.this, R.style.CustomAlertDialog));
-                dialog = builder.setTitle("")
-                        .setMessage("Feature will be available soon. Please buy directly at Product Details for now.")
-                        .setNeutralButton("OK", null)
-                        .create();
-                dialog.show();
+                FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                        .getReference("checkout_cart")
+                        .child(studid)
+                        .setValue(checkoutmain)
+                        .addOnSuccessListener(unused -> {
+                            Log.d(TAG, "Insert 1st child Success!");
 
+                            for (int i = 0; i < trylang.size(); i++) {
+                                FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                                        .getReference("checkout_cart")
+                                        .child(studid)
+                                        .child("items")
+                                        .child(trylang.get(i).getProdId())
+                                        .setValue(trylang.get(i))
+                                        .addOnSuccessListener(unused2 -> {
+                                            Log.d(TAG, "Insert 2nd child Success!");
+
+                                            Intent intent = new Intent(AddToCart.this, CheckoutForCart.class);
+                                            startActivity(intent);
+                                        });
+                            }
+
+                        });
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(AddToCart.this, R.style.CustomAlertDialog));
                 dialog = builder.setTitle("")
@@ -169,6 +164,7 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
         ButterKnife.bind(this);
         cartItemLoadListener = this;
         cartItemRView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
         back.setOnClickListener(view -> {
             Intent intent = new Intent(AddToCart.this, HomeContainer.class);
             intent.putExtra("back_Home", "Home");
@@ -192,7 +188,7 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
         try {
             x = value;
         } catch (Exception exception) {
-            Snackbar.make(mainlayout, exception.getMessage(), Snackbar.LENGTH_LONG).show();
+           Log.d("Exception", exception.getMessage());
         }
     }
 
@@ -201,6 +197,7 @@ public class AddToCart extends AppCompatActivity implements CartItemLoadListener
             for (String id : idlist) {
                 if (value != null && id.equals(value.getProdId())) {
                     trylang.add(value);
+                    Log.d("CHECKOUT CART VALUE", String.valueOf(trylang));
                 }
             }
         } catch (Exception ex) {

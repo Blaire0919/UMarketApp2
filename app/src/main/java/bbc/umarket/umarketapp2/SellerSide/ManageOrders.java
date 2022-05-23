@@ -51,7 +51,6 @@ public class ManageOrders extends AppCompatActivity {
     CompletedOrderAdapter completedOrderAdapter;
     ArrayList<ToProcessModel> completedList;
 
-
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
 
@@ -85,7 +84,7 @@ public class ManageOrders extends AppCompatActivity {
 
         //to process orders
         toProcessRecyclerView.setHasFixedSize(true);
-        toProcessRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        toProcessRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         toProcessList = new ArrayList<>();
         toProcessAdapter = new ToProcessAdapter(this, toProcessList);
         toProcessRecyclerView.setAdapter(toProcessAdapter);
@@ -113,7 +112,7 @@ public class ManageOrders extends AppCompatActivity {
 
         //shipping order
         shippingRecyclerView.setHasFixedSize(true);
-        shippingRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        shippingRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         shippingList = new ArrayList<>();
         shippingAdapter = new ShippingAdapter(this, shippingList);
         shippingRecyclerView.setAdapter(shippingAdapter);
@@ -141,7 +140,7 @@ public class ManageOrders extends AppCompatActivity {
 
         //completed order
         completedOrderRecyclerview.setHasFixedSize(true);
-        completedOrderRecyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        completedOrderRecyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         completedList = new ArrayList<>();
         completedOrderAdapter = new CompletedOrderAdapter(this, completedList);
         completedOrderRecyclerview.setAdapter(completedOrderAdapter);

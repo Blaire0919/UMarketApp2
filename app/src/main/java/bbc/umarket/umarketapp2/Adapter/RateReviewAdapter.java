@@ -48,7 +48,7 @@ public class RateReviewAdapter extends RecyclerView.Adapter<RateReviewAdapter.RR
         holder.name.setText(rateReviewHelperClass.getNameofBuyer());
         holder.studid.setText(rateReviewHelperClass.getStudID());
         holder.rate.setRating(Float.parseFloat(rateReviewHelperClass.getRate()));
-        holder.ratetxt.setText(rateReviewHelperClass.getRate());
+        holder.ratetxt.setText(String.format("(%s)", rateReviewHelperClass.getRate()));
         holder.comment.setText(rateReviewHelperClass.getReview());
     }
 

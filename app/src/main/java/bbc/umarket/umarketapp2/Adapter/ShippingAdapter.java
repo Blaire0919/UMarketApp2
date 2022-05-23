@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ import bbc.umarket.umarketapp2.SellerSide.ShippingOrder;
 public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.ShippingViewHolder> {
     ArrayList<ToProcessModel> shippingList;
     Context context;
+    public static int setStatus;
 
     public ShippingAdapter(Context context, ArrayList<ToProcessModel> shippingList) {
         this.shippingList = shippingList;
@@ -35,13 +37,17 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
     public ShippingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.des_orders, parent, false);
         return new ShippingViewHolder(view);
-
     }
 
     @Override
     public void onBindViewHolder(@NonNull ShippingViewHolder holder, int position) {
 
         ToProcessModel shippingModel = shippingList.get(position);
+
+        if(setStatus==1 ){
+            holder.status.setVisibility(View.VISIBLE);
+        }
+
 
         holder.buyerName.setText(shippingModel.getBuyerName());
         holder.prodID.setText(shippingModel.getProdID());
@@ -61,10 +67,17 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
             intent.putExtra("totamt", shippingModel.getTotAmt());
             intent.putExtra("buyerid", shippingModel.getBuyerID());
             intent.putExtra("sellerid", shippingModel.getSellerID());
-
-
             context.startActivity(intent);
         });
+
+    }
+
+    public static void StatusShipped(int value) {
+        if (value==1){
+            setStatus =1;
+        }else{
+            setStatus=2;
+        }
 
     }
 
@@ -76,11 +89,11 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
     public static class ShippingViewHolder extends RecyclerView.ViewHolder {
         TextView buyerName, prodID, prodName, price, qty, totAmt, datetime;
         CardView card;
+        LinearLayout status;
 
 
         public ShippingViewHolder(@NonNull View itemView) {
             super(itemView);
-
 
             card = itemView.findViewById(R.id.order_card);
             buyerName = itemView.findViewById(R.id.txt_buyersname);
@@ -90,8 +103,7 @@ public class ShippingAdapter extends RecyclerView.Adapter<ShippingAdapter.Shippi
             qty = itemView.findViewById(R.id.txt_qty);
             totAmt = itemView.findViewById(R.id.txt_totamt);
             datetime = itemView.findViewById(R.id.txt_datetime);
-
-
+            status = itemView.findViewById(R.id.linear_statusShipped);
 
         }
     }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -178,27 +179,27 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
 //              convert the returned value from algo to array
-               String[] rec = pyobj.callAttr("main", studid).toJava(String[].class);
-               for (String strTemp : rec) {
+          //     String[] rec = pyobj.callAttr("main", studid).toJava(String[].class);
+           //    for (String strTemp : rec) {
                     reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for (DataSnapshot snapi : snapshot.getChildren()) {
                                 FeatProdtHelperClass featProdtHelperClass = snapi.getValue(FeatProdtHelperClass.class);
                                 assert featProdtHelperClass != null;
-                                if (featProdtHelperClass.getpName().equals(strTemp)) {
+                             //   if (featProdtHelperClass.getpName().equals(strTemp)) {
                                     if(!featProdtHelperClass.getpSellerID().equals(studid)){
                                         featprod.add(featProdtHelperClass);
                                     }
 
-                                }
+                             //   }
                             }
                             featProdAdapter.notifyDataSetChanged();
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) { }
                     });
-                }
+            //    }
             }
 
             @Override
@@ -207,7 +208,7 @@ public class FragHome extends Fragment implements ItemLoadListener, CartItemLoad
 
         //for product listing
         items.setHasFixedSize(true);
-        items.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
+        items.setLayoutManager(new GridLayoutManager(context, 3, RecyclerView.VERTICAL, false ));
         listItem = new ArrayList<>();
         itemAdapter = new ItemAdapter(context, listItem);
         items.setAdapter(itemAdapter);

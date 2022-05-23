@@ -7,9 +7,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,12 +45,10 @@ public class ShippingOrder extends AppCompatActivity {
     TextView bname, pID, pname, pprice, pqty, ptotamt;
     ImageView img, back;
     Button shipped;
-
     Calendar calendar;
-
     //for to receive buyer
     String TRImgUrl, TRbuyerID, TRprodID, TRsellerID, TRsellerName, TRprodName, TRprodQty, TRprodPrice;
-
+    LinearLayout isshippedout;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
 
@@ -87,6 +87,7 @@ public class ShippingOrder extends AppCompatActivity {
         pqty = findViewById(R.id.shippedqty);
         ptotamt = findViewById(R.id.shippedtotamt);
         shipped = findViewById(R.id.btnShipped);
+        isshippedout = findViewById(R.id.isshippedout);
 
         //usernotif
         calendar = Calendar.getInstance();
@@ -149,8 +150,7 @@ public class ShippingOrder extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                        }
+                        public void onCancelled(@NonNull DatabaseError error) {}
                     });
                 }
             }
@@ -162,6 +162,7 @@ public class ShippingOrder extends AppCompatActivity {
 
         shipped.setOnClickListener(view -> {
             //for buyernotif
+
             String sentence = String.format("Your order of %s %s is being shipped", qty, prodName);
             NotifModel notifModel = new NotifModel(buyerid, sentence, currenttime);
             FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
@@ -171,6 +172,7 @@ public class ShippingOrder extends AppCompatActivity {
                     .setValue(notifModel)
                     .addOnSuccessListener(unused -> {
                         Log.d("NOtif", "Order is being shipped");
+                        ShippingAdapter.StatusShipped(1);
                         Intent backintent = new Intent(ShippingOrder.this, SellerCenter.class);
                         startActivity(backintent);
                     });

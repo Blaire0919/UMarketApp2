@@ -49,14 +49,12 @@ import bbc.umarket.umarketapp2.Helper.UserHelperClass;
 import bbc.umarket.umarketapp2.R;
 
 public class Register extends AppCompatActivity {
-    ImageView back, checkVerified;
+    ImageView back;
     TextView backlogin;
     public TextInputLayout fname, lname, studid, contact, email, cpass;
     Button register;
-    MaterialCardView sendCode;
     CheckBox chkSS, chkE, chkFB, chkCA, chkBP, chkSE, chkOthers;
     LinearLayout forOthers;
-    ProgressBar progress_bar;
     AlertDialog dialog;
 
     //for usermodel
@@ -75,14 +73,12 @@ public class Register extends AppCompatActivity {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
-    public int Answer = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.Theme_UMarketApp2);
         setContentView(R.layout.act_register);
-      //  getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
+        //  getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(Register.this, R.style.CustomAlertDialog));
 
@@ -97,18 +93,13 @@ public class Register extends AppCompatActivity {
         back = findViewById(R.id.btnback);
         backlogin = findViewById(R.id.backlogin);
         register = findViewById(R.id.btnRegister);
-        checkVerified = findViewById(R.id.ImageView_emailVerified);
-        sendCode = findViewById(R.id.card_sendemailcode);
         forOthers = findViewById(R.id.LinearForOthers);
-        progress_bar = findViewById(R.id.regprogressbar);
-
         fname = findViewById(R.id.Reg_fname);
         lname = findViewById(R.id.Reg_lname);
         studid = findViewById(R.id.Reg_studid);
         contact = findViewById(R.id.Reg_contactnum);
         email = findViewById(R.id.Reg_email);
         cpass = findViewById(R.id.Reg_CreatePass);
-
         chkSS = findViewById(R.id.chkSchoolSupplies);
         chkE = findViewById(R.id.chkElectronics);
         chkFB = findViewById(R.id.chkFoodsBeverage);
@@ -116,7 +107,6 @@ public class Register extends AppCompatActivity {
         chkBP = findViewById(R.id.chkBeautyProduct);
         chkSE = findViewById(R.id.chkSportsEquipment);
         chkOthers = findViewById(R.id.chkOthers);
-
 
         chkOthers.setOnCheckedChangeListener((compoundButton, isChecked) -> {
             if (isChecked) {
@@ -143,137 +133,96 @@ public class Register extends AppCompatActivity {
             finish();
         });
 
-        //verify email
-        sendCode.setOnClickListener(view -> {
-            progress_bar.setVisibility(View.VISIBLE);
-            String verify_email = Objects.requireNonNull(email.getEditText()).getText().toString();
-            String verify_pass = Objects.requireNonNull(cpass.getEditText()).getText().toString();
+        //register
+        register.setOnClickListener(v -> {
 
-            if (validateEmail() && validatePass()) {
-                firebaseAuth.createUserWithEmailAndPassword(verify_email, verify_pass).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        progress_bar.setVisibility(View.INVISIBLE);
-                        sendCode.setEnabled(false);
-                        sendCode.setCardBackgroundColor(Color.GRAY);
-                        checkVerified.setColorFilter(ContextCompat.getColor(this, R.color.shamrock), android.graphics.PorterDuff.Mode.SRC_IN);
-                        Answer = 1;
-                    }
+            if (!validateFName() | !validateLName() | !validatestudID() | !validateContact() | !validateEmail() | !validatePass()) {
+                return;
+            }
+            if (!validateFName() | !validateLName() | !validatestudID() | !validateContact() | !validateEmail() | !validatePass()) {
+                return;
+            }
+            if (!chkSS.isChecked() && !chkE.isChecked() && !chkFB.isChecked() && !chkCA.isChecked() && !chkBP.isChecked() && !chkSE.isChecked()) {
+                Toast.makeText(getBaseContext(), "Please check atleast one interest", Toast.LENGTH_SHORT).show();
+            } else {
+
+                //Get all the values
+                sfname = Objects.requireNonNull(fname.getEditText()).getText().toString();
+                slname = Objects.requireNonNull(lname.getEditText()).getText().toString();
+                sstudid = Objects.requireNonNull(studid.getEditText()).getText().toString().toLowerCase();
+                scontacts = Objects.requireNonNull(contact.getEditText()).getText().toString();
+                sgender = "";
+                sbday = "";
+                semail = Objects.requireNonNull(email.getEditText()).getText().toString();
+                spass = Objects.requireNonNull(cpass.getEditText()).getText().toString();
+
+                if (chkSS.isChecked()) {
+                    ss = "School Equipment";
+                } else {
+                    ss = "";
+                }
+                if (chkE.isChecked()) {
+                    e = "Electronics";
+                } else {
+                    e = "";
+                }
+                if (chkFB.isChecked()) {
+                    fb = "Food and Beverages";
+                } else {
+                    fb = "";
+                }
+                if (chkCA.isChecked()) {
+                    ca = "Clothes and Accessories";
+                } else {
+                    ca = "";
+                }
+                if (chkBP.isChecked()) {
+                    bp = "Beauty Products";
+                } else {
+                    bp = "";
+                }
+                if (chkSE.isChecked()) {
+                    se = "Sports Equipment";
+                } else {
+                    se = "";
+                }
+
+                rootNode = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/");
+                reference = rootNode.getReference("users");
+                catref = rootNode.getReference("interests");
+
+                //user database
+                UserHelperClass userHelperClass = new UserHelperClass(sfname, slname, sstudid, scontacts, sgender, sbday, semail, spass);
+                reference.child(sstudid).setValue(userHelperClass);
+                //interest database
+                InterestHelperClass interestHelperClass = new InterestHelperClass(sstudid, ss, e, fb, ca, bp, se);
+                catref.child(sstudid).setValue(interestHelperClass);
+
+                DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+
+                Map<String, Object> userdata = new HashMap<>();
+                userdata.put("name", String.format("%s %s", sfname, slname));
+                userdata.put("uid", firebaseAuth.getUid());
+                userdata.put("status", "Offline");
+                userdata.put("userid", sstudid);
+
+                documentReference.set(userdata).addOnSuccessListener(unused -> {
+                    Toast.makeText(getApplicationContext(), "Data on Cloud Firestore send success", Toast.LENGTH_SHORT).show();
+                    Log.d("FIRESTORE: ", "Data on Cloud Firestore send success");
                 });
-            }else {
-                progress_bar.setVisibility(View.INVISIBLE);
-                dialog = builder.setTitle("")
-                        .setMessage("REQUIRED: Please enter your password for email authentication.")
-                        .setNeutralButton("OK", null)
+
+                AlertDialog dialog = builder.setTitle("")
+                        .setMessage("Registered Successfully!")
+                        .setNeutralButton("OK", (dialogInterface, i) -> {
+                            Intent intent = new Intent(Register.this, Login.class);
+                            startActivity(intent);
+                            finish();
+                        })
                         .create();
 
                 dialog.show();
             }
         });
-
-        //register
-        register.setOnClickListener(v -> {
-            progress_bar.setVisibility(View.VISIBLE);
-            if (!validateFName() | !validateLName() | !validatestudID() | !validateContact() | !validateEmail() | !validatePass()) {
-                progress_bar.setVisibility(View.INVISIBLE);
-                return;
-            }
-
-            if (Answer == 1) {
-
-                if (!validateFName() | !validateLName() | !validatestudID() | !validateContact() | !validateEmail() | !validatePass()) {
-                    return;
-                }
-
-                if (!chkSS.isChecked() && !chkE.isChecked() && !chkFB.isChecked() && !chkCA.isChecked() && !chkBP.isChecked() && !chkSE.isChecked()) {
-                    Toast.makeText(getBaseContext(), "Please check atleast one interest", Toast.LENGTH_SHORT).show();
-                } else {
-
-                    //Get all the values
-                    sfname = Objects.requireNonNull(fname.getEditText()).getText().toString();
-                    slname = Objects.requireNonNull(lname.getEditText()).getText().toString();
-                    sstudid = Objects.requireNonNull(studid.getEditText()).getText().toString().toLowerCase();
-                    scontacts = Objects.requireNonNull(contact.getEditText()).getText().toString();
-                    sgender = "";
-                    sbday = "";
-                    semail = Objects.requireNonNull(email.getEditText()).getText().toString();
-                    spass = Objects.requireNonNull(cpass.getEditText()).getText().toString();
-
-
-                    if (chkSS.isChecked()) {
-                        ss = "School Equipment";
-                    } else {
-                        ss = "";
-                    }
-
-                    if (chkE.isChecked()) {
-                        e = "Electronics";
-                    } else {
-                        e = "";
-                    }
-
-                    if (chkFB.isChecked()) {
-                        fb = "Food and Beverages";
-                    } else {
-                        fb = "";
-                    }
-
-                    if (chkCA.isChecked()) {
-                        ca = "Clothes and Accessories";
-                    } else {
-                        ca = "";
-                    }
-                    if (chkBP.isChecked()) {
-                        bp = "Beauty Products";
-                    } else {
-                        bp = "";
-                    }
-                    if (chkSE.isChecked()) {
-                        se = "Sports Equipment";
-                    } else {
-                        se = "";
-                    }
-
-                    rootNode = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/");
-                    reference = rootNode.getReference("users");
-                    catref = rootNode.getReference("interests");
-
-                    //user database
-                    UserHelperClass userHelperClass = new UserHelperClass(sfname, slname, sstudid, scontacts, sgender, sbday, semail, spass);
-                    reference.child(sstudid).setValue(userHelperClass);
-                    //interest database
-                    InterestHelperClass interestHelperClass = new InterestHelperClass(sstudid, ss, e, fb, ca, bp, se);
-                    catref.child(sstudid).setValue(interestHelperClass);
-
-                    DocumentReference documentReference =  firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
-
-                    Map<String, Object> userdata = new HashMap<>();
-                    userdata.put("name", String.format("%s %s", sfname, slname));
-                    userdata.put("uid", firebaseAuth.getUid());
-                    userdata.put("status", "Offline");
-                    userdata.put("userid", sstudid);
-
-                    documentReference.set(userdata).addOnSuccessListener(unused -> {
-                        Toast.makeText(getApplicationContext(), "Data on Cloud Firestore send success", Toast.LENGTH_SHORT).show();
-                        Log.d("FIRESTORE: ", "Data on Cloud Firestore send success"); });
-
-
-                    progress_bar.setVisibility(View.INVISIBLE);
-
-                    AlertDialog dialog = builder.setTitle("")
-                            .setMessage("Registered Successfully!")
-                            .setNeutralButton("OK", (dialogInterface, i) -> {
-                                Intent intent = new Intent(Register.this, Login.class);
-                                startActivity(intent);
-                                finish();
-                            })
-                            .create();
-
-                    dialog.show();
-
-                }
-            }
-        });
-
 
     }
 
@@ -281,7 +230,7 @@ public class Register extends AppCompatActivity {
         String val = Objects.requireNonNull(fname.getEditText()).getText().toString();
 
         if (val.isEmpty()) {
-            fname.setError("Field cannot be empty");
+            fname.setError("First name is required");
             return false;
         } else {
             fname.setError(null);
@@ -294,7 +243,7 @@ public class Register extends AppCompatActivity {
         String val = Objects.requireNonNull(lname.getEditText()).getText().toString();
 
         if (val.isEmpty()) {
-            lname.setError("Field cannot be empty");
+            lname.setError("Last name is required");
             return false;
         } else {
             lname.setError(null);
@@ -306,13 +255,9 @@ public class Register extends AppCompatActivity {
     private Boolean validatestudID() {
         String val = Objects.requireNonNull(studid.getEditText()).getText().toString();
         String noWhiteSpace = "^\\A\\w{8,10}\\z$";
-
-        DatabaseReference reference = FirebaseDatabase
-                .getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                 .getReference("users");
-
         Query checkID = reference.orderByChild("studID").equalTo(val);
-
         checkID.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -327,7 +272,7 @@ public class Register extends AppCompatActivity {
         });
 
         if (val.isEmpty()) {
-            studid.setError("Field cannot be empty");
+            studid.setError("Student Id is required");
             return false;
         } else if (val.length() > 10) {
             studid.setError("Student ID too long");
@@ -347,8 +292,14 @@ public class Register extends AppCompatActivity {
 
     private Boolean validateContact() {
         String val = Objects.requireNonNull(contact.getEditText()).getText().toString();
+        String initialPart = val.substring(0, 2);
+//Get 1st three characters and then compare it with 639
+        String phonePattern = "09[0-9]{9}";
         if (val.isEmpty()) {
-            contact.setError("Field cannot be empty");
+            contact.setError("Contact number is required");
+            return false;
+        } else if (!initialPart.equals("09") && !val.matches(phonePattern) ) {
+            contact.setError("Invalid. Input a valid number");
             return false;
         } else {
             contact.setError(null);
@@ -361,12 +312,10 @@ public class Register extends AppCompatActivity {
         String val = Objects.requireNonNull(email.getEditText()).getText().toString();
         String emailPattern = "^\\S+@umak\\.edu\\.ph$";
 
-        DatabaseReference reference = FirebaseDatabase
-                .getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                 .getReference("users");
 
         Query checkEmail = reference.orderByChild("email").equalTo(val);
-
         checkEmail.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -381,7 +330,7 @@ public class Register extends AppCompatActivity {
         });
 
         if (val.isEmpty()) {
-            email.setError("Field cannot be empty");
+            email.setError("Email address is required");
             return false;
         } else if (!val.matches(emailPattern)) {
             email.setError("Invalid. Use your UMak gmail");
@@ -398,7 +347,7 @@ public class Register extends AppCompatActivity {
         String pass = "^" + "(?=.*[a-zA-Z0-9])" + ".{5,}" + "$";
 
         if (val.isEmpty()) {
-            cpass.setError("Field cannot be empty");
+            cpass.setError("Password is required");
             return false;
         } else if (!val.matches(pass)) {
             cpass.setError("Password is weak");
@@ -409,7 +358,6 @@ public class Register extends AppCompatActivity {
             return true;
         }
     }
-
 
 
 }

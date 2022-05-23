@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -53,6 +55,7 @@ public class Checkout extends AppCompatActivity {
     CheckOutAdapter checkOutAdapter;
     CheckOutHelperClass checkOutHelperClass = new CheckOutHelperClass();
     ArrayList<CheckOutHelperClass> checkoutList;
+
     public static HashMap<String, String> orderLog = new HashMap<>();
     public static ArrayList<CheckOutHelperClass> orderedItem = new ArrayList<>();
     public static List<String> ItemIdOrdered = new ArrayList<>();
@@ -66,30 +69,25 @@ public class Checkout extends AppCompatActivity {
     ImageView back;
     TextView totPayment;
     LinearLayout PlaceOrder;
-
     String totpay;
-
-
-
     String checkoutProduct, sellerID;
 
     //for user notification
     Calendar calendar;
     String un_prodname, un_sellername, un_qty, un_price, currenttime;
 
-
     //for managing orders by sellers
     String seller_ID, buyerID, buyerName, prodID, prodName, price, qty, totAmt, order_currentdate, order_currenttime;
 
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
+    AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.Theme_UMarketApp2);
         setContentView(R.layout.act_checkout);
-       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //hide status bar
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -198,17 +196,15 @@ public class Checkout extends AppCompatActivity {
         }
 
         back.setOnClickListener(view -> {
-            checkoutList.clear();
-            ItemIdOrdered.clear();
-            orderLog.clear();
-            Integer x = 0;
-            AddToCart.selectedItemCount(x);
-
             FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
                     .getReference("checkout")
                     .child(studid)
                     .removeValue()
                     .addOnSuccessListener(unused -> Log.d(TAG, "Delete Success!"));
+
+            checkoutList.clear();
+            ItemIdOrdered.clear();
+            orderLog.clear();
 
             Intent intent = new Intent(Checkout.this, HomeContainer.class);
             intent.putExtra("back_Home", "Home");
@@ -223,16 +219,6 @@ public class Checkout extends AppCompatActivity {
                     .child(studid)
                     .removeValue()
                     .addOnSuccessListener(unused -> Log.d(TAG, "Delete Success!"));
-
-            //remove from cart
-            for (String id : ItemIdOrdered) {
-                FirebaseDatabase.getInstance("https://umarketapp2-58178-default-rtdb.asia-southeast1.firebasedatabase.app/")
-                        .getReference("cart")
-                        .child(studid)
-                        .child(id)
-                        .removeValue()
-                        .addOnSuccessListener(unused -> Log.d("REMOVE ITEMS FROM CART", id));
-            }
 
             //usernotif
             String sentence = String.format("You placed an order of %s %s from %s with a price of %s", un_qty, un_prodname, un_sellername, un_price);
@@ -251,6 +237,15 @@ public class Checkout extends AppCompatActivity {
                     .push()
                     .setValue(toProcessModel);
 
+            AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(Checkout.this, R.style.CustomAlertDialog));
+
+            dialog = builder.setTitle("")
+                    .setMessage("Successfully ordered the product!")
+                    .setNeutralButton("OK", null)
+                    .create();
+
+            dialog.show();
+
             Intent intent = new Intent(Checkout.this, HomeContainer.class);
             intent.putExtra("back_Home", "Home");
             startActivity(intent);
@@ -261,11 +256,11 @@ public class Checkout extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-            try {
-             DocumentReference   documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
-                documentReference.update("status", "Online");}
-            catch (Exception exception) {
-                Log.d("EXCEPTION", exception.getMessage());
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Online");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
 
         }
     }
@@ -273,11 +268,11 @@ public class Checkout extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
-            try {
-           DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
-                documentReference.update("status", "Offline");
-            } catch (Exception exception) {
-                Log.d("EXCEPTION", exception.getMessage());
+        try {
+            DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
+            documentReference.update("status", "Offline");
+        } catch (Exception exception) {
+            Log.d("EXCEPTION", exception.getMessage());
 
         }
     }

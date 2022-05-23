@@ -80,7 +80,7 @@ public class Settings extends AppCompatActivity {
             DocumentReference documentReference = firebaseFirestore.collection("Users").document(Objects.requireNonNull(firebaseAuth.getUid()));
             documentReference.update("status", "Offline");
         } catch (Exception exception) {
-            Log.d("EXCEPTION", exception.getMessage());
+            Log.d("EXCEPTION", exception.toString());
 
         }
     }

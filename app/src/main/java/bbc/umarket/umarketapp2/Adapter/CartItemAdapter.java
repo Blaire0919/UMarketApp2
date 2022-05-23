@@ -43,7 +43,10 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
     ArrayList<CartHelperClass> cartItem;
 
     CheckOutHelperClass checkOutHelperClass;
+    CheckOutHelperClass noItemHelperClass = new CheckOutHelperClass();
     List<String> chkitemID = new ArrayList<>();
+    ArrayList<Object> setCheckOut = new ArrayList<>();
+    String[] a;
 
     final Context context;
     String itemqty;
@@ -101,6 +104,8 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
 
             if (!holder.selectItem.isChecked()) {
                 if (cartItem.get(position).getProdQty().equals("1")) {
+                    sum -= Float.parseFloat(currentItem.getTotalPrice());
+                    AddToCart.selected_subtotal(String.format("%.2f", sum));
                     itemqty = cartItem.get(position).getProdQty();
                     holder.qty.setText(itemqty);
                     holder.minus.setEnabled(false);
@@ -132,17 +137,30 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
                         cartItem.remove(position);
                         deleteFromFirebase(currentItem);
                         notifyItemRangeChanged(position, cartItem.size());
+                        sum -= Float.parseFloat(currentItem.getTotalPrice());
+                        AddToCart.selected_subtotal(String.format("%.2f", sum));
                         dialog2.dismiss();
                     })
                     .create();
             dialog.show();
         });
 
+        chkitemID.add(currentItem.getProdID());
+        String totprice = String.valueOf(Float.parseFloat(currentItem.getProdPrice()) * Integer.parseInt(currentItem.getProdQty()));
+        a = new String[]{currentItem.getImgUrl(),
+                currentItem.getProdID(),
+                currentItem.getSellerName(),
+                currentItem.getProdName(),
+                currentItem.getProdQty(),
+                String.format("%s", currentItem.getProdPrice()),
+                totprice,
+                currentItem.getSellerID()};
+        setCheckOut.add(a);
         holder.selectItem.setOnCheckedChangeListener((compoundButton, isChecked) -> {
             if (isChecked) {
-                chkitemID.add(currentItem.getProdID());
+
                 SelectedCount++;
-                String totprice = String.valueOf(Float.parseFloat(currentItem.getProdPrice()) * Integer.parseInt(currentItem.getProdQty()));
+
                 checkOutHelperClass = new CheckOutHelperClass(
                         currentItem.getImgUrl(),
                         currentItem.getProdID(),
@@ -153,16 +171,23 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
                         totprice,
                         currentItem.getSellerID()
                 );
+                //for cart checkout
                 AddToCart.check_out(chkitemID, checkOutHelperClass);
+               Log.d("CHECKOUT ID", String.valueOf(chkitemID));
+               Log.d("CHECKOUT list", String.valueOf(checkOutHelperClass.getProdName()));
+
             } else {
                 try {
                     chkitemID.remove(currentItem.getProdID());
+
+                    Log.d("CHECKOUT ID WHEN UNCHECKED", String.valueOf(chkitemID));
                     SelectedCount--;
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
             }
             AddToCart.selectedItemCount(SelectedCount);
+            Log.d("CHECKOUT COUNT", String.valueOf(SelectedCount));
         });
     }
 
@@ -193,9 +218,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
             holder.minus.setBackgroundColor(Color.WHITE);
         }
 
-        synchronized (context) {
-            context.notifyAll();
-        }
+        synchronized (context) {context.notifyAll();}
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -249,11 +272,9 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
     }
 
     public static class CartViewHolder extends RecyclerView.ViewHolder {
-
         ImageView img, delete;
         TextView sellername, prodname, price, qty;
         CheckBox selectItem;
-
         //qty button
         MaterialCardView add, minus;
 

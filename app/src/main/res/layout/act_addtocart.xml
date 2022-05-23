@@ -25,8 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:src="@drawable/ic_back" />
+               android:src="@drawable/ic_back" />
 
             <TextView
                 android:layout_width="wrap_content"

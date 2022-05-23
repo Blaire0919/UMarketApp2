@@ -18,6 +18,7 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -120,7 +121,7 @@ public class Search extends AppCompatActivity {
         //for filtered recyclerview
         //for product listing
         searchrv.setHasFixedSize(true);
-        searchrv.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
+        searchrv.setLayoutManager(new GridLayoutManager(this, 3, RecyclerView.VERTICAL, false ));
         searched_item = new ArrayList<>();
         itemAdapter = new ItemAdapter(this, searched_item);
         searchrv.setAdapter(itemAdapter);

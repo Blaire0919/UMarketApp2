@@ -199,18 +199,21 @@ public class Login extends AppCompatActivity {
                                 SessionManager sessionManager2 = new SessionManager(Login.this, SessionManager.SESSION_USERSESSION);
                                 sessionManager2.createLoginSession(fnamefromDB, lnamefromDB, studIDfromDB, phonefromDB, genderfromDB,
                                         bdayfromDB, emailfromDB, passFromDB, sellerFromDB);
-                                login_progressbar.setVisibility(View.INVISIBLE);
+
                                 Intent intent = new Intent(Login.this, HomeContainer.class);
+                                login_progressbar.setVisibility(View.INVISIBLE);
                                 startActivity(intent);
                                 finish();
                             }
                         });
 
                     } else {
+                        login_progressbar.setVisibility(View.INVISIBLE);
                         l_pass.setError("Wrong Password");
                         l_pass.requestFocus();
                     }
                 } else {
+                    login_progressbar.setVisibility(View.INVISIBLE);
                     l_user.setError("No such User exist");
                     l_user.requestFocus();
                 }
@@ -224,9 +227,11 @@ public class Login extends AppCompatActivity {
     private Boolean validatestudID() {
         String val = Objects.requireNonNull(l_user.getEditText()).getText().toString();
         if (val.isEmpty()) {
+            login_progressbar.setVisibility(View.INVISIBLE);
             l_user.setError("Field cannot be empty");
             return false;
         } else {
+            login_progressbar.setVisibility(View.INVISIBLE);
             l_user.setError(null);
             l_user.setErrorEnabled(false);
             return true;
@@ -236,9 +241,11 @@ public class Login extends AppCompatActivity {
     private Boolean validatePass() {
         String val = Objects.requireNonNull(l_pass.getEditText()).getText().toString();
         if (val.isEmpty()) {
+            login_progressbar.setVisibility(View.INVISIBLE);
             l_pass.setError("Field cannot be empty");
             return false;
         } else {
+            login_progressbar.setVisibility(View.INVISIBLE);
             l_pass.setError(null);
             l_pass.setErrorEnabled(false);
             return true;

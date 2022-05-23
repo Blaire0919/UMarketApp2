@@ -27,8 +27,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
                 android:src="@drawable/ic_back"
                 tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
@@ -38,12 +36,19 @@
                 android:layout_weight="10" />
 
             <ImageView
+                android:id="@+id/proddetails_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:src="@drawable/ic_cart"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+            <ImageView
                 android:id="@+id/ImageViewreportItem"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
                 android:gravity="center_vertical"
                 android:src="@drawable/ic_baseline_report_24"
                 tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
@@ -73,6 +78,7 @@
 
                 <ImageView
                     android:id="@+id/pd_image"
+                    android:scaleType="centerCrop"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/prod_mockup" />
@@ -89,6 +95,7 @@
                     android:id="@+id/pd_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:fontFamily="@font/moon_light"
                     android:gravity="center_horizontal"
                     android:text="Loading... "
@@ -103,6 +110,8 @@
                     android:fontFamily="@font/moon_light"
                     android:gravity="center_horizontal"
                     android:text="P0.00"
+                    android:layout_marginTop="10dp"
+                    android:textSize="18dp"
                     android:textAlignment="center"
                     android:textColor="@color/black" />
 
@@ -155,9 +164,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_weight="20"
+                            android:layout_weight="38"
                             android:orientation="horizontal"
-                            android:padding="8dp">
+                            android:padding="3dp">
 
                             <TextView
                                 android:id="@+id/pd_seller_name"
@@ -166,7 +175,7 @@
                                 android:fontFamily="@font/moon_light"
                                 android:text="Loading..."
                                 android:textColor="@color/black"
-                                android:textSize="10sp"
+                                android:textSize="12sp"
                                 tools:ignore="SmallSp" />
                         </LinearLayout>
 
@@ -174,8 +183,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_weight="1"
                             android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
                             android:backgroundTint="@color/NewUMarketDarkBlue"
                             android:fontFamily="@font/moon_light"
                             android:text="View \nListing"
@@ -224,7 +233,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
+                                android:layout_marginTop="10dp"
                                 android:fontFamily="@font/moon_light"
                                 android:text="Brand:"
                                 android:textColor="@color/black"
@@ -233,7 +242,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
+                                android:layout_marginTop="11dp"
                                 android:fontFamily="@font/moon_light"
                                 android:text="Stock:"
                                 android:textColor="@color/black"
@@ -242,7 +251,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
+                                android:layout_marginTop="11dp"
                                 android:fontFamily="@font/moon_light"
                                 android:text="Condition:"
                                 android:textColor="@color/black"
@@ -261,7 +270,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:fontFamily="@font/moon_light"
+                                android:fontFamily="@font/poppins_regular"
                                 android:text="Sheki Sheki"
                                 android:textColor="@color/black"
                                 android:textSize="12sp" />
@@ -271,7 +280,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:fontFamily="@font/moon_light"
+                                android:fontFamily="@font/poppins_regular"
                                 android:text="150"
                                 android:textColor="@color/black"
                                 android:textSize="12sp" />
@@ -281,7 +290,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:fontFamily="@font/moon_light"
+                                android:fontFamily="@font/poppins_regular"
                                 android:text="Never been used"
                                 android:textColor="@color/black"
                                 android:textSize="12sp" />
@@ -305,7 +314,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="20dp"
-                        android:fontFamily="@font/moon_light"
+                        android:fontFamily="@font/poppins_regular"
                         android:text="So grab your watercolors. And just have fun painting. All over these stickers. You could use a pen..."
                         android:textColor="@color/black"
                         android:textSize="12sp" />

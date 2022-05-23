@@ -96,6 +96,7 @@
                             android:layout_width="110dp"
                             android:layout_height="110dp"
                             android:cropToPadding="true"
+                            android:scaleType="centerCrop"
                             android:src="@drawable/profile_img"
                             tools:ignore="ContentDescription" />
 
@@ -147,7 +148,7 @@
                                     android:padding="8dp">
 
                                     <TextView
-                                        android:id="@+id/followerscount"
+                                        android:id="@+id/tvPendingOrders"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:gravity="center"
@@ -156,7 +157,7 @@
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_below="@+id/followerscount"
+                                        android:layout_below="@+id/tvPendingOrders"
                                         android:fontFamily="@font/moon_light"
                                         android:gravity="center_horizontal"
                                         android:text="Pending Orders"
@@ -333,17 +334,18 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="550dp"
-                android:layout_margin="10dp"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:clickable="false"
                 android:background="@color/NewUMarketDarkBlue">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/RV_productlisting"
+                    android:id="@+id/RV_sellerlisting"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
+                    android:clickable="false"
                     android:background="@color/white"
-                    android:padding="10dp" />
+                    android:padding="2dp" />
 
             </LinearLayout>
 

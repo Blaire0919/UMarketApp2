@@ -16,6 +16,7 @@ import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -49,13 +50,13 @@ import bbc.umarket.umarketapp2.SellerSide.ProcessOrder;
 
 public class RateAndReview extends AppCompatActivity {
     ImageView p_img, back, selectedphoto;
-    TextView p_name, submit;
+    TextView p_name;
     TextInputLayout review;
     RatingBar rate;
     MaterialCardView addphoto, card;
+    Button submit;
 
     long maxid = 0;
-
     public String studid, fname, lname, buyerName, rrID, pId, p_date, pUrl, ratenum, rrreview, prodname;
 
     DatabaseReference reference;
@@ -109,7 +110,6 @@ public class RateAndReview extends AppCompatActivity {
         prodName = phistoryintent.getExtras().getString("prodname");
         prodQty = phistoryintent.getExtras().getString("prodqty");
         prodPrice = phistoryintent.getExtras().getString("prodprice");
-
         storageref = storage.getReference();
 
         //hooks
@@ -293,10 +293,6 @@ public class RateAndReview extends AppCompatActivity {
         });
     }
 
-    private void DeleteItemOnRateDB() {
-
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -304,8 +300,8 @@ public class RateAndReview extends AppCompatActivity {
 
         if (requestCode == 2 && resultCode == RESULT_OK && data != null) {
             imageUri = data.getData();
-            card.setVisibility(View.VISIBLE);
             selectedphoto.setImageURI(imageUri);
+            selectedphoto.setVisibility(View.VISIBLE);
         }
     }
 

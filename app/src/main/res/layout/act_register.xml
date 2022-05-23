@@ -4,61 +4,150 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/background"
+    android:orientation="vertical"
     android:padding="20dp"
     tools:context="bbc.umarket.umarketapp2.Main.Register">
 
-        <ScrollView
-            android:id="@+id/scrollView01"
+    <ScrollView
+        android:id="@+id/scrollView01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="-10dp"
+        android:padding="5dp"
+        android:scrollbars="none">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-10dp"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:scrollbars="none">
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:id="@+id/btnback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:foregroundGravity="left"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_back"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/logintxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/moon_light"
+                    android:gravity="end"
+                    android:text="@string/registertext"
+                    android:textColor="@color/NewUMarketDarkBlue"
+                    android:textSize="37sp" />
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/Reg_fname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/reg_fname"
+                android:padding="10dp"
+                android:transitionName="@string/trans_Id"
+                app:boxBackgroundColor="@color/transparent"
+                app:boxStrokeColor="@color/black"
+                app:hintTextColor="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/Reg_lname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/reg_lname"
+                android:padding="10dp"
+                android:transitionName="@string/trans_Id"
+                app:boxBackgroundColor="@color/transparent"
+                app:boxStrokeColor="@color/black"
+                app:hintTextColor="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/Reg_studid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/reg_studid"
+                android:padding="10dp"
+                android:transitionName="@string/trans_Id"
+                app:boxBackgroundColor="@color/transparent"
+                app:boxStrokeColor="@color/black"
+                app:hintTextColor="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/Reg_contactnum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/reg_contact"
+                android:padding="10dp"
+                android:transitionName="@string/trans_Id"
+                app:boxBackgroundColor="@color/transparent"
+                app:boxStrokeColor="@color/black"
+                app:hintTextColor="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:maxLength="11"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:paddingTop="10dp"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:id="@+id/btnback"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:foregroundGravity="left"
-                        android:padding="10dp"
-                        android:src="@drawable/ic_back"
-                        tools:ignore="ContentDescription" />
-
-                    <TextView
-                        android:id="@+id/logintxt"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/moon_light"
-                        android:gravity="end"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/registertext"
-                        android:textColor="@color/NewUMarketDarkBlue"
-                        android:textSize="37sp" />
-
-                </LinearLayout>
+                android:orientation="horizontal"
+                android:padding="10dp">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/Reg_fname"
-                    android:layout_width="match_parent"
+                    android:id="@+id/Reg_email"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="@string/reg_fname"
-                    android:padding="10dp"
+                    android:layout_weight="2"
+                    android:hint="@string/reg_email"
                     android:transitionName="@string/trans_Id"
                     app:boxBackgroundColor="@color/transparent"
                     app:boxStrokeColor="@color/black"
@@ -67,372 +156,203 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/Reg_lname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/reg_lname"
-                    android:padding="10dp"
-                    android:transitionName="@string/trans_Id"
-                    app:boxBackgroundColor="@color/transparent"
-                    app:boxStrokeColor="@color/black"
-                    app:hintTextColor="@color/black">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/Reg_studid"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/reg_studid"
-                    android:padding="10dp"
-                    android:transitionName="@string/trans_Id"
-                    app:boxBackgroundColor="@color/transparent"
-                    app:boxStrokeColor="@color/black"
-                    app:hintTextColor="@color/black">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/Reg_contactnum"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/reg_contact"
-                    android:padding="10dp"
-                    android:transitionName="@string/trans_Id"
-                    app:boxBackgroundColor="@color/transparent"
-                    app:boxStrokeColor="@color/black"
-                    app:hintTextColor="@color/black">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:orientation="horizontal"
-                    >
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/Reg_email"
-                        android:layout_width="0dp"
-                        android:layout_weight="2"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/reg_email"
-                        android:transitionName="@string/trans_Id"
-                        app:boxBackgroundColor="@color/transparent"
-                        app:boxStrokeColor="@color/black"
-                        app:hintTextColor="@color/black">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_weight="1"
-                        android:baselineAligned="false">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="match_parent"
-                            tools:ignore="NestedWeights">
-
-                            <com.google.android.material.card.MaterialCardView
-                                android:id="@+id/card_sendemailcode"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:clickable="true"
-                                android:foreground="?android:attr/selectableItemBackground"
-                                tools:ignore="TouchTargetSizeCheck">
-
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:background="@color/NewUMarketDarkBlue"
-                                    android:padding="8dp">
-
-                                    <TextView
-                                        android:id="@+id/PurchaseHistory"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="5dp"
-                                        android:layout_marginBottom="5dp"
-                                        android:fontFamily="@font/moon_light"
-                                        android:gravity="center_horizontal"
-                                        android:text="Verify"
-                                        android:textColor="@color/white"
-                                        android:textSize="11sp"
-                                        tools:ignore="SmallSp" />
-                                </RelativeLayout>
-                            </com.google.android.material.card.MaterialCardView>
-
-
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent">
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                tools:ignore="UselessParent">
-
-                                <ImageView
-                                    android:id="@+id/ImageView_emailVerified"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_centerVertical="true"
-                                    android:src="@drawable/ic_baseline_check_circle_outline_24"
-                                    tools:ignore="ContentDescription"
-                                    app:tint="@color/white" />
-
-                                <ProgressBar
-                                    android:id="@+id/regprogressbar"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerInParent="true"
-                                    android:visibility="invisible" />
-
-
-                            </RelativeLayout>
-
-
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-
-
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/Reg_CreatePass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/reg_pass"
-                    android:padding="10dp"
-                    android:transitionName="@string/trans_Pass"
-                    app:boxBackgroundColor="@color/transparent"
-                    app:boxStrokeColor="@color/black"
-                    app:errorIconDrawable="@null"
-                    app:hintTextColor="@color/black"
-                    app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/black">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPassword"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/moon_light"
-                    android:gravity="center"
-                    android:text="Interest"
-                    android:textColor="@color/black"
-                    android:textSize="17sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:fontFamily="@font/moon_light"
-                    android:text="Select one or more interest below."
-                    android:textColor="@color/black"
-                    android:textSize="9sp"
-                    tools:ignore="SmallSp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="5dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <CheckBox
-                            android:id="@+id/chkSchoolSupplies"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/moon_light"
-                            android:text="School Supplies"
-                            android:textSize="10sp"
-                            tools:ignore="SmallSp" />
-
-                        <CheckBox
-                            android:id="@+id/chkElectronics"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/moon_light"
-                            android:text="Electronics"
-                            android:textSize="10sp"
-                            tools:ignore="SmallSp" />
-
-                        <CheckBox
-                            android:id="@+id/chkFoodsBeverage"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/moon_light"
-                            android:text="Foods and Beverages"
-                            android:textSize="10sp"
-                            tools:ignore="SmallSp" />
-
-                        <CheckBox
-                            android:id="@+id/chkOthers"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/moon_light"
-                            android:text="Others"
-                            android:textSize="10sp"
-                            tools:ignore="SmallSp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <CheckBox
-                            android:id="@+id/chkClothesandAccessories"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/moon_light"
-                            android:text="Clothes and Accessories"
-                            android:textSize="10sp"
-                            tools:ignore="SmallSp" />
-
-                        <CheckBox
-                            android:id="@+id/chkBeautyProduct"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/moon_light"
-                            android:text="Beauty Products"
-                            android:textSize="10sp"
-                            tools:ignore="SmallSp" />
-
-                        <CheckBox
-                            android:id="@+id/chkSportsEquipment"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/moon_light"
-                            android:text="Sports Equipment"
-                            android:textSize="10sp"
-                            tools:ignore="SmallSp" />
-
-                        <LinearLayout
-                            android:id="@+id/LinearForOthers"
-                            android:layout_width="match_parent"
-                            android:layout_marginTop="1dp"
-                            android:layout_height="wrap_content"
-                            android:visibility="invisible"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:text="Please Specify if others:"
-                                android:textColor="@color/black"
-                                android:fontFamily="@font/moon_light"
-                                android:textSize="10sp"/>
-
-                            <EditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/black"
-                                android:textSize="10sp"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/btnRegister"
-                    style="@style/ButtonStyle01"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:background="@drawable/corner_layouts"
-                    android:elevation="2dp"
-                    android:fontFamily="@font/moon_light"
-                    android:text="Register"
-                    android:transitionName="@string/trans_btnLogin" />
-
-                <TextView
-                    android:id="@+id/backlogin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="90dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/moon_light"
-                    android:text="Already have an account? Log in instead."
-                    android:textColor="@color/black"
-                    android:textSize="10sp"
-                    tools:ignore="SmallSp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    tools:ignore="UselessLeaf" />
 
             </LinearLayout>
 
-        </ScrollView>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/Reg_CreatePass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/reg_pass"
+                android:padding="10dp"
+                android:transitionName="@string/trans_Pass"
+                app:boxBackgroundColor="@color/transparent"
+                app:boxStrokeColor="@color/black"
+                app:errorIconDrawable="@null"
+                app:hintTextColor="@color/black"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/moon_light"
+                android:gravity="center"
+                android:text="Interest"
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/moon_light"
+                android:text="Select one or more interest below."
+                android:textColor="@color/black"
+                android:textSize="9sp"
+                tools:ignore="SmallSp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/chkSchoolSupplies"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/moon_light"
+                        android:text="School Supplies"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
+
+                    <CheckBox
+                        android:id="@+id/chkElectronics"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/moon_light"
+                        android:text="Electronics"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
+
+                    <CheckBox
+                        android:id="@+id/chkFoodsBeverage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/moon_light"
+                        android:text="Foods and Beverages"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
+
+                    <CheckBox
+                        android:id="@+id/chkOthers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/moon_light"
+                        android:text="Others"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/chkClothesandAccessories"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/moon_light"
+                        android:text="Clothes and Accessories"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
+
+                    <CheckBox
+                        android:id="@+id/chkBeautyProduct"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/moon_light"
+                        android:text="Beauty Products"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
+
+                    <CheckBox
+                        android:id="@+id/chkSportsEquipment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/moon_light"
+                        android:text="Sports Equipment"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
+
+                    <LinearLayout
+                        android:id="@+id/LinearForOthers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:orientation="vertical"
+                        android:visibility="invisible">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/moon_light"
+                            android:text="Please Specify if others:"
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnRegister"
+                style="@style/ButtonStyle01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+
+                android:background="@drawable/corner_layouts"
+                android:elevation="2dp"
+                android:fontFamily="@font/moon_light"
+                android:text="Register"
+                android:transitionName="@string/trans_btnLogin" />
+
+            <TextView
+                android:id="@+id/backlogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="90dp"
+                android:fontFamily="@font/moon_light"
+                android:text="Already have an account? Log in instead."
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                tools:ignore="UselessLeaf" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

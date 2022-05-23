@@ -5,31 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerVertical="true"
-    android:layout_marginTop="2dp"
-    android:layout_marginBottom="2dp">
+    android:layout_marginTop="3dp"
+    android:layout_marginBottom="3dp">
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:padding="8dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="50dp"
+
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_notification"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
 
-            <TextView
-                android:id="@+id/notif_time"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:fontFamily="@font/moon_light"
-                android:gravity="center_vertical"
-                android:text="00:00"
+                android:orientation="horizontal">
 
-                android:textSize="13sp" />
+                <TextView
+                    android:id="@+id/notif_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/NewUMarketDarkBlue"
+                    android:text="00:00"
+                    android:textSize="13sp" />
 
-        </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -42,13 +54,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:fontFamily="@font/moon_light"
+                    android:justificationMode="inter_word"
+                    android:fontFamily="@font/poppins_regular"
                     android:text="Notification"
-                    android:textSize="12sp"
+                    android:textSize="11sp"
                     android:textColor="@color/black" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
+
     </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>

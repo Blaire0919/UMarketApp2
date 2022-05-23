@@ -183,6 +183,10 @@ public class AddListing extends AppCompatActivity {
                     ListSubCat.add("Hats");
                     ListSubCat.add("Rings");
                     ListSubCat.add("Necklace");
+                    ListSubCat.add("Shoes");
+                    ListSubCat.add("Socks");
+                    ListSubCat.add("Sandals");
+                    ListSubCat.add("Pajamas");
                     ListSubCat.add("Tops");
                     ListSubCat.add("Shorts");
                     ListSubCat.add("Underwear");
@@ -202,6 +206,7 @@ public class AddListing extends AppCompatActivity {
                 case "Beauty Products":
 
                     ListSubCat.add("Skincare");
+                    ListSubCat.add("Cologne/Perfume");
                     ListSubCat.add("Cosmetics");
                     ListSubCat.add("Cleanser and Scrubs");
                     ListSubCat.add("Bath and Body");
@@ -216,7 +221,7 @@ public class AddListing extends AppCompatActivity {
                     break;
 
                 case "Sports Equipment":
-
+                    ListSubCat.add("Table Tennis");
                     ListSubCat.add("Support");
                     ListSubCat.add("Exercise and Fitness");
                     ListSubCat.add("Tennis");
